@@ -14,12 +14,12 @@ export default {
 			yogurt: {
 				100: "#FEFDFC",
 				80: "#FDF1ED",
-				60: "#F6EAE6",
+				60: "#F9E7E1",
 			},
 			cocoa: {
 				120: "#3E3734",
-				100: "#645853",
-				80: "#8F7D76",
+				100: "#645A57",
+				80: "#857873",
 			},
 			accent: "#DB825C",
 			lilac: "#BEA5CE",
@@ -27,7 +27,9 @@ export default {
 			shrub: "#74AE6E",
 		},
 		fontWeight: {
+			regular: 400,
 			medium: 500,
+			semibold: 600,
 			bold: 700,
 		},
 		screens: {
@@ -63,7 +65,7 @@ export default {
 	},
 	safelist: [
 		{
-			pattern: /[a-zA-Z]+-?(yogurt|cocoa|lilac|blurple|shrub)(-[0-9]+)*/,
+			pattern: /[a-zA-Z]+-?(yogurt|cocoa|lilac|blurple|shrub|accent)(-[0-9]+)*/,
 			variants: ["hover", "focus", "active", "disabled"],
 		},
 	],

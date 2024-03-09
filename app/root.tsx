@@ -11,6 +11,8 @@ import {
 	type ShouldRevalidateFunction,
 } from "@remix-run/react";
 import favicon from "../public/favicon.svg";
+import styles from "./styles/tailwind.css";
+import { CartProvider } from "@shopify/hydrogen-react";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -42,11 +44,15 @@ export function links() {
 		{
 			rel: "preconnect",
 			href: "https://fonts.gstatic.com",
-			crossorigin: "anonymous",
+			crossOrigin: "anonymous",
 		},
 		{
 			rel: "stylesheet",
 			href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap",
+		},
+		{
+			rel: "stylesheet",
+			href: styles,
 		},
 		{ rel: "icon", type: "image/svg+xml", href: favicon },
 	];
@@ -63,11 +69,13 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body>
-				<Outlet />
-				<ScrollRestoration nonce={nonce} />
-				<Scripts nonce={nonce} />
-				<LiveReload nonce={nonce} />
+			<body className="antialiased scroll-smooth font-figtree">
+				<CartProvider>
+					<Outlet />
+					<ScrollRestoration nonce={nonce} />
+					<Scripts nonce={nonce} />
+					<LiveReload nonce={nonce} />
+				</CartProvider>
 			</body>
 		</html>
 	);
