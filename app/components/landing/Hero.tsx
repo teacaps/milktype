@@ -7,7 +7,8 @@ export function Hero() {
 		<Container className="py-24 flex flex-row">
 			<div className="flex flex-col space-y-5 self-center text-5xl text-cocoa-120 leading-tight font-medium w-2/5">
 				<h1>
-					creations for people we <HeartIcon className="inline-flex ml-1 h-8 fill-accent" />
+					creations for
+					<br /> people we <HeartIcon className="inline-flex ml-1 h-8 fill-accent" />
 				</h1>
 				<Spaghetti className="w-5 text-accent" />
 				<h2>hi, we're milktype</h2>

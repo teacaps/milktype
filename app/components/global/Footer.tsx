@@ -6,7 +6,9 @@ import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
 
 function NewsletterSignup() {
 	return (
-		<Container as="form" className="flex text-xl bg-yogurt-60 p-8 flex-row items-center justify-center">
+		<form
+			className="flex w-full text-xl bg-yogurt-60 p-8 flex-row items-center justify-center"
+			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-cocoa-120">let’s keep in touch — we’ll send a monthly newsletter to</span>
 			<label htmlFor="email" className="sr-only">
 				Email
@@ -17,7 +19,7 @@ function NewsletterSignup() {
 				icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
 				className="ml-3 h-8 w-8 p-2 rounded-lg mt-px"
 			/>
-		</Container>
+		</form>
 	);
 }
 
@@ -27,7 +29,8 @@ export function Footer() {
 			<NewsletterSignup />
 			<Container
 				as="footer"
-				className="w-full font-medium text-yogurt-80 text-base h-auto bg-cocoa-100 flex flex-col py-8">
+				className="!w-full !max-w-full !mx-0 font-medium text-yogurt-80 text-base h-auto bg-cocoa-100 flex flex-col py-8"
+				style={{ viewTransitionName: "footer" }}>
 				<Wordmark className="h-14 w-fit" />
 				<div className="h-0.5 w-16 my-4 bg-yogurt-80"></div>
 				<span className="mb-1">San Francisco, CA</span>

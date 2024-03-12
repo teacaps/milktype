@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+::view-transition-group(*) {
+    animation-duration: 0.5s;
+}
+
+::view-transition-group(footer),
+::view-transition-group(newsletter),
+::view-transition-group(navigation) {
+    animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+::view-transition-group(product-image) {
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+    animation-duration: 0.6s;
+}
+
+::view-transition-new(product-image),
+::view-transition-old(product-image) {
+    height: 100%;
+}

@@ -15,6 +15,7 @@ export default function Landing() {
 				}
 				description="the perfect keyboard for boba lovers. functional, stunning, and ready to use right out of the box."
 				image={null}
+				url="/products/milktype75"
 			/>
 			<Intro />
 		</Layout>
