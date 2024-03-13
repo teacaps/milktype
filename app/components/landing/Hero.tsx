@@ -7,11 +7,11 @@ export function Hero() {
 		<Container className="py-24 flex flex-row">
 			<div className="flex flex-col space-y-5 self-center text-5xl text-cocoa-120 leading-tight font-medium w-2/5">
 				<h1>
-					creations for
-					<br /> people we <HeartIcon className="inline-flex ml-1 h-8 fill-accent" />
+					creations&nbsp;for people&nbsp;we&nbsp;
+					<HeartIcon className="inline-flex ml-1 h-8 fill-accent" />
 				</h1>
 				<Spaghetti className="w-5 text-accent" />
-				<h2>hi, we're milktype</h2>
+				<h2>hi,&nbsp;we're milktype</h2>
 			</div>
 			<div className="h-auto flex flex-row gap-5 ml-auto">
 				<div className="w-44 h-full bg-accent rounded-full"></div>

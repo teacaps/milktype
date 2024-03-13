@@ -34,7 +34,7 @@ export function Footer() {
 				<Wordmark className="h-14 w-fit" />
 				<div className="h-0.5 w-16 my-4 bg-yogurt-80"></div>
 				<span className="mb-1">San Francisco, CA</span>
-				<span>milktype.co</span>
+				<a href="mailto:hi@milktype.co">hi@milktype.co</a>
 			</Container>
 		</>
 	);
