@@ -13,8 +13,8 @@ export default {
 			current: "currentColor",
 			yogurt: {
 				100: "#FEFDFC",
-				80: "#FDF1ED",
-				60: "#F9E7E1",
+				80: "#FDF8F5",
+				60: "#FBEEE7",
 			},
 			cocoa: {
 				120: "#3E3734",

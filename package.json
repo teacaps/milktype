@@ -10,13 +10,13 @@
 		"codegen": "shopify hydrogen codegen"
 	},
 	"dependencies": {
-		"@remix-run/react": "^2.6.0",
-		"@remix-run/server-runtime": "^2.6.0",
+		"@remix-run/react": "^2.8.1",
+		"@remix-run/server-runtime": "^2.8.1",
 		"@shopify/cli": "3.52.0",
 		"@shopify/cli-hydrogen": "^7.1.0",
-		"@shopify/hydrogen": "~2024.1.2",
-		"@shopify/hydrogen-react": "^2024.1.1",
-		"@shopify/remix-oxygen": "^2.0.3",
+		"@shopify/hydrogen": "~2024.4.0",
+		"@shopify/hydrogen-react": "~2024.4.0",
+		"@shopify/remix-oxygen": "^2.0.4",
 		"graphql": "^16.6.0",
 		"graphql-tag": "^2.12.6",
 		"isbot": "^3.6.6",
@@ -25,7 +25,7 @@
 		"tailwind-merge": "^2.2.1"
 	},
 	"devDependencies": {
-		"@remix-run/dev": "^2.6.0",
+		"@remix-run/dev": "^2.8.1",
 		"@remix-run/eslint-config": "^2.6.0",
 		"@shopify/oxygen-workers-types": "^4.0.0",
 		"@tailwindcss/forms": "^0.5.3",
@@ -35,7 +35,7 @@
 		"@types/react-dom": "^18.2.7",
 		"eslint": "^8.20.0",
 		"eslint-plugin-hydrogen": "0.12.2",
-		"postcss": "^8.4.21",
+		"postcss": "^8.4.38",
 		"postcss-import": "^15.1.0",
 		"postcss-preset-env": "^8.2.0",
 		"prettier": "^2.8.4",
