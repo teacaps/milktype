@@ -9,10 +9,13 @@ import {
 	ScrollRestoration,
 	isRouteErrorResponse,
 	type ShouldRevalidateFunction,
+	defer,
+	useMatches,
 } from "@remix-run/react";
 import favicon from "../public/favicon.svg";
 import styles from "./styles/tailwind.css";
 import { CartProvider } from "@shopify/hydrogen-react";
+import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -25,6 +28,19 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, current
 
 	// revalidate when manually revalidating via useRevalidator
 	return currentUrl.toString() === nextUrl.toString();
+};
+
+export async function loader({ context }: LoaderFunctionArgs) {
+	const { cart } = context;
+
+	return defer({
+		cart: cart.get(),
+	});
+}
+
+export const useRootLoaderData = () => {
+	const [root] = useMatches();
+	return root?.data as SerializeFrom<typeof loader>;
 };
 
 export function links() {

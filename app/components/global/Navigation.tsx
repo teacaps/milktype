@@ -1,15 +1,18 @@
-import { Link, NavLink } from "@remix-run/react";
+import { Await, Link, NavLink } from "@remix-run/react";
 import { Wordmark } from "~/assets/Wordmark";
 import { CartIcon } from "~/assets/icons/Cart";
-import { useCart } from "@shopify/hydrogen-react";
+import { useRootLoaderData } from "~/root";
 import { Container } from "~/components/global/Container";
 import { twJoin } from "tailwind-merge";
+import { Suspense, useState } from "react";
+import { Cart } from "~/components/global/Cart";
 
 export function Navigation() {
+	const [showCart, setShowCart] = useState(false);
 	return (
 		<Container
 			as="header"
-			className="flex w-full flex-row py-8 items-center"
+			className="flex relative w-full flex-row py-8 items-center z-10"
 			style={{ viewTransitionName: "navigation" }}>
 			<Link to="/" className="mr-auto" aria-label="Home" unstable_viewTransition>
 				<Wordmark className="h-10 text-cocoa-120" />
@@ -24,23 +27,38 @@ export function Navigation() {
 					unstable_viewTransition>
 					milktype 75
 				</NavLink>
-				<button type="button" className="relative flex">
-					<CartIcon className="h-4 fill-cocoa-120 hover:fill-accent xs:h-5 sm:h-6" />
+				<button type="button" className="relative flex group" onClick={() => setShowCart((show) => !show)}>
+					<CartIcon
+						className={twJoin(
+							"h-4 xs:h-5 sm:h-6",
+							showCart ? "fill-accent" : "fill-cocoa-120",
+							"group-hover:opacity-50",
+						)}
+					/>
 					<CartBadge />
 				</button>
 			</nav>
+			{showCart ? <Cart /> : null}
 		</Container>
 	);
 }
 
 function CartBadge() {
-	const { totalQuantity } = useCart();
-	if (!totalQuantity) return null;
+	const { cart } = useRootLoaderData();
 	return (
-		<div className="absolute -bottom-1 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent px-[0.125rem] py-[0.125rem] pb-[0.25rem]">
-			<span className="text-[0.75rem] text-center font-medium text-yogurt-100 trim-both leading-none">
-				{totalQuantity}
-			</span>
-		</div>
+		<Suspense fallback={null}>
+			<Await resolve={cart}>
+				{(cart) => {
+					if (!cart?.totalQuantity) return null;
+					return (
+						<div className="peer/badge absolute -bottom-1 -left-2 flex h-5 w-5 items-center justify-center rounded-full bg-accent">
+							<span className="text-[0.75rem] tabular-nums text-center font-medium text-yogurt-100 trim-both leading-none m-auto">
+								{cart.totalQuantity}
+							</span>
+						</div>
+					);
+				}}
+			</Await>
+		</Suspense>
 	);
 }

@@ -71,10 +71,12 @@ export interface ButtonLinkProps<External extends boolean> extends Pick<ButtonPr
 	external?: External;
 }
 export function ButtonLink<
-	T extends boolean,
-	PassthroughProps extends T extends true
+	External extends boolean,
+	PassthroughProps extends External extends true
 		? HTMLAttributes<HTMLAnchorElement>
-		: Parameters<typeof Link>[0] = T extends true ? HTMLAttributes<HTMLAnchorElement> : Parameters<typeof Link>[0],
+		: Parameters<typeof Link>[0] = External extends true
+		? HTMLAttributes<HTMLAnchorElement>
+		: Parameters<typeof Link>[0],
 >({
 	color,
 	icon,
@@ -83,14 +85,14 @@ export function ButtonLink<
 	className,
 	children,
 	...props
-}: MakePropertiesOptional<ButtonLinkProps<T> & PassthroughProps, "to">) {
+}: MakePropertiesOptional<ButtonLinkProps<External> & PassthroughProps, "to">) {
 	const LinkElement = external ? "a" : Link;
 	const [hoverColor, setHoverColor] = useState(randomColor(color));
 	return (
 		<LinkElement
 			className={twMerge(
-				`bg-${color} hover:bg-${hoverColor}`,
-				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium disabled:cursor-not-allowed`,
+				`bg-${color} hover:bg-${hoverColor} active:bg-${color}`,
+				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium`,
 				className,
 			)}
 			href={external ? url : undefined}
