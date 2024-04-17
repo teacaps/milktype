@@ -27,12 +27,12 @@ export function Button({
 	children,
 	...props
 }: ButtonProps) {
-	const color = disabled ? `cocoa-80` : `${baseColor}`;
+	const color = disabled ? "cocoa-80" : `${baseColor}`;
 	const [hoverColor, setHoverColor] = useState(randomColor(color));
 	return (
 		<button
 			className={twMerge(
-				`bg-${color} hover:bg-${hoverColor} active:bg-${color}`,
+				`bg-${color} hover:enabled:bg-${hoverColor} active:bg-${color}`,
 				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium disabled:cursor-not-allowed`,
 				className,
 			)}

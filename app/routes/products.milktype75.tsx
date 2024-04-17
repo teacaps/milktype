@@ -1,7 +1,18 @@
 import { Container } from "~/components/global/Container";
-import { Button } from "~/components/elements/Button";
 import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
+import { AddToCartButton } from "~/components/product/AddToCartButton";
+import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import { useLoaderData } from "@remix-run/react";
+
+export async function loader({ context }: LoaderFunctionArgs) {
+	const { product } = await context.storefront.query(PRODUCT_QUERY, {
+		variables: {
+			handle: "milktype75",
+		},
+	});
+	return { product };
+}
 
 function InfoBubble({ children }: { children: string }) {
 	const [highlighted, rest] = children.split("|");
@@ -13,6 +24,8 @@ function InfoBubble({ children }: { children: string }) {
 }
 
 export default function Milktype75() {
+	const { product } = useLoaderData<typeof loader>();
+	const selectedVariant = product!.variants.nodes[0];
 	return (
 		<Layout>
 			<Container className="py-24">
@@ -34,9 +47,14 @@ export default function Milktype75() {
 							</p>
 							<div className="flex flex-row items-center gap-x-6">
 								<span className="text-cocoa-120 font-medium text-3xl">$99</span>
-								<Button color="accent" className="h-16 text-xl text-yogurt-100 font-medium">
-									add to cart
-								</Button>
+								<AddToCartButton
+									lines={[
+										{
+											merchandiseId: selectedVariant.id,
+											quantity: 1,
+										},
+									]}
+								/>
 							</div>
 						</div>
 						<div className="flex flex-row flex-wrap gap-5">
@@ -64,3 +82,27 @@ export default function Milktype75() {
 		</Layout>
 	);
 }
+
+const PRODUCT_QUERY = `#graphql
+query Product($handle: String!) {
+	product(handle: $handle) {
+		seo {
+			title
+			description
+        }
+		variants(first: 1) {
+			nodes {
+				id
+				price {
+					amount
+					currencyCode
+                }
+				compareAtPrice {
+					amount
+					currencyCode
+                }
+            }
+		}
+    }
+}
+`;

@@ -24,7 +24,7 @@ export function Navigation() {
 					unstable_viewTransition>
 					milktype 75
 				</NavLink>
-				<button className="relative flex">
+				<button type="button" className="relative flex">
 					<CartIcon className="h-4 fill-cocoa-120 hover:fill-accent xs:h-5 sm:h-6" />
 					<CartBadge />
 				</button>

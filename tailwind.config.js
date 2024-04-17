@@ -20,6 +20,7 @@ export default {
 				120: "#3E3734",
 				100: "#645A57",
 				80: "#857873",
+				60: "#E9DDD6",
 			},
 			accent: "#DB825C",
 			lilac: "#BEA5CE",
@@ -66,7 +67,7 @@ export default {
 	safelist: [
 		{
 			pattern: /[a-zA-Z]+-?(yogurt|cocoa|lilac|blurple|shrub|accent)(-[0-9]+)*/,
-			variants: ["hover", "focus", "active", "disabled"],
+			variants: ["hover", "focus", "active", "disabled", "enabled", "hover:enabled"],
 		},
 	],
 	plugins: [formsPlugin, typographyPlugin],
