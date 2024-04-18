@@ -19,7 +19,7 @@ function NewsletterSignup() {
 				<Input
 					name="email"
 					placeholder="example@gmail.com"
-					className="w-48 h-auto ml-[0.375rem] text-cocoa-100"
+					className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus:ring-0"
 				/>
 				<Button
 					color="accent"
@@ -42,7 +42,11 @@ export function Footer() {
 				<Wordmark className="h-14 w-fit" />
 				<div className="h-0.5 w-16 my-4 bg-yogurt-80"></div>
 				<span className="mb-1">San Francisco, CA</span>
-				<a href="mailto:hi@milktype.co">hi@milktype.co</a>
+				<a
+					className="inline hover:text-accent hover:underline focus:text-accent focus:underline focus:outline-none"
+					href="mailto:hi@milktype.co">
+					hi@milktype.co
+				</a>
 			</Container>
 		</>
 	);

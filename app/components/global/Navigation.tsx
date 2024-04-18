@@ -14,31 +14,41 @@ export function Navigation() {
 			as="header"
 			className="flex relative w-full flex-row py-8 items-center z-10"
 			style={{ viewTransitionName: "navigation" }}>
-			<Link to="/" className="mr-auto" aria-label="Home" unstable_viewTransition>
-				<Wordmark className="h-10 text-cocoa-120" />
+			<Link
+				to="/"
+				className="mr-auto text-cocoa-120 hover:text-accent focus:text-accent focus:outline-none"
+				aria-label="Home"
+				unstable_viewTransition>
+				<Wordmark className="h-10" />
 			</Link>
 			<nav className="flex flex-row flex-grow sm:flex-grow-0 justify-between sm:justify-start sm:gap-x-24 pl-8 sm:pl-0 font-medium text-cocoa-120 text-base leading-6 xs:text-lg">
 				<NavLink
 					prefetch="intent"
 					to="/products/milktype75"
 					className={({ isActive }) =>
-						twJoin(isActive && "underline", "hover:text-accent active:font-medium")
+						twJoin(
+							isActive && "underline",
+							"hover:text-accent focus-visible:text-accent rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
+						)
 					}
 					unstable_viewTransition>
 					milktype 75
 				</NavLink>
-				<button type="button" className="relative flex group" onClick={() => setShowCart((show) => !show)}>
+				<button
+					type="button"
+					className="relative flex group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-8 focus-visible:ring-accent"
+					onClick={() => setShowCart((show) => !show)}>
 					<CartIcon
 						className={twJoin(
 							"h-4 xs:h-5 sm:h-6",
 							showCart ? "fill-accent" : "fill-cocoa-120",
-							"group-hover:opacity-50",
+							"group-hover:fill-accent group-focus-visible:fill-accent",
 						)}
 					/>
 					<CartBadge />
 				</button>
 			</nav>
-			<Cart show={showCart} />
+			<Cart show={showCart} setShow={setShowCart} />
 		</Container>
 	);
 }

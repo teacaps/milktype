@@ -4,8 +4,7 @@ import type {
 	CartLineUpdateInput,
 	CartLine,
 } from "@shopify/hydrogen-react/storefront-api-types";
-import type { ReactNode } from "react";
-import { Suspense } from "react";
+import { useEffect, Suspense, type ReactNode, type MouseEventHandler, type KeyboardEventHandler } from "react";
 import { CartForm, Money, OptimisticInput, useOptimisticData, flattenConnection } from "@shopify/hydrogen";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { PlusIcon } from "~/assets/icons/Plus";
@@ -78,7 +77,7 @@ function QuantitySelector({ line }: { line: CartLine | ComponentizableCartLine }
 					<button
 						name="decrease-quantity"
 						aria-label="Decrease quantity"
-						className="w-5 h-5 -mt-px rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent disabled:bg-cocoa-80"
+						className="w-5 h-5 -mt-px rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus:outline-none focus:ring focus:ring-accent disabled:bg-cocoa-80"
 						value={prevQuantity}
 						disabled={quantity <= 1}>
 						<MinusIcon className="w-full h-full" />
@@ -90,7 +89,7 @@ function QuantitySelector({ line }: { line: CartLine | ComponentizableCartLine }
 					<button
 						name="increase-quantity"
 						aria-label="Increase quantity"
-						className="w-5 h-5 rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent disabled:bg-cocoa-80"
+						className="w-5 h-5 rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus:outline-none focus:ring focus:ring-accent disabled:bg-cocoa-80"
 						value={nextQuantity}>
 						<PlusIcon className="w-full h-full" />
 					</button>
@@ -105,7 +104,7 @@ function CartLineItem({ line }: { line: CartLine | ComponentizableCartLine }) {
 	const image = line.merchandise.image || null;
 
 	return (
-		<div className="flex flex-row gap-6">
+		<div className="w-full flex flex-row gap-6">
 			<div className="aspect-square h-24 flex-shrink-0 rounded-2xl overflow-clip object-cover bg-cocoa-80">
 				{image && (
 					<img
@@ -129,59 +128,87 @@ function CartLineItem({ line }: { line: CartLine | ComponentizableCartLine }) {
 	);
 }
 
-export function Cart({ show = false }: { show?: boolean }) {
+export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean) => void }) {
 	const { cart } = useRootLoaderData();
 
 	return (
-		<div
-			className={twJoin(
-				"absolute left-0 right-0 top-28 sm:left-unset sm:top-20 sm:right-10 w-6/7 sm:w-96 flex flex-col mx-auto sm:mx-unset px-10 py-8 gap-8 bg-yogurt-60 border border-cocoa-60 rounded-2xl transition-opacity",
-				show ? "opacity-100 pointer-events-auto shadow-md" : "opacity-0 pointer-events-none",
-			)}
-			onClick={(e) => e.stopPropagation()}>
-			<Suspense fallback={<span className="font-medium text-base text-cocoa-100">loading...</span>}>
-				<Await resolve={cart}>
-					{(cart) => {
-						const lines = flattenConnection(cart?.lines);
-						const amount = cart?.cost.totalAmount || null;
-						const checkoutUrl = cart?.checkoutUrl || null;
-						const cartLines = lines?.length ? (
-							lines.map((line) => <CartLineItem line={line} />)
-						) : (
-							<span className="font-medium text-base text-cocoa-100">your cart is empty!</span>
-						);
-						return (
-							<>
-								{cartLines}
-								<div className="flex flex-col w-full gap-4">
-									{amount && (
-										<div className="flex flex-row w-full justify-between items-center">
-											<span className="text-cocoa-120 text-base font-medium">subtotal</span>
-											<span className="text-cocoa-120 text-base font-semibold">
-												<Money withoutTrailingZeros data={amount} />
-											</span>
-										</div>
-									)}
-									<div className="flex flex-row w-full justify-between items-center">
-										<span className="text-cocoa-120 text-base font-medium">shipping & tax</span>
-										<span className="text-cocoa-80 text-base font-semibold">
-											handled at checkout
+		<>
+			{show ? (
+				<div
+					className="fixed w-screen h-screen top-0 left-0"
+					onClick={() => setShow(false)}
+					onKeyDown={(e) => e.key === "Escape" && setShow(false)}
+					role="presentation"
+					aria-hidden={!show}
+					tabIndex={-1}
+					aria-label="Close cart"></div>
+			) : null}
+			<div
+				className={twJoin(
+					"cart absolute left-0 right-0 top-28 sm:left-unset sm:top-20 sm:right-10 w-6/7 sm:w-96 mx-auto sm:mx-unset px-10 py-8 bg-yogurt-60 border border-cocoa-60 rounded-2xl transition-[opacity,visibility]",
+					show ? "opacity-100 pointer-events-auto shadow-md" : "opacity-0 pointer-events-none invisible",
+				)}
+				role="dialog"
+				aria-modal="true"
+				aria-label="Cart"
+				aria-hidden={!show}>
+				<div
+					className="flex flex-col items-center gap-8 w-full"
+					role="presentation"
+					onClick={(e) => e.stopPropagation()}
+					onKeyDown={(e) => e.stopPropagation()}>
+					<Suspense fallback={<span className="font-medium text-base text-cocoa-100">loading...</span>}>
+						<Await resolve={cart}>
+							{(cart) => {
+								const lines = flattenConnection(cart?.lines);
+								const amount = cart?.cost.totalAmount || null;
+								const checkoutUrl = cart?.checkoutUrl || null;
+								if (!lines?.length)
+									return (
+										<span className="font-medium text-base text-cocoa-100">
+											your cart is empty!
 										</span>
-									</div>
-								</div>
-								{checkoutUrl && (
-									<ButtonLink
-										url={checkoutUrl}
-										color="accent"
-										className="w-full text-yogurt-100 h-10">
-										check out
-									</ButtonLink>
-								)}
-							</>
-						);
-					}}
-				</Await>
-			</Suspense>
-		</div>
+									);
+								return (
+									<>
+										{lines.map((line) => (
+											<CartLineItem line={line} key={line.id} />
+										))}
+										<div className="flex flex-col w-full gap-4">
+											{amount && (
+												<div className="flex flex-row w-full justify-between items-center">
+													<span className="text-cocoa-120 text-base font-medium">
+														subtotal
+													</span>
+													<span className="text-cocoa-120 text-base font-semibold">
+														<Money withoutTrailingZeros data={amount} />
+													</span>
+												</div>
+											)}
+											<div className="flex flex-row w-full justify-between items-center">
+												<span className="text-cocoa-120 text-base font-medium">
+													shipping & tax
+												</span>
+												<span className="text-cocoa-80 text-base font-semibold">
+													handled at checkout
+												</span>
+											</div>
+										</div>
+										{checkoutUrl && (
+											<ButtonLink
+												url={checkoutUrl}
+												color="accent"
+												className="w-full text-yogurt-100 h-10">
+												check out
+											</ButtonLink>
+										)}
+									</>
+								);
+							}}
+						</Await>
+					</Suspense>
+				</div>
+			</div>
+		</>
 	);
 }

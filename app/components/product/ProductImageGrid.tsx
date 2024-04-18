@@ -15,11 +15,12 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 
 	const onHover = (index: number) => setHoveredIndex(index);
 	const onLeave = () => setHoveredIndex(null);
+	const onClick = (index: number) => (hoveredIndex === null ? onHover(index) : onLeave());
 
 	return (
 		<div
 			className={twJoin(
-				"aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out overflow-clip",
+				"aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out",
 				hoveredIndex !== null
 					? makeSquareAtIndexTakeUpWholeGrid[hoveredIndex] + " gap-0"
 					: "grid-cols-[1fr,1fr,1fr] grid-rows-[1fr,1fr,1fr] gap-3",
@@ -29,14 +30,18 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 				<div
 					key={url}
 					className={twMerge(
-						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out`,
+						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out focus:scale-110 focus:outline-none focus:ring focus:ring-accent`,
 						"flex items-center justify-center text-yogurt-100 font-medium text-3xl", // this is just for the i placeholder
 						i === 3 && "col-span-2 row-span-2",
 						hoveredIndex !== null && hoveredIndex !== i && "opacity-0",
 					)}
 					onMouseEnter={() => onHover(i)}
 					onMouseLeave={onLeave}
-					onClick={() => (hoveredIndex !== null ? onLeave() : onHover(i))}>
+					onClick={() => onClick(i)}
+					onKeyDown={(ev) => ev.key === "Enter" && onClick(i)}
+					role="button"
+					tabIndex={0}
+					aria-label={`Image ${i + 1}`}>
 					{i /* PRODUCT IMAGE */}
 				</div>
 			))}

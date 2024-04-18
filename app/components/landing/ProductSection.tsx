@@ -15,11 +15,15 @@ export function ProductSection(props: ProductSectionProps) {
 	const isTransitioning = unstable_useViewTransitionState(props.url);
 
 	const SplatLink = ({ className }: { className: string }) => (
-		<NavLink className={"group " + className} to={props.url} prefetch="render" unstable_viewTransition>
+		<NavLink
+			className={"group focus:outline-none " + className}
+			to={props.url}
+			prefetch="render"
+			unstable_viewTransition>
 			<Splat
 				className="h-60"
-				splatClasses="fill-accent h-full w-full transition-transform ease-in-out duration-700 rotate-0 group-hover:-rotate-90">
-				<span className="text-yogurt-100 text-3xl ease-in-out duration-700 font-semibold rotate-12 transition-transform group-hover:-rotate-12">
+				splatClasses="fill-accent h-full w-full transition-transform ease-in-out duration-700 rotate-0 group-focus:-rotate-90 group-focus:fill-shrub group-hover:-rotate-90">
+				<span className="text-yogurt-100 text-3xl ease-in-out duration-700 font-semibold rotate-12 transition-transform group-focus:-rotate-12 group-hover:-rotate-12">
 					shop now
 				</span>
 			</Splat>

@@ -85,7 +85,7 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body className="antialiased scroll-smooth font-figtree">
+			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
 				<CartProvider>
 					<Outlet />
 					<ScrollRestoration nonce={nonce} />
