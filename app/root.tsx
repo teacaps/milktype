@@ -70,6 +70,7 @@ export function links() {
 			rel: "stylesheet",
 			href: styles,
 		},
+		{ rel: "icon", href: "/favicon.ico", sizes: "48x48" },
 		{ rel: "icon", type: "image/svg+xml", href: favicon },
 	];
 }
