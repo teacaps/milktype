@@ -64,11 +64,5 @@ export default {
 			}),
 		},
 	},
-	safelist: [
-		{
-			pattern: /(bg|text)-?(yogurt|cocoa|lilac|blurple|shrub|accent)(-[0-9]+)*/,
-			variants: ["hover", "focus", "active", "disabled", "enabled", "hover:enabled"],
-		},
-	],
 	plugins: [formsPlugin, typographyPlugin],
 };

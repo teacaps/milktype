@@ -13,6 +13,33 @@ const randomColor = throttle((base?: string, current?: string): Color => {
 	return color;
 }, 250);
 
+const BG_CLASSES: Record<Color, string> = {
+	accent: "bg-accent active:bg-accent",
+	shrub: "bg-shrub active:bg-shrub",
+	blurple: "bg-blurple active:bg-blurple",
+	lilac: "bg-lilac active:bg-lilac",
+	yogurt: "bg-yogurt active:bg-yogurt",
+	cocoa: "bg-cocoa active:bg-cocoa",
+};
+
+const HOVER_CLASSES: Record<Color, string> = {
+	accent: "hover:enabled:bg-accent",
+	shrub: "hover:enabled:bg-shrub",
+	blurple: "hover:enabled:bg-blurple",
+	lilac: "hover:enabled:bg-lilac",
+	yogurt: "hover:enabled:bg-yogurt",
+	cocoa: "hover:enabled:bg-cocoa",
+};
+
+const LINK_HOVER_CLASSES: Record<Color, string> = {
+	accent: "hover:bg-accent",
+	shrub: "hover:bg-shrub",
+	blurple: "hover:bg-blurple",
+	lilac: "hover:bg-lilac",
+	yogurt: "hover:bg-yogurt",
+	cocoa: "hover:bg-cocoa",
+};
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	color: Color;
 	disabled?: boolean;
@@ -28,12 +55,14 @@ export function Button({
 	children,
 	...props
 }: ButtonProps) {
-	const color = disabled ? "cocoa-80" : `${baseColor}`;
-	const [hoverColor, setHoverColor] = useState(randomColor(color));
+	const bgClasses = disabled ? "bg-cocoa-80 active:bg-cocoa-80" : BG_CLASSES[baseColor];
+	const [hoverColor, setHoverColor] = useState(randomColor(baseColor));
+	const hoverBgClasses = HOVER_CLASSES[hoverColor];
 	return (
 		<button
 			className={twMerge(
-				`bg-${color} hover:enabled:bg-${hoverColor} active:bg-${color}`,
+				bgClasses,
+				hoverBgClasses,
 				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium disabled:cursor-not-allowed`,
 				className,
 			)}
@@ -42,11 +71,11 @@ export function Button({
 			{...props}
 			onMouseEnter={(ev) => {
 				props.onMouseEnter?.(ev);
-				if (!disabled) setHoverColor(randomColor(color, hoverColor));
+				if (!disabled) setHoverColor(randomColor(baseColor, hoverColor));
 			}}
 			onFocus={(ev) => {
 				props.onFocus?.(ev);
-				if (!disabled) setHoverColor(randomColor(color, hoverColor));
+				if (!disabled) setHoverColor(randomColor(baseColor, hoverColor));
 			}}>
 			{children}
 			{icon || null}
@@ -88,11 +117,14 @@ export function ButtonLink<
 	...props
 }: MakePropertiesOptional<ButtonLinkProps<External> & PassthroughProps, "to">) {
 	const LinkElement = external ? "a" : Link;
+	const bgClasses = BG_CLASSES[color];
 	const [hoverColor, setHoverColor] = useState(randomColor(color));
+	const hoverBgClasses = LINK_HOVER_CLASSES[hoverColor];
 	return (
 		<LinkElement
 			className={twMerge(
-				`bg-${color} hover:bg-${hoverColor} active:bg-${color}`,
+				bgClasses,
+				hoverBgClasses,
 				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium`,
 				className,
 			)}

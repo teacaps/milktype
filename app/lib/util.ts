@@ -12,21 +12,26 @@ export type MakePropertiesOptional<T, K extends string> = T extends T
 	: never;
 
 export function throttle<T extends (...args: any[]) => any>(fn: T, n: number): T {
-	let last: number;
-	let timeout: ReturnType<typeof setTimeout>;
+	let last: number | undefined;
+	let timeout: ReturnType<typeof setTimeout> | undefined;
 	let result: ReturnType<T>;
+
 	return function (this: any, ...args: Parameters<T>): ReturnType<T> {
 		const now = Date.now();
-		if (last && now < last + n) {
-			clearTimeout(timeout);
-			timeout = setTimeout(() => {
-				last = now;
-				result = fn.apply(this, args);
-			}, n);
-		} else {
+
+		if (!last || now >= last + n) {
 			last = now;
 			result = fn.apply(this, args);
+		} else {
+			if (timeout) {
+				clearTimeout(timeout);
+			}
+			timeout = setTimeout(() => {
+				last = Date.now();
+				result = fn.apply(this, args);
+			}, n - (now - last));
 		}
+
 		return result;
 	} as T;
 }

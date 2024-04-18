@@ -135,8 +135,8 @@ export function Cart({ show = false }: { show?: boolean }) {
 	return (
 		<div
 			className={twJoin(
-				"absolute left-0 right-0 top-28 sm:top-20 sm:right-10 w-6/7 sm:w-96 flex flex-col mx-auto px-10 py-8 gap-8 bg-yogurt-60 border border-cocoa-60 rounded-2xl transition-opacity",
-				show ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none",
+				"absolute left-0 right-0 top-28 sm:left-unset sm:top-20 sm:right-10 w-6/7 sm:w-96 flex flex-col mx-auto sm:mx-unset px-10 py-8 gap-8 bg-yogurt-60 border border-cocoa-60 rounded-2xl transition-opacity",
+				show ? "opacity-100 pointer-events-auto shadow-md" : "opacity-0 pointer-events-none",
 			)}
 			onClick={(e) => e.stopPropagation()}>
 			<Suspense fallback={<span className="font-medium text-base text-cocoa-100">loading...</span>}>
