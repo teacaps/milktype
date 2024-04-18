@@ -19,10 +19,10 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 	return (
 		<div
 			className={twJoin(
-				"aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out gap-3 overflow-clip",
+				"aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out overflow-clip",
 				hoveredIndex !== null
 					? makeSquareAtIndexTakeUpWholeGrid[hoveredIndex] + " gap-0"
-					: "grid-cols-[1fr,1fr,1fr] grid-rows-[1fr,1fr,1fr]",
+					: "grid-cols-[1fr,1fr,1fr] grid-rows-[1fr,1fr,1fr] gap-3",
 			)}
 			onMouseLeave={onLeave}>
 			{images.map((url, i) => (
@@ -35,7 +35,8 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 						hoveredIndex !== null && hoveredIndex !== i && "opacity-0",
 					)}
 					onMouseEnter={() => onHover(i)}
-					onMouseLeave={onLeave}>
+					onMouseLeave={onLeave}
+					onClick={() => (hoveredIndex !== null ? onLeave() : onHover(i))}>
 					{i /* PRODUCT IMAGE */}
 				</div>
 			))}
