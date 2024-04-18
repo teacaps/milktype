@@ -17,7 +17,7 @@ export function Navigation() {
 			<Link to="/" className="mr-auto" aria-label="Home" unstable_viewTransition>
 				<Wordmark className="h-10 text-cocoa-120" />
 			</Link>
-			<nav className="flex flex-row gap-x-24 font-medium text-cocoa-120 text-base leading-6 xs:text-lg">
+			<nav className="flex flex-row flex-grow sm:flex-grow-0 justify-between sm:justify-start sm:gap-x-24 pl-8 sm:pl-0 font-medium text-cocoa-120 text-base leading-6 xs:text-lg">
 				<NavLink
 					prefetch="intent"
 					to="/products/milktype75"
@@ -38,7 +38,7 @@ export function Navigation() {
 					<CartBadge />
 				</button>
 			</nav>
-			{showCart ? <Cart /> : null}
+			<Cart show={showCart} />
 		</Container>
 	);
 }

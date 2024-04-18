@@ -8,7 +8,7 @@ export function Container({ children, className, as = "div", ...props }: Contain
 	const Component = as;
 	return (
 		<Component
-			className={twMerge("px-8 sm:mx-auto sm:w-4/5 sm:px-12 lg:px-16 xl:max-w-screen-xl", className)}
+			className={twMerge("px-8 sm:mx-auto sm:w-4/5 sm:px-12 lg:px-16 lg:max-w-screen-lg", className)}
 			{...props}>
 			{children}
 		</Component>

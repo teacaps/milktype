@@ -1,16 +1,17 @@
 import { Link } from "@remix-run/react";
 import { twMerge } from "tailwind-merge";
 import type { Color, MakePropertiesOptional } from "~/lib/util";
+import { throttle } from "~/lib/util";
 import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
 import { useState } from "react";
 
-const randomColor = (base?: string, current?: string): Color => {
+const randomColor = throttle((base?: string, current?: string): Color => {
 	const colors = ["accent", "shrub", "blurple", "lilac"];
 	const random = () => colors[Math.floor(Math.random() * colors.length)] as Color;
 	let color = random();
 	while ((base && color === base) || (current && color === current)) color = random();
 	return color;
-};
+}, 250);
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	color: Color;

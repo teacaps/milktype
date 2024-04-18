@@ -7,18 +7,26 @@ import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
 function NewsletterSignup() {
 	return (
 		<form
-			className="flex w-full text-xl bg-yogurt-60 p-8 flex-row items-center justify-center"
+			className="flex w-full text-xl bg-yogurt-60 p-8 gap-y-4 flex-col md:flex-row items-center justify-center"
 			style={{ viewTransitionName: "newsletter" }}>
-			<span className="font-medium text-cocoa-120">let’s keep in touch — we’ll send a monthly newsletter to</span>
+			<span className="font-medium text-cocoa-120">
+				let’s keep in touch — we’ll send a monthly newsletter to<span className="md:hidden">:</span>
+			</span>
 			<label htmlFor="email" className="sr-only">
 				Email
 			</label>
-			<Input name="email" placeholder="example@gmail.com" className="w-48 h-auto ml-[0.375rem] text-cocoa-100" />
-			<Button
-				color="accent"
-				icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-				className="ml-3 h-8 w-8 p-2 rounded-lg mt-px"
-			/>
+			<div className="flex flex-row">
+				<Input
+					name="email"
+					placeholder="example@gmail.com"
+					className="w-48 h-auto ml-[0.375rem] text-cocoa-100"
+				/>
+				<Button
+					color="accent"
+					icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
+					className="ml-3 h-8 w-8 p-2 rounded-lg mt-px"
+				/>
+			</div>
 		</form>
 	);
 }

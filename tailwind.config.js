@@ -34,7 +34,7 @@ export default {
 			bold: 700,
 		},
 		screens: {
-			"xs": "385px",
+			"xs": "480px",
 			"sm": "640px",
 			"md": "768px",
 			"lg": "1024px",
@@ -66,7 +66,7 @@ export default {
 	},
 	safelist: [
 		{
-			pattern: /[a-zA-Z]+-?(yogurt|cocoa|lilac|blurple|shrub|accent)(-[0-9]+)*/,
+			pattern: /(bg|text)-?(yogurt|cocoa|lilac|blurple|shrub|accent)(-[0-9]+)*/,
 			variants: ["hover", "focus", "active", "disabled", "enabled", "hover:enabled"],
 		},
 	],

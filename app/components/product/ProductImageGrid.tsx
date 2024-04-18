@@ -19,7 +19,7 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 	return (
 		<div
 			className={twJoin(
-				"basis-1/2 aspect-square max-w-[30rem] max-h-[30rem] rounded-3xl grid transition-all duration-700 ease-in-out gap-3 overflow-clip",
+				"aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out gap-3 overflow-clip",
 				hoveredIndex !== null
 					? makeSquareAtIndexTakeUpWholeGrid[hoveredIndex] + " gap-0"
 					: "grid-cols-[1fr,1fr,1fr] grid-rows-[1fr,1fr,1fr]",
@@ -29,7 +29,7 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 				<div
 					key={url}
 					className={twMerge(
-						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out`,
+						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out`,
 						"flex items-center justify-center text-yogurt-100 font-medium text-3xl", // this is just for the i placeholder
 						i === 3 && "col-span-2 row-span-2",
 						hoveredIndex !== null && hoveredIndex !== i && "opacity-0",
