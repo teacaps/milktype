@@ -77,7 +77,7 @@ function QuantitySelector({ line }: { line: CartLine | ComponentizableCartLine }
 					<button
 						name="decrease-quantity"
 						aria-label="Decrease quantity"
-						className="w-5 h-5 -mt-px rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus:outline-none focus:ring focus:ring-accent disabled:bg-cocoa-80"
+						className="w-5 h-5 -mt-px rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus-visible:outline-none focus-visible:ring focus-visible:ring-accent disabled:bg-cocoa-80"
 						value={prevQuantity}
 						disabled={quantity <= 1}>
 						<MinusIcon className="w-full h-full" />
@@ -89,7 +89,7 @@ function QuantitySelector({ line }: { line: CartLine | ComponentizableCartLine }
 					<button
 						name="increase-quantity"
 						aria-label="Increase quantity"
-						className="w-5 h-5 rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus:outline-none focus:ring focus:ring-accent disabled:bg-cocoa-80"
+						className="w-5 h-5 rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus-visible:outline-none focus-visible:ring focus-visible:ring-accent disabled:bg-cocoa-80"
 						value={nextQuantity}>
 						<PlusIcon className="w-full h-full" />
 					</button>

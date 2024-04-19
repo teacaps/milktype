@@ -19,7 +19,7 @@ function NewsletterSignup() {
 				<Input
 					name="email"
 					placeholder="example@gmail.com"
-					className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus:ring-0"
+					className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
 				/>
 				<Button
 					color="accent"
@@ -43,7 +43,7 @@ export function Footer() {
 				<div className="h-0.5 w-16 my-4 bg-yogurt-80"></div>
 				<span className="mb-1">San Francisco, CA</span>
 				<a
-					className="inline hover:text-accent hover:underline focus:text-accent focus:underline focus:outline-none"
+					className="inline hover:text-accent hover:underline focus-visible:text-accent focus-visible:underline focus-visible:outline-none"
 					href="mailto:hi@milktype.co">
 					hi@milktype.co
 				</a>

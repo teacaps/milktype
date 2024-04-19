@@ -30,7 +30,7 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 				<div
 					key={url}
 					className={twMerge(
-						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out focus:scale-110 focus:outline-none focus:ring focus:ring-accent`,
+						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out focus-visible:scale-110 focus-visible:outline-none focus-visible:ring focus-visible:ring-accent`,
 						"flex items-center justify-center text-yogurt-100 font-medium text-3xl", // this is just for the i placeholder
 						i === 3 && "col-span-2 row-span-2",
 						hoveredIndex !== null && hoveredIndex !== i && "opacity-0",

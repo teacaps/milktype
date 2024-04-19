@@ -16,7 +16,7 @@ export function Navigation() {
 			style={{ viewTransitionName: "navigation" }}>
 			<Link
 				to="/"
-				className="mr-auto text-cocoa-120 hover:text-accent focus:text-accent focus:outline-none"
+				className="mr-auto text-cocoa-120 hover:text-accent focus-visible:text-accent focus-visible:outline-none"
 				aria-label="Home"
 				unstable_viewTransition>
 				<Wordmark className="h-10" />
