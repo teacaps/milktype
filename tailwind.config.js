@@ -22,7 +22,7 @@ export default {
 				80: "#857873",
 				60: "#E9DDD6",
 			},
-			accent: "#DB825C",
+			accent: "#E2794C",
 			lilac: "#BEA5CE",
 			blurple: "#8882CA",
 			shrub: "#74AE6E",
