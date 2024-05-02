@@ -160,9 +160,9 @@ export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean
 					<Suspense fallback={<span className="font-medium text-base text-cocoa-100">loading...</span>}>
 						<Await resolve={cart}>
 							{(cart) => {
-								const lines = flattenConnection(cart?.lines);
-								const amount = cart?.cost.totalAmount || null;
-								const checkoutUrl = cart?.checkoutUrl || null;
+								const lines = cart?.lines ? flattenConnection(cart.lines) : [];
+								const amount = cart?.cost?.totalAmount;
+								const checkoutUrl = cart?.checkoutUrl;
 								if (!lines?.length)
 									return (
 										<span className="font-medium text-base text-cocoa-100">

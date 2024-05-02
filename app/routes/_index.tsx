@@ -2,6 +2,15 @@ import { Layout } from "~/components/global/Layout";
 import { Hero } from "~/components/landing/Hero";
 import { ProductSection } from "~/components/landing/ProductSection";
 import { Intro } from "~/components/landing/Intro";
+import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+
+export async function loader({ context }: LoaderFunctionArgs) {
+	return {
+		seo: {
+			title: "Milktype",
+		},
+	};
+}
 
 export default function Landing() {
 	return (

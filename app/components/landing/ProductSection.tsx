@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { Container } from "~/components/global/Container";
 import { Splat } from "~/assets/Splat";
 import { NavLink, unstable_useViewTransitionState } from "@remix-run/react";
-import { Divider } from "~/assets/Divider";
+import { HeroDivider } from "~/assets/Divider";
 
 interface ProductSectionProps {
 	name: ReactNode;
@@ -32,7 +32,7 @@ export function ProductSection(props: ProductSectionProps) {
 
 	return (
 		<Container className="relative py-24 flex flex-col gap-9">
-			<Divider className="w-[150%] xl:w-[125%] xl:max-w-screen-xl -top-2 md:-top-20 left-1/2 -translate-x-1/2 absolute h-auto text-yogurt-60" />
+			<HeroDivider className="w-[150%] xl:w-[125%] xl:max-w-screen-xl -top-2 md:-top-20 left-1/2 -translate-x-1/2 absolute h-auto fill-yogurt-60" />
 			<div className="flex flex-col md:flex-row md:items-center mt-16 bg-yogurt-60 px-12 py-8 h-fit lg:h-52 rounded-3xl">
 				<div className="flex flex-col gap-4">
 					<h3 className="text-3xl text-cocoa-120 font-medium">{props.name}</h3>
