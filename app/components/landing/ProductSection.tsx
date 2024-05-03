@@ -22,8 +22,8 @@ export function ProductSection(props: ProductSectionProps) {
 			unstable_viewTransition>
 			<Splat
 				className="h-60"
-				splatClasses="fill-accent h-full w-full transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:-rotate-90 group-focus-visible:fill-shrub group-hover:-rotate-90">
-				<span className="text-yogurt-100 text-3xl ease-in-out duration-700 font-semibold rotate-12 transition-transform group-focus-visible:-rotate-12 group-hover:-rotate-12">
+				splatClasses="fill-accent h-full w-full transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:motion-safe:-rotate-90 group-focus-visible:fill-shrub group-hover:motion-safe:-rotate-90 group-hover:motion-reduce:fill-shrub">
+				<span className="text-yogurt-100 text-3xl ease-in-out duration-700 font-semibold rotate-12 transition-transform group-focus-visible:motion-safe:-rotate-12 group-hover:motion-safe:-rotate-12">
 					shop now
 				</span>
 			</Splat>

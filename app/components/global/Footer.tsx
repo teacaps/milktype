@@ -15,9 +15,9 @@ import { NavLink } from "@remix-run/react";
 function NewsletterSignup() {
 	return (
 		<form
-			className="flex w-full text-xl p-8 gap-y-4 flex-col md:flex-row items-center justify-center"
+			className="flex w-full text-xl pt-8 pb-12 lg:pb-8 gap-y-4 flex-col md:flex-row items-center justify-center"
 			style={{ viewTransitionName: "newsletter" }}>
-			<span className="font-medium text-cocoa-120">
+			<span className="font-medium text-center md:text-start text-cocoa-120">
 				let’s keep in touch — we’ll send a monthly newsletter to<span className="md:hidden">:</span>
 			</span>
 			<label htmlFor="email" className="sr-only">
@@ -67,8 +67,9 @@ function Socials({ className }: { className?: string }) {
 						className={twJoin(
 							"h-12 w-12 absolute transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:fill-accent",
 							i < 2
-								? "group-focus-visible:rotate-90 group-hover:rotate-90"
-								: "group-focus-visible:-rotate-90 group-hover:-rotate-90",
+								? "motion-safe:group-focus-visible:rotate-90 motion-safe:group-hover:rotate-90"
+								: "motion-safe:group-focus-visible:-rotate-90 motion-safe:group-hover:-rotate-90",
+							"motion-reduce:group-hover:fill-accent",
 							social.color,
 						)}
 					/>
@@ -77,8 +78,8 @@ function Socials({ className }: { className?: string }) {
 							"absolute ease-in-out duration-700 transition-transform",
 							"left-2 top-2 h-8 w-8",
 							i < 2
-								? "-rotate-12 group-focus-visible:rotate-12 group-hover:rotate-12"
-								: "rotate-12 group-focus-visible:-rotate-12 group-hover:-rotate-12",
+								? "motion-safe:-rotate-12 group-focus-visible:motion-safe:rotate-12 group-hover:motion-safe:rotate-12"
+								: "motion-safe:rotate-12 group-focus-visible:motion-safe:-rotate-12 group-hover:motion-safe:-rotate-12",
 						)}
 					/>
 				</a>
@@ -106,7 +107,7 @@ export function Footer() {
 	return (
 		<>
 			<NewsletterSignup />
-			<FooterDivider className="w-full h-auto fill-yogurt-60" />
+			<FooterDivider className="w-[175%] sm:w-[150%] md:w-[125%] lg:w-full h-auto fill-yogurt-60" />
 			<Container
 				as="footer"
 				className="!w-full !max-w-full !mx-0 font-medium text-cocoa-100 text-sm xs:text-base flex flex-row md:items-center justify-between pt-4 pb-12"
