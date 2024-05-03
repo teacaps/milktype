@@ -41,28 +41,46 @@ function NewsletterSignup() {
 
 const socials = [
 	//	{ name: "Discord", icon: DiscordIcon, color: "fill-[#8292CA]", url: "..." },
-	{ name: "Bluesky", icon: BlueskyIcon, color: "fill-[#0CD2FE]", url: "https://bsky.app/profile/milktype.co" },
+	{ name: "Bluesky", icon: BlueskyIcon, color: "fill-[#0CB5FE]", url: "https://bsky.app/profile/milktype.co" },
 	{ name: "TikTok", icon: TikTokIcon, color: "fill-[#D087BC]", url: "https://tiktok.com/@milktype" },
 	{ name: "Instagram", icon: InstagramIcon, color: "fill-[#EFA36C]", url: "https://instagram.com/milktype" },
 ];
 
-function Socials() {
+function Socials({ className }: { className?: string }) {
 	return (
-		<div className="flex flex-col -space-y-3 w-24 text-yogurt-100">
+		<div
+			className={twJoin(
+				"flex flex-row lg:flex-col justify-between lg:justify-normal lg:-space-y-3 w-full lg:w-24 h-16 lg:h-auto text-yogurt-100",
+				className,
+			)}>
 			{socials.map((social, i) => (
 				<a
 					key={social.name}
 					href={social.url}
 					target="_blank"
 					rel="noopener noreferrer"
-					className={twJoin("relative h-12 w-12 group", i % 2 === 0 ? "self-end" : "self-start")}>
+					className={twJoin(
+						"relative h-12 w-12 group transition-transform focus-visible:outline-none focus-visible:scale-125",
+						i % 2 === 0 ? "self-start lg:self-end" : "self-end lg:self-start",
+					)}>
 					<SocialBlob
-						className={
-							"h-12 w-12 absolute transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:rotate-90 group-focus-visible:fill-accent group-hover:rotate-90 " +
-							social.color
-						}
+						className={twJoin(
+							"h-12 w-12 absolute transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:fill-accent",
+							i < 2
+								? "group-focus-visible:rotate-90 group-hover:rotate-90"
+								: "group-focus-visible:-rotate-90 group-hover:-rotate-90",
+							social.color,
+						)}
 					/>
-					<social.icon className="left-2 top-2 h-8 w-8 absolute ease-in-out duration-700 -rotate-12 transition-transform group-focus-visible:rotate-12 group-hover:rotate-12" />
+					<social.icon
+						className={twJoin(
+							"absolute ease-in-out duration-700 transition-transform",
+							"left-2 top-2 h-8 w-8",
+							i < 2
+								? "-rotate-12 group-focus-visible:rotate-12 group-hover:rotate-12"
+								: "rotate-12 group-focus-visible:-rotate-12 group-hover:-rotate-12",
+						)}
+					/>
 				</a>
 			))}
 		</div>
@@ -76,6 +94,14 @@ const footerLinks = [
 	{ text: "shipping and returns", href: "/shipping" },
 ];
 
+function SendMessageButton({ className }: { className?: string }) {
+	return (
+		<ButtonLink url="mailto:hi@milktype.co" color="blurple" className={twJoin("text-yogurt-100 p-4", className)}>
+			send us a message
+		</ButtonLink>
+	);
+}
+
 export function Footer() {
 	return (
 		<>
@@ -83,35 +109,40 @@ export function Footer() {
 			<FooterDivider className="w-full h-auto fill-yogurt-60" />
 			<Container
 				as="footer"
-				className="!w-full !max-w-full !mx-0 font-medium text-cocoa-100 text-base flex flex-row items-center justify-between pt-4 pb-12"
+				className="!w-full !max-w-full !mx-0 font-medium text-cocoa-100 text-sm xs:text-base flex flex-row md:items-center justify-between pt-4 pb-12"
 				style={{ viewTransitionName: "footer" }}>
-				<div className="max-w-fit w-1/4">
-					<Wordmark className="h-14 w-fit text-accent" />
-					<p className="mt-3">
+				<div className="w-1/2 md:w-1/3 lg:w-1/4">
+					<Wordmark className="h-10 sm:h-14 w-fit text-accent" />
+					<p className="mt-1 mb-4">
 						we’re milktype, a design studio in foggy san francisco. we love our creations and the people who
 						use them.
 					</p>
+					<SendMessageButton className="lg:hidden" />
 				</div>
-				<Socials />
-				<div className="gap-y-4 grid grid-cols-2 grid-rows-2 text-cocoa-100">
-					{footerLinks.map((link) => (
-						<NavLink
-							prefetch="intent"
-							to={link.href}
-							className={({ isActive }) =>
-								twJoin(
-									isActive && "underline",
-									"hover:text-accent focus-visible:text-accent rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
-								)
-							}
-							unstable_viewTransition>
-							{link.text}
-						</NavLink>
-					))}
+				<div className="mt-14 md:mt-0 text-cocoa-100">
+					<div className="gap-y-4 flex flex-col md:grid grid-cols-2 grid-rows-2 mb-4 mx-8 md:mx-0">
+						{footerLinks.map((link) => (
+							<NavLink
+								key={link.href}
+								prefetch="intent"
+								to={link.href}
+								className={({ isActive }) =>
+									twJoin(
+										isActive && "underline",
+										"hover:text-accent focus-visible:text-accent rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
+									)
+								}
+								unstable_viewTransition>
+								{link.text}
+							</NavLink>
+						))}
+					</div>
+					<Socials className="lg:hidden col-span-full max-w-52 mx-auto" />
 				</div>
-				<ButtonLink url="mailto:hi@milktype.co" color="lilac" className="text-yogurt-100 p-5">
-					send us a message
-				</ButtonLink>
+				<div className="hidden lg:flex flex-row items-center gap-2">
+					<Socials />
+					<SendMessageButton />
+				</div>
 			</Container>
 		</>
 	);
