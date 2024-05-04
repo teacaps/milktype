@@ -112,7 +112,7 @@ export function Footer() {
 				as="footer"
 				className="!w-full !max-w-full !mx-0 font-medium text-cocoa-100 text-sm xs:text-base flex flex-row md:items-center justify-between pt-4 pb-12"
 				style={{ viewTransitionName: "footer" }}>
-				<div className="w-1/2 md:w-1/3 lg:w-1/4">
+				<div className="w-1/2 md:w-1/3 lg:w-1/4 max-w-[40ch]">
 					<Wordmark className="h-10 sm:h-14 w-fit text-accent" />
 					<p className="mt-1 mb-4">
 						we’re milktype, a design studio in foggy san francisco. we love our creations and the people who
