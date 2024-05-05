@@ -1,6 +1,6 @@
 import { Container } from "~/components/global/Container";
 import { HeartIcon } from "~/assets/icons/Heart";
-import { Spaghetti } from "~/assets/Spaghetti";
+import { VerticalSpaghetti } from "~/assets/Spaghetti";
 import { BSBCurvedText } from "~/assets/BSBCurvedText";
 import { Milkleaf } from "~/assets/Milkleaf";
 
@@ -15,7 +15,7 @@ export function Hero() {
 						for people we <HeartIcon className="inline-flex ml-1 h-6 lg:h-8 fill-accent" />
 					</span>
 				</h1>
-				<Spaghetti className="w-5 text-accent" />
+				<VerticalSpaghetti className="w-5 text-accent" />
 				<h2 className="text-center md:text-left">hi,&nbsp;we&#39;re milktype</h2>
 			</div>
 			<div className="h-auto flex flex-row gap-5 md:ml-auto">
