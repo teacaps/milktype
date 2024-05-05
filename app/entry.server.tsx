@@ -11,6 +11,7 @@ export default async function handleRequest(
 	remixContext: EntryContext,
 ) {
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
+		imgSrc: ["https://res.cloudinary.com", "http://localhost:3000"],
 		styleSrc: ["https://fonts.googleapis.com"],
 		fontSrc: ["https://fonts.gstatic.com"],
 	});

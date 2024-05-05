@@ -5,6 +5,20 @@ import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import { useLoaderData } from "@remix-run/react";
 
+export const MILKTYPE75_IMAGE = {
+	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/l22kweufstinsfdepoq7",
+	alt: "A photo of the milktype75 keyboard in a boba-themed colorway.",
+};
+
+const GRID_IMAGES = [
+	"https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/innj00oefkkazmwmdgwt",
+	"https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/wvldfqi9eahqaz322cqk",
+	"https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/qqg2t4uoygzpkhjfxjuz",
+	"https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/wyyfun1x96ht9neo9fcy", // big one
+	"https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/fulyigwjakaxnosk7e7b",
+	"https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/sqf18klmetlgug6snpzz",
+];
+
 export async function loader({ context }: LoaderFunctionArgs) {
 	const { product } = await context.storefront.query(PRODUCT_QUERY, {
 		variables: {
@@ -30,13 +44,13 @@ export default function Milktype75() {
 		<Layout>
 			<Container className="py-8 sm:py-16 sm:w-full">
 				<div
-					className="w-full h-auto bg-blurple min-h-[20rem] rounded-3xl"
+					className="relative flex items-center justify-center w-full h-auto bg-blurple md:aspect-[23/8] overflow-clip rounded-3xl"
 					style={{ viewTransitionName: "product-image" }}>
-					{null /* HEADER IMAGE */}
+					<img {...MILKTYPE75_IMAGE} className="object-cover object-center min-h-64 rounded-3xl" />
 				</div>
 				<main className="flex flex-col md:flex-row w-full gap-10 mt-8 sm:mt-16">
 					<div className="md:basis-1/2 lg:basis-2/5 aspect-square">
-						<ProductImageGrid images={["a", "b", "c", "d", "e", "f"]} />
+						<ProductImageGrid images={GRID_IMAGES} />
 					</div>
 					<section className="md:basis-1/2 lg:basis-3/5 flex flex-col gap-y-12">
 						<div className="flex flex-col gap-y-6">
@@ -87,24 +101,24 @@ export default function Milktype75() {
 
 const PRODUCT_QUERY = `#graphql
 query Product($handle: String!) {
-	product(handle: $handle) {
-		seo {
-			title
-			description
+    product(handle: $handle) {
+        seo {
+            title
+            description
         }
-		variants(first: 1) {
-			nodes {
-				id
-				price {
-					amount
-					currencyCode
+        variants(first: 1) {
+            nodes {
+                id
+                price {
+                    amount
+                    currencyCode
                 }
-				compareAtPrice {
-					amount
-					currencyCode
+                compareAtPrice {
+                    amount
+                    currencyCode
                 }
             }
-		}
+        }
     }
 }
 `;

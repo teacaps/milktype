@@ -24,7 +24,7 @@ export type ProductQuery = {
 };
 
 interface GeneratedQueryTypes {
-  '#graphql\nquery Product($handle: String!) {\n\tproduct(handle: $handle) {\n\t\tseo {\n\t\t\ttitle\n\t\t\tdescription\n        }\n\t\tvariants(first: 1) {\n\t\t\tnodes {\n\t\t\t\tid\n\t\t\t\tprice {\n\t\t\t\t\tamount\n\t\t\t\t\tcurrencyCode\n                }\n\t\t\t\tcompareAtPrice {\n\t\t\t\t\tamount\n\t\t\t\t\tcurrencyCode\n                }\n            }\n\t\t}\n    }\n}\n': {
+  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n        seo {\n            title\n            description\n        }\n        variants(first: 1) {\n            nodes {\n                id\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n            }\n        }\n    }\n}\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };

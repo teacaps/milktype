@@ -31,7 +31,6 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 					key={url}
 					className={twMerge(
 						`col-span-1 row-span-1 min-h-0 min-w-0 bg-shrub rounded-2xl sm:rounded-3xl opacity-100 transition-opacity duration-700 ease-in-out focus-visible:scale-110 focus-visible:outline-none focus-visible:ring focus-visible:ring-accent`,
-						"flex items-center justify-center text-yogurt-100 font-medium text-3xl", // this is just for the i placeholder
 						i === 3 && "col-span-2 row-span-2",
 						hoveredIndex !== null && hoveredIndex !== i && "opacity-0",
 					)}
@@ -41,8 +40,12 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 					onKeyDown={(ev) => ev.key === "Enter" && onClick(i)}
 					role="button"
 					tabIndex={0}
-					aria-label={`Image ${i + 1}`}>
-					{i /* PRODUCT IMAGE */}
+					aria-label={`Expand image ${i + 1}`}>
+					<img
+						src={url}
+						alt={`Image ${i + 1}`}
+						className="object-cover object-center w-full h-full rounded-2xl sm:rounded-3xl"
+					/>
 				</div>
 			))}
 		</div>

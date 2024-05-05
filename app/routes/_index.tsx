@@ -3,6 +3,7 @@ import { Hero } from "~/components/landing/Hero";
 import { ProductSection } from "~/components/landing/ProductSection";
 import { Intro } from "~/components/landing/Intro";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import { MILKTYPE75_IMAGE } from "~/routes/products.milktype75";
 
 export async function loader({ context }: LoaderFunctionArgs) {
 	return {
@@ -23,8 +24,8 @@ export default function Landing() {
 					</>
 				}
 				description="the perfect keyboard for boba lovers. functional, stunning, and ready to use right out of the box."
-				image={null}
 				url="/products/milktype75"
+				image={MILKTYPE75_IMAGE}
 			/>
 			<Intro />
 		</Layout>
