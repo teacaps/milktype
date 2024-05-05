@@ -7,13 +7,16 @@ export function AddToCartButton({ lines, disabled: _disabled }: { lines: CartLin
 		<CartForm route="/cart" action={CartForm.ACTIONS.LinesAdd} inputs={{ lines }}>
 			{(fetcher) => {
 				const disabled = _disabled ?? fetcher.state !== "idle";
+				let text = "add to cart";
+				if (fetcher.state === "submitting") text = "adding...";
+				if (_disabled) text = "out of stock";
 				return (
 					<Button
 						color="accent"
 						className="h-16 text-xl text-yogurt-100 font-medium"
 						type="submit"
 						disabled={disabled}>
-						add to cart
+						{text}
 					</Button>
 				);
 			}}

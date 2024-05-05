@@ -70,6 +70,7 @@ export default function Milktype75() {
 											quantity: 1,
 										},
 									]}
+									disabled={!selectedVariant.quantityAvailable}
 								/>
 							</div>
 						</div>
@@ -117,6 +118,7 @@ query Product($handle: String!) {
                     amount
                     currencyCode
                 }
+				quantityAvailable
             }
         }
     }
