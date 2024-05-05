@@ -1,6 +1,8 @@
 import { Container } from "~/components/global/Container";
 import { HeartIcon } from "~/assets/icons/Heart";
 import { Spaghetti } from "~/assets/Spaghetti";
+import { BSBCurvedText } from "~/assets/BSBCurvedText";
+import { Milkleaf } from "~/assets/Milkleaf";
 
 export function Hero() {
 	return (
@@ -17,10 +19,25 @@ export function Hero() {
 				<h2 className="text-center md:text-left">hi,&nbsp;we&#39;re milktype</h2>
 			</div>
 			<div className="h-auto flex flex-row gap-5 md:ml-auto">
-				<div className="w-32 lg:w-44 h-[17.25rem] lg:h-auto bg-accent rounded-full"></div>
+				<div className="relative w-32 lg:w-44 h-[17.25rem] lg:h-auto bg-accent rounded-full">
+					<img
+						src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/gdtycebx9dt7bmhntytu"
+						alt=""
+						className="object-cover object-center w-full h-full rounded-full"
+					/>
+					<BSBCurvedText className="absolute w-4/5 bottom-4 left-1/2 transform -translate-x-1/2 fill-yogurt-100" />
+				</div>
 				<div className="flex flex-col gap-5">
-					<div className="h-32 w-32 lg:h-44 lg:w-44 bg-lilac rounded-t-full"></div>
-					<div className="h-32 w-32 lg:h-44 lg:w-44 bg-shrub rounded-full"></div>
+					<div className="h-32 w-32 lg:h-44 lg:w-44 bg-shrub rounded-t-full">
+						<img
+							src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/ehcnxhhhghukeotgxal1"
+							alt=""
+							className="object-cover object-center w-full h-full rounded-t-full"
+						/>
+					</div>
+					<div className="flex items-center justify-center h-32 w-32 lg:h-44 lg:w-44 bg-lilac rounded-full">
+						<Milkleaf className="w-8 h-8 lg:w-12 lg:h-12 text-yogurt-100" />
+					</div>
 				</div>
 			</div>
 		</Container>
