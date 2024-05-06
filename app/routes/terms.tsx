@@ -5,7 +5,7 @@ import { Container } from "~/components/global/Container";
 export async function loader({ context }: LoaderFunctionArgs) {
 	return {
 		seo: {
-			title: "Terms and Privacy",
+			title: "terms and privacy",
 		},
 	};
 }

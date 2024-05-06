@@ -8,7 +8,7 @@ import { MILKTYPE75_IMAGE } from "~/routes/products.milktype75";
 export async function loader({ context }: LoaderFunctionArgs) {
 	return {
 		seo: {
-			title: "Milktype",
+			title: "milktype",
 		},
 	};
 }

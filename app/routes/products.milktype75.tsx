@@ -25,7 +25,12 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			handle: "milktype75",
 		},
 	});
-	return { product };
+	return {
+		product,
+		seo: {
+			title: "milktype 75",
+		},
+	};
 }
 
 function InfoBubble({ children }: { children: string }) {

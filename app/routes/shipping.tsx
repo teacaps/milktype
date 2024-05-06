@@ -6,7 +6,7 @@ import { HorizontalSpaghetti } from "~/assets/Spaghetti";
 export async function loader({ context }: LoaderFunctionArgs) {
 	return {
 		seo: {
-			title: "Shipping and Returns",
+			title: "shipping and returns",
 		},
 	};
 }
