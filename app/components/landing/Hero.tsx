@@ -7,12 +7,13 @@ import { Milkleaf } from "~/assets/Milkleaf";
 export function Hero() {
 	return (
 		<Container className="py-8 md:py-16 flex flex-col items-center gap-y-16 md:flex-row">
-			<div className="flex flex-col items-center md:items-start space-y-5 self-center text-3xl xl:text-5xl text-cocoa-120 leading-tight font-medium pr-8 w-3/5 lg:w-5/12">
+			<div className="flex flex-col items-center md:items-start space-y-5 self-center text-3xl xl:text-4xl text-cocoa-120 leading-tight font-medium pr-8 w-3/5 lg:w-5/12">
 				<h1 className="text-center md:text-left">
 					<span className="whitespace-nowrap">adorable accessories</span>
 					<br className="md:hidden" />{" "}
 					<span className="whitespace-nowrap">
-						for people we <HeartIcon className="inline-flex ml-1 h-6 lg:h-8 fill-accent" />
+						for people we{" "}
+						<HeartIcon className="inline-flex -mt-0.5 xl:-mt-1 ml-0.5 xl:ml-1 h-5 xl:h-6 fill-accent" />
 					</span>
 				</h1>
 				<VerticalSpaghetti className="w-5 text-accent" />

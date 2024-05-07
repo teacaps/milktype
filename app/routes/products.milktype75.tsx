@@ -2,8 +2,38 @@ import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { useLoaderData } from "@remix-run/react";
+
+export const meta: MetaFunction<typeof loader> = ({ data }) => [
+	{
+		title: data?.product?.title,
+	},
+	{
+		name: "description",
+		content: data?.product?.description,
+	},
+	{
+		property: "og:title",
+		content: data?.product?.title,
+	},
+	{
+		property: "og:description",
+		content: data?.product?.description,
+	},
+	{
+		property: "og:url",
+		content: "https://milktype.com/products/milktype75",
+	},
+	{
+		property: "og:image",
+		content: MILKTYPE75_IMAGE.src,
+	},
+	{
+		property: "twitter:image",
+		content: MILKTYPE75_IMAGE.src,
+	},
+];
 
 export const MILKTYPE75_IMAGE = {
 	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/l22kweufstinsfdepoq7",
@@ -25,10 +55,8 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			handle: "milktype75",
 		},
 	});
-	const { title, description } = product || {};
 	return {
 		product,
-		seo: { title, description },
 	};
 }
 

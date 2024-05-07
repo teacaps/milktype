@@ -1,14 +1,36 @@
 import { Layout } from "~/components/global/Layout";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import type { MetaFunction } from "@shopify/remix-oxygen";
 import { Container } from "~/components/global/Container";
 
-export async function loader({ context }: LoaderFunctionArgs) {
-	return {
-		seo: {
-			title: "terms and privacy",
-		},
-	};
-}
+export const meta: MetaFunction = () => [
+	{
+		title: "terms and privacy",
+	},
+	{
+		name: "description",
+		content: "legal stuff.",
+	},
+	{
+		property: "og:title",
+		content: "terms and privacy",
+	},
+	{
+		property: "og:description",
+		content: "legal stuff.",
+	},
+	{
+		property: "og:url",
+		content: "https://milktype.com/terms",
+	},
+	{
+		property: "og:image",
+		content: "https://milktype.com/og/main.png",
+	},
+	{
+		property: "twitter:image",
+		content: "https://milktype.com/og/main.png",
+	},
+];
 
 export default function Terms() {
 	return (

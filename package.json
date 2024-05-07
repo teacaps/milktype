@@ -10,12 +10,12 @@
 		"codegen": "shopify hydrogen codegen"
 	},
 	"dependencies": {
-		"@remix-run/react": "^2.8.1",
-		"@remix-run/server-runtime": "^2.8.1",
+		"@remix-run/react": "^2.9.1",
+		"@remix-run/server-runtime": "^2.9.1",
 		"@shopify/cli": "3.52.0",
 		"@shopify/cli-hydrogen": "^7.1.2",
-		"@shopify/hydrogen": "~2024.4.0",
-		"@shopify/hydrogen-react": "~2024.4.0",
+		"@shopify/hydrogen": "^2024.4.1",
+		"@shopify/hydrogen-react": "^2024.4.1",
 		"@shopify/remix-oxygen": "^2.0.4",
 		"graphql": "^16.8.1",
 		"graphql-tag": "^2.12.6",

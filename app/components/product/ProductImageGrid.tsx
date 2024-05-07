@@ -3,8 +3,8 @@ import { twJoin, twMerge } from "tailwind-merge";
 
 const makeSquareAtIndexTakeUpWholeGrid = [
 	"grid-cols-[1fr,0fr,0fr] grid-rows-[1fr,0fr,0fr]", // 0 1 2
-	"grid-cols-[0fr,1fr,0fr] grid-rows-[1fr,0fr,0fr]", // 3   4
-	"grid-cols-[0fr,0fr,1fr] grid-rows-[1fr,0fr,0fr]", //     5
+	"grid-cols-[0fr,1fr,0fr] grid-rows-[1fr,0fr,0fr]", // 3 3 4
+	"grid-cols-[0fr,0fr,1fr] grid-rows-[1fr,0fr,0fr]", // 3 3 5
 	"grid-cols-[1fr,0fr,0fr] grid-rows-[0fr,1fr,0fr]",
 	"grid-cols-[0fr,0fr,1fr] grid-rows-[0fr,1fr,0fr]",
 	"grid-cols-[0fr,0fr,1fr] grid-rows-[0fr,0fr,1fr]",

@@ -1,15 +1,37 @@
 import { Layout } from "~/components/global/Layout";
-import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import type { MetaFunction } from "@shopify/remix-oxygen";
 import { Container } from "~/components/global/Container";
 import { HorizontalSpaghetti } from "~/assets/Spaghetti";
 
-export async function loader({ context }: LoaderFunctionArgs) {
-	return {
-		seo: {
-			title: "shipping and returns",
-		},
-	};
-}
+export const meta: MetaFunction = () => [
+	{
+		title: "shipping and returns",
+	},
+	{
+		name: "description",
+		content: "milktype shipping and returns information.",
+	},
+	{
+		property: "og:title",
+		content: "shipping and returns",
+	},
+	{
+		property: "og:description",
+		content: "milktype shipping and returns information.",
+	},
+	{
+		property: "og:url",
+		content: "https://milktype.com/shipping",
+	},
+	{
+		property: "og:image",
+		content: "https://milktype.com/og/main.png",
+	},
+	{
+		property: "twitter:image",
+		content: "https://milktype.com/og/main.png",
+	},
+];
 
 export default function Shipping() {
 	return (
