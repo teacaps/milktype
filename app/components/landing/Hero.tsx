@@ -30,12 +30,14 @@ export function Hero() {
 					<BSBCurvedText className="absolute w-4/5 bottom-4 left-1/2 transform -translate-x-1/2 fill-yogurt-100" />
 				</a>
 				<div className="flex flex-col gap-5">
-					<div className="h-32 w-32 lg:h-44 lg:w-44 bg-shrub rounded-t-full hover:motion-safe:animate-bounce hover:motion-reduce:bg-blurple">
-						<img
-							src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/ehcnxhhhghukeotgxal1"
-							alt=""
-							className="object-cover object-center w-full h-full rounded-t-full"
-						/>
+					<div className="group">
+						<div className="h-32 w-32 lg:h-44 lg:w-44 bg-shrub rounded-t-full group-hover:motion-safe:animate-bounce group-hover:motion-reduce:bg-blurple">
+							<img
+								src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/ehcnxhhhghukeotgxal1"
+								alt=""
+								className="object-cover object-center w-full h-full rounded-t-full"
+							/>
+						</div>
 					</div>
 					<div className="flex items-center justify-center h-32 w-32 lg:h-44 lg:w-44 bg-lilac rounded-full hover:motion-safe:animate-spin">
 						<Milkleaf className="w-8 h-8 lg:w-12 lg:h-12 text-yogurt-100" />
