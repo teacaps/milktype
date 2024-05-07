@@ -1,4 +1,4 @@
-import { Seo, useNonce } from "@shopify/hydrogen";
+import { useNonce } from "@shopify/hydrogen";
 import {
 	Links,
 	Meta,
@@ -47,7 +47,7 @@ export function links() {
 	return [
 		{
 			rel: "canonical",
-			href: "https://milktype.com",
+			href: "https://milktype.co",
 		},
 		{
 			rel: "preconnect",
@@ -87,6 +87,10 @@ export default function App() {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
+				<meta name="theme-color" content="#E2794C" />
+				<meta property="og:site_name" content="milktype" />
+				<meta property="og:type" content="website" />
+				<meta property="twitter:card" content="summary_large_image" />
 				<Meta />
 				<Links />
 			</head>
@@ -120,10 +124,6 @@ export function ErrorBoundary() {
 			<head>
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
-				<meta name="theme-color" content="#E2794C" />
-				<meta property="og:site_name" content="milktype" />
-				<meta property="og:type" content="website" />
-				<meta property="twitter:card" content="summary_large_image" />
 				<Meta />
 				<Links />
 			</head>

@@ -23,7 +23,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	},
 	{
 		property: "og:url",
-		content: "https://milktype.com/products/milktype75",
+		content: "https://milktype.co/products/milktype75",
 	},
 	{
 		property: "og:image",

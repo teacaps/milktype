@@ -21,15 +21,15 @@ export const meta: MetaFunction = () => [
 	},
 	{
 		property: "og:url",
-		content: "https://milktype.com/shipping",
+		content: "https://milktype.co/shipping",
 	},
 	{
 		property: "og:image",
-		content: "https://milktype.com/og/main.png",
+		content: "https://milktype.co/og/main.png",
 	},
 	{
 		property: "twitter:image",
-		content: "https://milktype.com/og/main.png",
+		content: "https://milktype.co/og/main.png",
 	},
 ];
 

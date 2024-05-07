@@ -19,19 +19,19 @@ export const meta: MetaFunction = () => [
 	},
 	{
 		property: "og:description",
-		content: "adorable accessories for people we 🧡",
+		content: "adorable accessories for people we ♥",
 	},
 	{
 		property: "og:url",
-		content: "https://milktype.com",
+		content: "https://milktype.co",
 	},
 	{
 		property: "og:image",
-		content: "https://milktype.com/og/main.png",
+		content: "https://milktype.co/og/main.png",
 	},
 	{
 		property: "twitter:image",
-		content: "https://milktype.com/og/main.png",
+		content: "https://milktype.co/og/main.png",
 	},
 ];
 
