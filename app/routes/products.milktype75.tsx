@@ -45,6 +45,7 @@ function InfoBubble({ children }: { children: string }) {
 export default function Milktype75() {
 	const { product } = useLoaderData<typeof loader>();
 	const selectedVariant = product!.variants.nodes[0];
+	console.log(product);
 	return (
 		<Layout>
 			<Container className="py-8 sm:py-16 sm:w-full">

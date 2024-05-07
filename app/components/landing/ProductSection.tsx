@@ -52,7 +52,7 @@ export function ProductSection(props: ProductSectionProps) {
 				prefetch="render"
 				unstable_viewTransition
 				className={twJoin(
-					"group focus-visible:outline-none relative flex items-center justify-center w-full h-auto bg-blurple rounded-3xl",
+					"group focus-visible:outline-none relative flex items-center justify-center w-full h-auto rounded-3xl",
 					isTransitioning && "bg-opacity-0",
 				)}>
 				<div className="absolute -right-8 -bottom-20 sm:-right-20 sm:-bottom-28 md:hidden">{splat}</div>
@@ -60,7 +60,7 @@ export function ProductSection(props: ProductSectionProps) {
 					<img
 						src={props.image.src}
 						alt={props.image.alt}
-						className="object-cover object-center aspect-video h-auto min-h-[20rem] rounded-3xl"
+						className="object-cover object-center aspect-video h-auto min-h-[20rem] rounded-3xl motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-in-out hover:motion-safe:lg:-translate-y-16 hover:motion-safe:md:translate-y-8 hover:motion-safe:lg:translate-x-12 hover:motion-safe:md:scale-110 hover:motion-safe:md:-rotate-6"
 						style={isTransitioning ? { viewTransitionName: "product-image" } : {}}
 					/>
 				)}

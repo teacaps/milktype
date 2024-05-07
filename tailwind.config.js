@@ -65,6 +65,37 @@ export default {
 			transitionTimingFunction: {
 				bounce: "cubic-bezier(0.34, 1.56, 0.64, 1)",
 			},
+			keyframes: {
+				boogie: {
+					"0%, 10%, 60%, 100%": {
+						transform: "translateY(0)",
+					},
+					"40%": {
+						transform: "translateY(-15px)",
+					},
+					"80%": {
+						transform: "translateY(-15px)",
+					},
+				},
+				bounce: {
+					"0%, 100%": {
+						transform: "translateY(0)",
+						animationTimingFunction: "cubic-bezier(0,0,0.2,1)",
+					},
+					"20%, 75%": {
+						transform: "translateY(-25%)",
+						animationTimingFunction: "cubic-bezier(0.8,0,1,1)",
+					},
+					"50%": {
+						transform: "translateY(0)",
+						animationTimingFunction: "cubic-bezier(0,0,0.2,1)",
+					},
+				},
+			},
+			animation: {
+				boogie: "boogie 2s ease-in-out infinite",
+				bounce: "bounce 2s ease-in-out infinite",
+			},
 		},
 	},
 	plugins: [formsPlugin, typographyPlugin],
