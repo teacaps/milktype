@@ -50,7 +50,7 @@ function Socials({ className }: { className?: string }) {
 	return (
 		<div
 			className={twJoin(
-				"flex flex-row lg:flex-col justify-between lg:justify-normal lg:-space-y-3 w-full lg:w-24 h-16 lg:h-auto text-yogurt-100",
+				"flex flex-row lg:flex-col justify-between lg:justify-normal lg:-space-y-3 w-full lg:w-24 h-16 lg:h-auto mt-6 md:mt-12 lg:mt-0 text-yogurt-100",
 				className,
 			)}>
 			{socials.map((social, i) => (
@@ -113,7 +113,11 @@ export function Footer() {
 				className="!w-full !max-w-full !mx-0 font-medium text-cocoa-100 text-sm xs:text-base flex flex-row md:items-center justify-between pt-4 pb-12"
 				style={{ viewTransitionName: "footer" }}>
 				<div className="w-1/2 md:w-1/3 lg:w-1/4 max-w-[40ch]">
-					<Wordmark className="h-10 sm:h-14 w-fit text-accent" />
+					<a
+						href="/"
+						className="inline-block w-fit text-accent hover:text-cocoa-120 focus-visible:text-cocoa-120 focus-visible:outline-none">
+						<Wordmark className="h-10 sm:h-14" />
+					</a>
 					<p className="mt-1 mb-4">
 						we’re milktype, a design studio in foggy san francisco. we love our creations and the people who
 						use them.
