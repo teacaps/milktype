@@ -4,7 +4,7 @@ import type {
 	CartLineUpdateInput,
 	CartLine,
 } from "@shopify/hydrogen-react/storefront-api-types";
-import { useEffect, Suspense, type ReactNode, type MouseEventHandler, type KeyboardEventHandler } from "react";
+import { Suspense, type ReactNode } from "react";
 import { CartForm, Money, OptimisticInput, useOptimisticData, flattenConnection } from "@shopify/hydrogen";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { PlusIcon } from "~/assets/icons/Plus";
@@ -61,7 +61,7 @@ function QuantitySelector({ line }: { line: CartLine | ComponentizableCartLine }
 	const lineId = line.id;
 	const optimisticData = useOptimisticData<OptimisticData>(lineId);
 
-	if (!line?.quantity && line.quantity !== 0) return null;
+	if (line?.quantity == null) return null;
 
 	const quantity = optimisticData?.quantity ?? line.quantity;
 	const prevQuantity = parseInt(Math.max(0, quantity - 1).toFixed(0));
@@ -78,8 +78,7 @@ function QuantitySelector({ line }: { line: CartLine | ComponentizableCartLine }
 						name="decrease-quantity"
 						aria-label="Decrease quantity"
 						className="w-5 h-5 -mt-px rounded bg-cocoa-120 text-yogurt-60 hover:bg-accent focus-visible:outline-none focus-visible:ring focus-visible:ring-accent disabled:bg-cocoa-80"
-						value={prevQuantity}
-						disabled={quantity <= 1}>
+						value={prevQuantity}>
 						<MinusIcon className="w-full h-full" />
 					</button>
 					<OptimisticInput id={lineId} data={{ quantity: prevQuantity }} />

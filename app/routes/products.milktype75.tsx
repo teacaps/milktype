@@ -25,11 +25,10 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			handle: "milktype75",
 		},
 	});
+	const { title, description } = product || {};
 	return {
 		product,
-		seo: {
-			title: "milktype 75",
-		},
+		seo: { title, description },
 	};
 }
 
@@ -45,7 +44,6 @@ function InfoBubble({ children }: { children: string }) {
 export default function Milktype75() {
 	const { product } = useLoaderData<typeof loader>();
 	const selectedVariant = product!.variants.nodes[0];
-	console.log(product);
 	return (
 		<Layout>
 			<Container className="py-8 sm:py-16 sm:w-full">
@@ -63,10 +61,7 @@ export default function Milktype75() {
 							<h1 className="text-4xl font-medium text-cocoa-120">
 								milktype<span className="ml-1 align-super font-bold text-xl">75</span>
 							</h1>
-							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">
-								the perfect keyboard for boba lovers. functional, stunning, and ready to use right out
-								of the box.
-							</p>
+							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">{product.description}</p>
 							<div className="flex flex-row items-center gap-x-6 justify-between xs:justify-start">
 								<span className="text-cocoa-120 font-medium text-2xl">$99</span>
 								<AddToCartButton
@@ -109,10 +104,8 @@ export default function Milktype75() {
 const PRODUCT_QUERY = `#graphql
 query Product($handle: String!) {
     product(handle: $handle) {
-        seo {
-            title
-            description
-        }
+		title
+		description
         variants(first: 1) {
             nodes {
                 id

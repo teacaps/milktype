@@ -8,23 +8,24 @@ export type ProductQueryVariables = StorefrontAPI.Exact<{
 }>;
 
 export type ProductQuery = {
-  product?: StorefrontAPI.Maybe<{
-    seo: Pick<StorefrontAPI.Seo, 'title' | 'description'>;
-    variants: {
-      nodes: Array<
-        Pick<StorefrontAPI.ProductVariant, 'id' | 'quantityAvailable'> & {
-          price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
-          compareAtPrice?: StorefrontAPI.Maybe<
-            Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
-          >;
-        }
-      >;
-    };
-  }>;
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'title' | 'description'> & {
+      variants: {
+        nodes: Array<
+          Pick<StorefrontAPI.ProductVariant, 'id' | 'quantityAvailable'> & {
+            price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
+            compareAtPrice?: StorefrontAPI.Maybe<
+              Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
+            >;
+          }
+        >;
+      };
+    }
+  >;
 };
 
 interface GeneratedQueryTypes {
-  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n        seo {\n            title\n            description\n        }\n        variants(first: 1) {\n            nodes {\n                id\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n\t\t\t\tquantityAvailable\n            }\n        }\n    }\n}\n': {
+  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n\t\ttitle\n\t\tdescription\n        variants(first: 1) {\n            nodes {\n                id\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n\t\t\t\tquantityAvailable\n            }\n        }\n    }\n}\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };
