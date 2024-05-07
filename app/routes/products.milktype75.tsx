@@ -3,7 +3,8 @@ import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
-import { useLoaderData } from "@remix-run/react";
+import { defer, useLoaderData } from "@remix-run/react";
+import { AnalyticsPageType } from "@shopify/hydrogen-react";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
@@ -55,9 +56,13 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			handle: "milktype75",
 		},
 	});
-	return {
+	return defer({
 		product,
-	};
+		analytics: {
+			pageType: AnalyticsPageType.product,
+			products: [product],
+		},
+	});
 }
 
 function InfoBubble({ children }: { children: string }) {
@@ -89,7 +94,7 @@ export default function Milktype75() {
 							<h1 className="text-4xl font-medium text-cocoa-120">
 								milktype<span className="ml-1 align-super font-bold text-xl">75</span>
 							</h1>
-							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">{product.description}</p>
+							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">{product?.description}</p>
 							<div className="flex flex-row items-center gap-x-6 justify-between xs:justify-start">
 								<span className="text-cocoa-120 font-medium text-2xl">$99</span>
 								<AddToCartButton

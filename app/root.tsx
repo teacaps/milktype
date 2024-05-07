@@ -1,4 +1,10 @@
-import { useNonce } from "@shopify/hydrogen";
+import {
+	AnalyticsEventName,
+	getClientBrowserParameters,
+	sendShopifyAnalytics,
+	useNonce,
+	useShopifyCookies,
+} from "@shopify/hydrogen";
 import {
 	Links,
 	Meta,
@@ -11,11 +17,14 @@ import {
 	type ShouldRevalidateFunction,
 	defer,
 	useMatches,
+	useLocation,
 } from "@remix-run/react";
 import favicon from "../public/favicon.svg";
 import styles from "./styles/tailwind.css";
 import { CartProvider } from "@shopify/hydrogen-react";
 import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
+import { useEffect, useRef } from "react";
+import { usePageAnalytics } from "~/lib/usePageAnalytics";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -32,9 +41,14 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, current
 
 export async function loader({ context }: LoaderFunctionArgs) {
 	const { cart } = context;
+	const { shop } = await context.storefront.query(`#graphql
+	{ shop { id } }`);
 
 	return defer({
 		cart: cart.get(),
+		analytics: {
+			shopId: shop.id,
+		},
 	});
 }
 
@@ -80,6 +94,32 @@ export function links() {
 }
 
 export default function App() {
+	useShopifyCookies({ domain: "milktype.co" });
+
+	const location = useLocation();
+	const lastLocationKey = useRef<string>("");
+	const pageAnalytics = usePageAnalytics({ hasUserConsent: false });
+
+	useEffect(() => {
+		// Only continue if the user's location changed.
+		if (lastLocationKey.current === location.key) return;
+		// Update the current location reference
+		lastLocationKey.current = location.key;
+
+		// Analytics data, including browser information
+		const payload = {
+			...getClientBrowserParameters(),
+			...pageAnalytics,
+		};
+
+		// Send analytics payload to Shopify
+		sendShopifyAnalytics({
+			eventName: AnalyticsEventName.PAGE_VIEW,
+			// @ts-expect-error
+			payload,
+		});
+	}, [location, pageAnalytics]);
+
 	const nonce = useNonce();
 
 	return (
