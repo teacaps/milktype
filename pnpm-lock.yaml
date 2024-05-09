@@ -11,6 +11,9 @@ dependencies:
   '@remix-run/server-runtime':
     specifier: ^2.9.1
     version: 2.9.1(typescript@5.4.5)
+  '@shopify/admin-api-client':
+    specifier: ^0.2.9
+    version: 0.2.9
   '@shopify/cli':
     specifier: 3.52.0
     version: 3.52.0(@types/node@20.12.7)(@types/react@18.2.79)(typescript@5.4.5)(zod@3.22.4)
@@ -3450,6 +3453,12 @@ packages:
     resolution: {integrity: sha512-hw437iINopmQuxWPSUEvqE56NCPsiU8N4AYtfHmJFckclktzK9YQJieD3XkDCDH4OjL+C7zgPUh73R/nrcHrqw==}
     dev: true
 
+  /@shopify/admin-api-client@0.2.9:
+    resolution: {integrity: sha512-0K/P6e4bofCyk5BQ1OCiw9bq2d2hlxHM3B8FQEQclyMyU/b3oMowhy56sOQQODViaiZoDH/atmeWJwOX1di0Qg==}
+    dependencies:
+      '@shopify/graphql-client': 0.10.4
+    dev: false
+
   /@shopify/cli-hydrogen@7.1.2(@remix-run/dev@2.8.1)(@types/node@20.12.7)(@types/react@18.2.79)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.4.5):
     resolution: {integrity: sha512-UOIrrdHlO0cjZw9wXK7XBEDPBdjD4IL91MEC4H46vY3XAeDv4kRTJ4OleM6GpM9Da0e01ypl3KiJA8N2+HOswQ==}
     engines: {node: '>=18.0.0'}
@@ -3692,6 +3701,10 @@ packages:
       - typescript
       - utf-8-validate
       - zod
+    dev: false
+
+  /@shopify/graphql-client@0.10.4:
+    resolution: {integrity: sha512-wbor9lk+GrdvCYnQBY0R/PuEVmOedwZQR0ld4zp1DB6eGaEpuoO5kPB4fk+Kz65mFD9hi2KqK6Nu7/ICsIJSHg==}
     dev: false
 
   /@shopify/graphql-codegen@0.0.1(graphql@16.8.1):

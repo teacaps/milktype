@@ -42,7 +42,7 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, current
 export async function loader({ context }: LoaderFunctionArgs) {
 	const { cart } = context;
 	const { shop } = await context.storefront.query(`#graphql
-	{ shop { id } }`);
+	query Shop { shop { id } }`);
 
 	return defer({
 		cart: cart.get(),

@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@remix-run/react": "^2.9.1",
 		"@remix-run/server-runtime": "^2.9.1",
+		"@shopify/admin-api-client": "^0.2.9",
 		"@shopify/cli": "3.52.0",
 		"@shopify/cli-hydrogen": "^7.1.2",
 		"@shopify/hydrogen": "^2024.4.1",

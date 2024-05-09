@@ -10,11 +10,17 @@ import { TikTokIcon } from "~/assets/icons/socials/TikTok";
 import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
-import { NavLink } from "@remix-run/react";
+import { Form, NavLink, useFetcher } from "@remix-run/react";
+import { useRef } from "react";
 
 function NewsletterSignup() {
+	const fetcher = useFetcher({ key: "newsletter" });
+	const formRef = useRef<HTMLFormElement>(null);
 	return (
-		<form
+		<fetcher.Form
+			ref={formRef}
+			action="/signup"
+			method="POST"
 			className="flex w-full text-xl pt-8 pb-12 lg:pb-8 gap-y-4 flex-col md:flex-row items-center justify-center"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center md:text-start text-cocoa-120">
@@ -25,6 +31,7 @@ function NewsletterSignup() {
 			</label>
 			<div className="flex flex-row">
 				<Input
+					type="email"
 					name="email"
 					placeholder="example@gmail.com"
 					className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
@@ -33,9 +40,13 @@ function NewsletterSignup() {
 					color="accent"
 					icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
 					className="ml-3 h-8 w-8 p-2 rounded-lg mt-px"
+					type="submit"
+					onClick={(ev) => {
+						fetcher.submit(ev.currentTarget.form);
+					}}
 				/>
 			</div>
-		</form>
+		</fetcher.Form>
 	);
 }
 
