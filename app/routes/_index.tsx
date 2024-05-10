@@ -5,7 +5,6 @@ import { Intro } from "~/components/landing/Intro";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { json } from "@shopify/remix-oxygen";
 import { MILKTYPE75_IMAGE } from "~/routes/products.milktype75";
-import { defer } from "@remix-run/react";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
 
 export const meta: MetaFunction = () => [

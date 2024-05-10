@@ -23,7 +23,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 	});
 
 	if (errors) {
-		console.error(errors.message, errors.graphQLErrors);
+		console.error(errors.message, JSON.stringify(errors.graphQLErrors, null, 4));
 		return json(null, { status: 500 });
 	}
 
@@ -35,6 +35,7 @@ mutation CreateCustomer($email: String!) {
     customerCreate(input: { email: $email, emailMarketingConsent: { marketingState: SUBSCRIBED, marketingOptInLevel: SINGLE_OPT_IN } }) {
 		customer {
 			id
+			email
 		}
     }
 }

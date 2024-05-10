@@ -10,36 +10,59 @@ import { TikTokIcon } from "~/assets/icons/socials/TikTok";
 import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
-import { Form, NavLink, useFetcher } from "@remix-run/react";
-import { useRef } from "react";
+import { NavLink, useFetcher } from "@remix-run/react";
 
 function NewsletterSignup() {
 	const fetcher = useFetcher({ key: "newsletter" });
-	const formRef = useRef<HTMLFormElement>(null);
+	const customer = (fetcher.data as any)?.customerCreate?.customer;
+	const submitted = !!customer;
+	const email = customer?.email ?? null;
 	return (
 		<fetcher.Form
-			ref={formRef}
 			action="/signup"
 			method="POST"
 			className="flex w-full text-xl pt-8 pb-12 lg:pb-8 gap-y-4 flex-col md:flex-row items-center justify-center"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center md:text-start text-cocoa-120">
-				let’s keep in touch — we’ll send a monthly newsletter to<span className="md:hidden">:</span>
+				{!submitted ? (
+					<>
+						let’s keep in touch — we’ll send a monthly newsletter to<span className="md:hidden">:</span>
+					</>
+				) : (
+					<>
+						thanks for signing up! we’ll keep you updated
+						{email ? (
+							<>
+								{" "}
+								at <span className="font-semibold">{email}</span>
+							</>
+						) : null}
+						.
+					</>
+				)}
 			</span>
-			<label htmlFor="email" className="sr-only">
-				Email
-			</label>
+			{!submitted ? (
+				<label htmlFor="email" className="sr-only">
+					Email
+				</label>
+			) : null}
 			<div className="flex flex-row">
-				<Input
-					type="email"
-					name="email"
-					placeholder="example@gmail.com"
-					className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
-				/>
+				{!submitted ? (
+					<Input
+						type="email"
+						name="email"
+						placeholder="example@gmail.com"
+						className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
+					/>
+				) : null}
 				<Button
-					color="accent"
+					color={submitted ? "shrub" : "accent"}
 					icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-					className="ml-3 h-8 w-8 p-2 rounded-lg mt-px"
+					className={twJoin(
+						"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
+						submitted && "bg-shrub cursor-default pointer-events-none",
+					)}
+					disabled={fetcher.state !== "idle" || submitted}
 					type="submit"
 					onClick={(ev) => {
 						fetcher.submit(ev.currentTarget.form);

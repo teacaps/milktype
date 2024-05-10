@@ -20,6 +20,7 @@ function AddToCartAnalytics({
 	const formData = fetcher.formData; // Form input data
 	// Page view data from loaders
 	const pageAnalytics = usePageAnalytics({ hasUserConsent });
+	console.log("add to cart analytics", pageAnalytics);
 
 	useEffect(() => {
 		if (formData) {
@@ -31,6 +32,7 @@ function AddToCartAnalytics({
 				if (cartInputs.inputs.analytics) {
 					const dataInForm: unknown = JSON.parse(String(cartInputs.inputs.analytics));
 					Object.assign(cartData, dataInForm);
+					console.log("cartData", cartData);
 				}
 			} catch {
 				// do nothing
@@ -45,11 +47,13 @@ function AddToCartAnalytics({
 					cartId: fetcherData.cart.id,
 				};
 
-				sendShopifyAnalytics({
+				console.log("addToCartPayload", addToCartPayload);
+
+				void sendShopifyAnalytics({
 					eventName: AnalyticsEventName.ADD_TO_CART,
 					// @ts-expect-error
 					payload: addToCartPayload,
-				}).catch(() => {});
+				});
 			}
 		}
 	}, [fetcherData, formData, pageAnalytics]);
