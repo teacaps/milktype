@@ -25,6 +25,8 @@ import { CartProvider } from "@shopify/hydrogen-react";
 import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
 import { useEffect, useRef } from "react";
 import { usePageAnalytics } from "~/lib/usePageAnalytics";
+import { ConsentProvider, useHasAnalyticsConsent } from "~/lib/ConsentContext";
+import { CookieConsentNotice } from "~/components/global/CookieConsentNotice";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -96,9 +98,10 @@ export function links() {
 export default function App() {
 	useShopifyCookies();
 
+	const hasUserConsent = useHasAnalyticsConsent();
 	const location = useLocation();
 	const lastLocationKey = useRef<string>("");
-	const pageAnalytics = usePageAnalytics({ hasUserConsent: false });
+	const pageAnalytics = usePageAnalytics({ hasUserConsent });
 
 	useEffect(() => {
 		// Only continue if the user's location changed.
@@ -111,15 +114,13 @@ export default function App() {
 			...getClientBrowserParameters(),
 			...pageAnalytics,
 		};
-		console.log("payload", payload);
-
 		// Send analytics payload to Shopify
 		sendShopifyAnalytics({
 			eventName: AnalyticsEventName.PAGE_VIEW,
 			// @ts-expect-error
 			payload,
 		});
-	}, [location, pageAnalytics]);
+	}, [location, pageAnalytics, hasUserConsent]);
 
 	const nonce = useNonce();
 
@@ -136,12 +137,15 @@ export default function App() {
 				<Links />
 			</head>
 			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
-				<CartProvider>
-					<Outlet />
-					<ScrollRestoration nonce={nonce} />
-					<Scripts nonce={nonce} />
-					<LiveReload nonce={nonce} />
-				</CartProvider>
+				<ConsentProvider>
+					<CartProvider>
+						<Outlet />
+						<ScrollRestoration nonce={nonce} />
+						<Scripts nonce={nonce} />
+						<LiveReload nonce={nonce} />
+						<CookieConsentNotice />
+					</CartProvider>
+				</ConsentProvider>
 			</body>
 		</html>
 	);
