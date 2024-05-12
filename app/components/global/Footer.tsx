@@ -11,12 +11,16 @@ import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
 import { NavLink, useFetcher } from "@remix-run/react";
+import { useHasAnalyticsConsent } from "~/lib/ConsentContext";
 
 function NewsletterSignup() {
 	const fetcher = useFetcher({ key: "newsletter" });
 	const customer = (fetcher.data as any)?.customerCreate?.customer;
 	const submitted = !!customer;
 	const email = customer?.email ?? null;
+
+	const hasAnalyticsConsent = useHasAnalyticsConsent();
+
 	return (
 		<fetcher.Form
 			action="/signup"
@@ -65,6 +69,10 @@ function NewsletterSignup() {
 					disabled={fetcher.state !== "idle" || submitted}
 					type="submit"
 					onClick={(ev) => {
+						if (hasAnalyticsConsent) {
+							// todo: track newsletter signup
+						}
+
 						fetcher.submit(ev.currentTarget.form);
 					}}
 				/>

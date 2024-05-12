@@ -23,6 +23,7 @@ function AddToCartAnalytics({
 	const pageAnalytics = usePageAnalytics({ hasUserConsent });
 
 	useEffect(() => {
+		if (!hasUserConsent) return;
 		if (formData) {
 			const cartData: Record<string, unknown> = {};
 			const cartInputs = CartForm.getFormInput(formData);
@@ -36,6 +37,8 @@ function AddToCartAnalytics({
 			} catch {
 				// do nothing
 			}
+
+			// todo: track add to cart
 
 			// If the cart action responded, send the analytics data
 			if (Object.keys(cartData).length && fetcherData) {

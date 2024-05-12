@@ -5,6 +5,8 @@ import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { defer, useLoaderData } from "@remix-run/react";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
+import { useHasAnalyticsConsent } from "~/lib/ConsentContext";
+import { useEffect } from "react";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
@@ -77,6 +79,14 @@ function InfoBubble({ children }: { children: string }) {
 export default function Milktype75() {
 	const { product } = useLoaderData<typeof loader>();
 	const selectedVariant = product!.variants.nodes[0];
+
+	const hasAnalyticsConsent = useHasAnalyticsConsent();
+	useEffect(() => {
+		if (hasAnalyticsConsent) {
+			// todo: track view
+		}
+	}, [hasAnalyticsConsent]);
+
 	return (
 		<Layout>
 			<Container className="py-8 sm:py-16 sm:w-full">

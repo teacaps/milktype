@@ -14,6 +14,7 @@ declare global {
 	 * Declare expected Env parameter in fetch handler.
 	 */
 	interface Env {
+		REDDIT_AD_ID: string;
 		PRIVATE_ADMIN_API_TOKEN: string;
 		API_VERSION: string;
 		SESSION_SECRET: string;

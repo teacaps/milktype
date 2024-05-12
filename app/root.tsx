@@ -51,6 +51,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
 		analytics: {
 			shopId: shop.id,
 		},
+		redditAdId: context.env.REDDIT_AD_ID,
 	});
 }
 
