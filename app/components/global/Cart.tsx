@@ -5,7 +5,14 @@ import type {
 	CartLine,
 } from "@shopify/hydrogen-react/storefront-api-types";
 import { Suspense, type ReactNode } from "react";
-import { CartForm, Money, OptimisticInput, useOptimisticData, flattenConnection } from "@shopify/hydrogen";
+import {
+	CartForm,
+	Money,
+	OptimisticInput,
+	useOptimisticData,
+	flattenConnection,
+	UNSTABLE_Analytics as Analytics,
+} from "@shopify/hydrogen";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { PlusIcon } from "~/assets/icons/Plus";
 import { useRootLoaderData } from "~/root";
@@ -208,6 +215,7 @@ export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean
 					</Suspense>
 				</div>
 			</div>
+			<Analytics.CartView />
 		</>
 	);
 }

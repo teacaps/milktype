@@ -1,10 +1,4 @@
-import {
-	AnalyticsEventName,
-	getClientBrowserParameters,
-	sendShopifyAnalytics,
-	useNonce,
-	useShopifyCookies,
-} from "@shopify/hydrogen";
+import { useNonce, UNSTABLE_Analytics as Analytics, getShopAnalytics, useShopifyCookies } from "@shopify/hydrogen";
 import {
 	Links,
 	Meta,
@@ -17,16 +11,15 @@ import {
 	type ShouldRevalidateFunction,
 	defer,
 	useMatches,
-	useLocation,
+	useLoaderData,
 } from "@remix-run/react";
 import favicon from "../public/favicon.svg";
 import styles from "./styles/tailwind.css";
 import { CartProvider } from "@shopify/hydrogen-react";
 import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
-import { useEffect, useRef } from "react";
-import { usePageAnalytics } from "~/lib/usePageAnalytics";
 import { ConsentProvider, useHasAnalyticsConsent } from "~/lib/ConsentContext";
 import { CookieConsentNotice } from "~/components/global/CookieConsentNotice";
+import { AnalyticsListener } from "~/lib/AnalyticsListener";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -42,16 +35,20 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, current
 };
 
 export async function loader({ context }: LoaderFunctionArgs) {
-	const { cart } = context;
+	const { cart, storefront } = context;
 	const { shop } = await context.storefront.query(`#graphql
 	query Shop { shop { id } }`);
 
 	return defer({
 		cart: cart.get(),
-		analytics: {
-			shopId: shop.id,
+		shop: getShopAnalytics({
+			storefront,
+			publicStorefrontId: context.env.PUBLIC_STOREFRONT_ID,
+		}),
+		consent: {
+			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+			storefrontAccessToken: context.env.PUBLIC_STOREFRONT_API_TOKEN,
 		},
-		redditAdId: context.env.REDDIT_AD_ID,
 	});
 }
 
@@ -97,33 +94,12 @@ export function links() {
 }
 
 export default function App() {
-	useShopifyCookies();
-
-	const hasUserConsent = useHasAnalyticsConsent();
-	const location = useLocation();
-	const lastLocationKey = useRef<string>("");
-	const pageAnalytics = usePageAnalytics({ hasUserConsent });
-
-	useEffect(() => {
-		// Only continue if the user's location changed.
-		if (lastLocationKey.current === location.key) return;
-		// Update the current location reference
-		lastLocationKey.current = location.key;
-
-		// Analytics data, including browser information
-		const payload = {
-			...getClientBrowserParameters(),
-			...pageAnalytics,
-		};
-		// Send analytics payload to Shopify
-		sendShopifyAnalytics({
-			eventName: AnalyticsEventName.PAGE_VIEW,
-			// @ts-expect-error
-			payload,
-		});
-	}, [location, pageAnalytics, hasUserConsent]);
-
 	const nonce = useNonce();
+
+	const data = useLoaderData<typeof loader>();
+	const hasUserConsent = useHasAnalyticsConsent();
+
+	useShopifyCookies({ hasUserConsent });
 
 	return (
 		<html lang="en">
@@ -139,13 +115,20 @@ export default function App() {
 			</head>
 			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
 				<ConsentProvider>
-					<CartProvider>
-						<Outlet />
-						<ScrollRestoration nonce={nonce} />
-						<Scripts nonce={nonce} />
-						<LiveReload nonce={nonce} />
-						<CookieConsentNotice />
-					</CartProvider>
+					<Analytics.Provider
+						canTrack={() => hasUserConsent}
+						cart={data.cart}
+						shop={data.shop}
+						consent={data.consent}>
+						<CartProvider>
+							<Outlet />
+							<ScrollRestoration nonce={nonce} />
+							<Scripts nonce={nonce} />
+							<LiveReload nonce={nonce} />
+							<AnalyticsListener />
+							<CookieConsentNotice />
+						</CartProvider>
+					</Analytics.Provider>
 				</ConsentProvider>
 			</body>
 		</html>

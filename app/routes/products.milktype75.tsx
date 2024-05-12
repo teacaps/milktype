@@ -3,10 +3,8 @@ import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
-import { defer, useLoaderData } from "@remix-run/react";
-import { AnalyticsPageType } from "@shopify/hydrogen-react";
-import { useHasAnalyticsConsent } from "~/lib/ConsentContext";
-import { useEffect } from "react";
+import { useLoaderData, json } from "@remix-run/react";
+import { UNSTABLE_Analytics as Analytics } from "@shopify/hydrogen";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
@@ -58,12 +56,13 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			handle: "milktype75",
 		},
 	});
-	return defer({
+
+	if (!product?.id) {
+		throw new Response(null, { status: 404 });
+	}
+
+	return json({
 		product,
-		analytics: {
-			pageType: AnalyticsPageType.product,
-			products: [product],
-		},
 	});
 }
 
@@ -78,14 +77,7 @@ function InfoBubble({ children }: { children: string }) {
 
 export default function Milktype75() {
 	const { product } = useLoaderData<typeof loader>();
-	const selectedVariant = product!.variants.nodes[0];
-
-	const hasAnalyticsConsent = useHasAnalyticsConsent();
-	useEffect(() => {
-		if (hasAnalyticsConsent) {
-			// todo: track view
-		}
-	}, [hasAnalyticsConsent]);
+	const selectedVariant = product.variants.nodes[0];
 
 	return (
 		<Layout>
@@ -139,6 +131,21 @@ export default function Milktype75() {
 						</div>
 					</section>
 				</main>
+				<Analytics.ProductView
+					data={{
+						products: [
+							{
+								id: product.id,
+								title: product.title,
+								price: selectedVariant.price.amount,
+								vendor: product.vendor,
+								variantId: selectedVariant.id,
+								variantTitle: selectedVariant.title,
+								quantity: 1,
+							},
+						],
+					}}
+				/>
 			</Container>
 		</Layout>
 	);
@@ -147,11 +154,14 @@ export default function Milktype75() {
 const PRODUCT_QUERY = `#graphql
 query Product($handle: String!) {
     product(handle: $handle) {
+		id
 		title
 		description
+		vendor
         variants(first: 1) {
             nodes {
                 id
+				title
                 price {
                     amount
                     currencyCode

@@ -13,10 +13,13 @@ export type ProductQueryVariables = StorefrontAPI.Exact<{
 
 export type ProductQuery = {
   product?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Product, 'title' | 'description'> & {
+    Pick<StorefrontAPI.Product, 'id' | 'title' | 'description' | 'vendor'> & {
       variants: {
         nodes: Array<
-          Pick<StorefrontAPI.ProductVariant, 'id' | 'quantityAvailable'> & {
+          Pick<
+            StorefrontAPI.ProductVariant,
+            'id' | 'title' | 'quantityAvailable'
+          > & {
             price: Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>;
             compareAtPrice?: StorefrontAPI.Maybe<
               Pick<StorefrontAPI.MoneyV2, 'amount' | 'currencyCode'>
@@ -33,7 +36,7 @@ interface GeneratedQueryTypes {
     return: ShopQuery;
     variables: ShopQueryVariables;
   };
-  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n\t\ttitle\n\t\tdescription\n        variants(first: 1) {\n            nodes {\n                id\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n\t\t\t\tquantityAvailable\n            }\n        }\n    }\n}\n': {
+  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n\t\tid\n\t\ttitle\n\t\tdescription\n\t\tvendor\n        variants(first: 1) {\n            nodes {\n                id\n\t\t\t\ttitle\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n\t\t\t\tquantityAvailable\n            }\n        }\n    }\n}\n': {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };

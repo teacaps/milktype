@@ -1,4 +1,4 @@
-import type { EntryContext } from "@shopify/remix-oxygen";
+import type { AppLoadContext, EntryContext } from "@shopify/remix-oxygen";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToReadableStream } from "react-dom/server";
@@ -9,6 +9,7 @@ export default async function handleRequest(
 	responseStatusCode: number,
 	responseHeaders: Headers,
 	remixContext: EntryContext,
+	context: AppLoadContext,
 ) {
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
 		imgSrc: [
@@ -19,6 +20,10 @@ export default async function handleRequest(
 		],
 		styleSrc: ["https://fonts.googleapis.com"],
 		fontSrc: ["https://fonts.gstatic.com"],
+		shop: {
+			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+			storeDomain: context.env.PUBLIC_STORE_DOMAIN,
+		},
 	});
 
 	const body = await renderToReadableStream(
