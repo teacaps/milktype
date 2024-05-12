@@ -1,10 +1,7 @@
 import { Button } from "~/components/elements/Button";
-import { ConsentLevel, useConsentLevel } from "~/lib/ConsentContext";
+import { ConsentLevel } from "~/lib/util";
 
-export function CookieConsentNotice() {
-	const [consentLevel, setConsentLevel] = useConsentLevel();
-	if (consentLevel !== ConsentLevel.NOT_SET) return null;
-
+export function CookieConsentNotice({ setConsentLevel }: { setConsentLevel: (newLevel: ConsentLevel) => void }) {
 	return (
 		<div className="fixed bottom-0 left-0 right-0 flex flex-col xl:flex-row items-center justify-center gap-4 z-50 p-4 bg-yogurt-60">
 			<p className="text-center text-cocoa-120">

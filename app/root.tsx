@@ -17,9 +17,12 @@ import favicon from "../public/favicon.svg";
 import styles from "./styles/tailwind.css";
 import { CartProvider } from "@shopify/hydrogen-react";
 import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
-import { ConsentProvider, useHasAnalyticsConsent } from "~/lib/ConsentContext";
 import { CookieConsentNotice } from "~/components/global/CookieConsentNotice";
 import { AnalyticsListener } from "~/lib/AnalyticsListener";
+import { CookiesProvider } from "react-cookie";
+import type { ReactNode } from "react";
+import { useEffect, useState } from "react";
+import { ConsentLevel, useConsentLevel } from "~/lib/util";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -49,6 +52,7 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
 			storefrontAccessToken: context.env.PUBLIC_STOREFRONT_API_TOKEN,
 		},
+		redditAdId: context.env.REDDIT_AD_ID,
 	});
 }
 
@@ -97,9 +101,6 @@ export default function App() {
 	const nonce = useNonce();
 
 	const data = useLoaderData<typeof loader>();
-	const hasUserConsent = useHasAnalyticsConsent();
-
-	useShopifyCookies({ hasUserConsent });
 
 	return (
 		<html lang="en">
@@ -114,26 +115,51 @@ export default function App() {
 				<Links />
 			</head>
 			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
-				<ConsentProvider>
-					<Analytics.Provider
-						canTrack={() => hasUserConsent}
-						cart={data.cart}
-						shop={data.shop}
-						consent={data.consent}>
+				<CookiesProvider
+					defaultSetOptions={{ path: "/", expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) }}>
+					<AnalyticsWrapper>
 						<CartProvider>
 							<Outlet />
 							<ScrollRestoration nonce={nonce} />
 							<Scripts nonce={nonce} />
 							<LiveReload nonce={nonce} />
-							<AnalyticsListener />
-							<CookieConsentNotice />
+							<AnalyticsListener redditAdId={data.redditAdId} />
 						</CartProvider>
-					</Analytics.Provider>
-				</ConsentProvider>
+					</AnalyticsWrapper>
+				</CookiesProvider>
 			</body>
 		</html>
 	);
 }
+
+const AnalyticsWrapper = ({ children }: { children: ReactNode }) => {
+	const data = useLoaderData<typeof loader>();
+
+	const [consentLevel, setConsentLevel] = useConsentLevel();
+	const hasAnalyticsConsent = consentLevel !== ConsentLevel.NECESSARY_ONLY;
+
+	const [showConsentNotice, setShowConsentNotice] = useState(false);
+	useEffect(() => {
+		if (consentLevel === ConsentLevel.NOT_SET) {
+			setShowConsentNotice(true);
+		} else {
+			setShowConsentNotice(false);
+		}
+	}, [consentLevel]);
+
+	useShopifyCookies({ hasUserConsent: hasAnalyticsConsent });
+
+	return (
+		<Analytics.Provider
+			canTrack={() => hasAnalyticsConsent}
+			cart={data.cart}
+			shop={data.shop}
+			consent={data.consent}>
+			{children}
+			{showConsentNotice ? <CookieConsentNotice setConsentLevel={setConsentLevel} /> : null}
+		</Analytics.Provider>
+	);
+};
 
 export function ErrorBoundary() {
 	const error = useRouteError();

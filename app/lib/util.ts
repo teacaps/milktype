@@ -1,3 +1,5 @@
+import { useCookies } from "react-cookie";
+
 export type Color =
 	| "accent"
 	| "yogurt"
@@ -7,9 +9,17 @@ export type Color =
 	| "shrub"
 	| "blurple"
 	| "lilac";
+
 export type MakePropertiesOptional<T, K extends string> = T extends T
 	? Omit<T, K> & Partial<Pick<T, K extends keyof T ? K : never>>
 	: never;
+
+export const ConsentLevel = {
+	NOT_SET: "not_set",
+	NECESSARY_ONLY: "necessary_only",
+	FULL_CONSENT: "full_consent",
+} as const;
+export type ConsentLevel = (typeof ConsentLevel)[keyof typeof ConsentLevel];
 
 export function throttle<T extends (...args: any[]) => any>(fn: T, n: number): T {
 	let last: number | undefined;
@@ -35,3 +45,14 @@ export function throttle<T extends (...args: any[]) => any>(fn: T, n: number): T
 		return result;
 	} as T;
 }
+
+export const useConsentLevel = (): [consentLevel: ConsentLevel, setConsentLevel: (newLevel: ConsentLevel) => void] => {
+	const [{ cookieConsent }, setCookie] = useCookies(["cookieConsent"]);
+	const consentLevel = cookieConsent || ConsentLevel.NOT_SET;
+	return [consentLevel, (newLevel: ConsentLevel) => setCookie("cookieConsent", newLevel, { path: "/" })];
+};
+
+export const useHasAnalyticsConsent = (): boolean => {
+	const [consentLevel] = useConsentLevel();
+	return consentLevel === ConsentLevel.FULL_CONSENT;
+};

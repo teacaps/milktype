@@ -14,12 +14,20 @@ export default async function handleRequest(
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
 		imgSrc: [
 			"https://res.cloudinary.com",
-			"http://localhost:3000",
+			"http://localhost:*",
 			"https://milktype.co",
 			"https://cdn.shopify.com",
+			"https://alb.reddit.com",
 		],
 		styleSrc: ["https://fonts.googleapis.com"],
 		fontSrc: ["https://fonts.gstatic.com"],
+		scriptSrc: [
+			"http://localhost:*",
+			"https://cdn.shopify.com",
+			"https://shopify.com",
+			"https://www.redditstatic.com",
+		],
+		connectSrc: ["https://www.redditstatic.com"],
 		shop: {
 			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
 			storeDomain: context.env.PUBLIC_STORE_DOMAIN,
