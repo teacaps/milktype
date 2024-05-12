@@ -11,7 +11,7 @@ import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
 import { NavLink, useFetcher } from "@remix-run/react";
-import { useHasAnalyticsConsent } from "~/lib/ConsentContext";
+import { useHasAnalyticsConsent } from "~/lib/util";
 
 function NewsletterSignup() {
 	const fetcher = useFetcher({ key: "newsletter" });

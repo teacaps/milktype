@@ -215,7 +215,7 @@ export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean
 					</Suspense>
 				</div>
 			</div>
-			<Analytics.CartView />
+			{show ? <Analytics.CartView /> : null}
 		</>
 	);
 }
