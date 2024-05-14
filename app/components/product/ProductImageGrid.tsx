@@ -20,7 +20,7 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 	return (
 		<div
 			className={twJoin(
-				"aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out",
+				"max-h-full aspect-square rounded-2xl sm:rounded-3xl grid transition-all duration-700 ease-in-out",
 				hoveredIndex !== null
 					? makeSquareAtIndexTakeUpWholeGrid[hoveredIndex] + " gap-0"
 					: "grid-cols-[1fr,1fr,1fr] grid-rows-[1fr,1fr,1fr] gap-3",
