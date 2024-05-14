@@ -13,7 +13,7 @@ export const meta: MetaFunction = () => [
 	},
 	{
 		name: "description",
-		content: "adorable accessories for people we 🧡",
+		content: "adorable accessories for people we ♥",
 	},
 	{
 		property: "og:title",
