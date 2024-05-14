@@ -79,16 +79,25 @@ export default function Milktype75() {
 	const { product } = useLoaderData<typeof loader>();
 	const selectedVariant = product.variants.nodes[0];
 
+	const price = parseFloat(selectedVariant.price.amount);
+	const compareAtPrice = selectedVariant.compareAtPrice?.amount
+		? parseFloat(selectedVariant.compareAtPrice?.amount)
+		: price;
+	const isOnSale = compareAtPrice > price;
+
+	const priceString = `$${price.toFixed(0)} ${selectedVariant.price.currencyCode}`;
+	const compareAtPriceString = `$${compareAtPrice.toFixed(0)}`;
+
 	return (
 		<Layout>
 			<Container className="py-8 sm:py-16 sm:w-full">
 				<div
-					className="relative flex items-center justify-center w-full h-auto bg-blurple md:aspect-[23/8] overflow-clip rounded-3xl"
+					className="relative hidden md:flex items-center justify-center w-full h-auto mb-16 aspect-[23/8] overflow-clip bg-blurple rounded-3xl"
 					style={{ viewTransitionName: "product-image" }}>
 					<img {...MILKTYPE75_IMAGE} className="object-cover object-center min-h-64 rounded-3xl" />
 				</div>
-				<main className="flex flex-col md:flex-row w-full gap-10 mt-8 sm:mt-16">
-					<div className="md:basis-1/2 lg:basis-2/5 aspect-square">
+				<main className="flex flex-col md:flex-row w-full gap-10">
+					<div className="md:basis-1/2 lg:basis-2/5 max-h-[40vh] sm:max-h-[50vh] self-center md:self-start aspect-square">
 						<ProductImageGrid images={GRID_IMAGES} />
 					</div>
 					<section className="md:basis-1/2 lg:basis-3/5 flex flex-col gap-y-12">
@@ -98,7 +107,14 @@ export default function Milktype75() {
 							</h1>
 							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">{product?.description}</p>
 							<div className="flex flex-row items-center gap-x-6 justify-between xs:justify-start">
-								<span className="text-cocoa-120 font-medium text-2xl">$99</span>
+								<span className="text-cocoa-120 font-medium text-2xl">
+									{isOnSale ? (
+										<span className="text-cocoa-100 text-xl line-through mr-3">
+											{compareAtPriceString}
+										</span>
+									) : null}
+									{priceString}
+								</span>
 								<AddToCartButton
 									lines={[
 										{
