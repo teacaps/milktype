@@ -63,7 +63,7 @@ export function Button({
 			className={twMerge(
 				bgClasses,
 				hoverBgClasses,
-				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium focus-visible:scale-110 focus-visible:outline-none disabled:cursor-not-allowed`,
+				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium text-nowrap focus-visible:scale-110 focus-visible:outline-none disabled:cursor-not-allowed`,
 				className,
 			)}
 			type={type}
@@ -125,7 +125,7 @@ export function ButtonLink<
 			className={twMerge(
 				bgClasses,
 				hoverBgClasses,
-				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium focus-visible:scale-110 focus-visible:outline-none`,
+				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium text-nowrap focus-visible:scale-110 focus-visible:outline-none`,
 				className,
 			)}
 			href={external ? url : undefined}
