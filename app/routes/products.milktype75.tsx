@@ -117,9 +117,7 @@ export default function Milktype75() {
 										) : null}
 										<Money as="span" withoutTrailingZeros data={price} />
 									</span>
-									<span className="italic text-base font-medium text-cocoa-100">
-										discounts applied at checkout!
-									</span>
+									<span className="italic text-base font-semibold text-blurple">launch sale!</span>
 								</div>
 								<AddToCartButton
 									lines={[
