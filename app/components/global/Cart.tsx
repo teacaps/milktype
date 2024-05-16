@@ -167,7 +167,7 @@ export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean
 						<Await resolve={cart}>
 							{(cart) => {
 								const lines = cart?.lines ? flattenConnection(cart.lines) : [];
-								const amount = cart?.cost?.totalAmount;
+								const amount = cart?.cost?.subtotalAmount;
 								const checkoutUrl = cart?.checkoutUrl;
 								if (!lines?.length)
 									return (
