@@ -4,7 +4,7 @@ import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { useLoaderData, json } from "@remix-run/react";
-import { UNSTABLE_Analytics as Analytics } from "@shopify/hydrogen";
+import { Money, UNSTABLE_Analytics as Analytics } from "@shopify/hydrogen";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
@@ -79,14 +79,12 @@ export default function Milktype75() {
 	const { product } = useLoaderData<typeof loader>();
 	const selectedVariant = product.variants.nodes[0];
 
-	const price = parseFloat(selectedVariant.price.amount);
-	const compareAtPrice = selectedVariant.compareAtPrice?.amount
-		? parseFloat(selectedVariant.compareAtPrice?.amount)
-		: price;
-	const isOnSale = compareAtPrice > price;
+	// const price = selectedVariant.price;
+	// const compareAtPrice = selectedVariant.compareAtPrice || price;
+	const price = { amount: "99.00", currencyCode: "USD" as const };
+	const compareAtPrice = { amount: "125.00", currencyCode: "USD" as const };
 
-	const priceString = `$${price.toFixed(0)} ${selectedVariant.price.currencyCode}`;
-	const compareAtPriceString = `$${compareAtPrice.toFixed(0)}`;
+	const isOnSale = parseFloat(compareAtPrice.amount) > parseFloat(price.amount);
 
 	return (
 		<Layout>
@@ -106,15 +104,23 @@ export default function Milktype75() {
 								milktype<span className="ml-1 align-super font-bold text-xl">75</span>
 							</h1>
 							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">{product?.description}</p>
-							<div className="flex flex-row items-center gap-x-6 justify-between xs:justify-start">
-								<span className="text-cocoa-120 font-medium text-2xl">
-									{isOnSale ? (
-										<span className="text-cocoa-100 text-xl line-through mr-3">
-											{compareAtPriceString}
-										</span>
-									) : null}
-									{priceString}
-								</span>
+							<div className="mt-4 flex flex-row items-center gap-x-6 justify-between">
+								<div className="flex flex-col gap-y-1">
+									<span className="text-blurple font-semibold text-2xl inline-flex items-center">
+										{isOnSale ? (
+											<Money
+												as="span"
+												className="text-cocoa-100 text-xl mr-4 relative before:absolute before:content-[''] before:left-0 before:top-1/2 before:right-0 before:border-t-[3px] before:border-t-blurple before:-rotate-12 before:scale-125"
+												withoutTrailingZeros
+												data={compareAtPrice}
+											/>
+										) : null}
+										<Money as="span" withoutTrailingZeros data={price} />
+									</span>
+									<span className="italic text-base font-medium text-cocoa-100">
+										discounts applied at checkout!
+									</span>
+								</div>
 								<AddToCartButton
 									lines={[
 										{
