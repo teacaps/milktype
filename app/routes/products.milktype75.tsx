@@ -103,7 +103,9 @@ export default function Milktype75() {
 							<h1 className="text-4xl font-medium text-cocoa-120">
 								milktype<span className="ml-1 align-super font-bold text-xl">75</span>
 							</h1>
-							<p className="text-cocoa-100 font-medium text-xl leading-relaxed">{product?.description}</p>
+							<p
+								className="text-cocoa-100 font-medium prose-xl prose-a:text-accent prose-a:underline hover:prose-a:no-underline"
+								dangerouslySetInnerHTML={{ __html: product?.descriptionHtml }}></p>
 							<div className="mt-4 flex flex-row items-center gap-x-6 justify-between">
 								<div className="flex flex-col gap-y-1">
 									<span className="text-blurple font-semibold text-2xl inline-flex items-center">
@@ -177,6 +179,7 @@ query Product($handle: String!) {
 		id
 		title
 		description
+		descriptionHtml
 		vendor
         variants(first: 1) {
             nodes {
