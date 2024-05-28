@@ -25,7 +25,7 @@ function NewsletterSignup() {
 		<fetcher.Form
 			action="/signup"
 			method="POST"
-			className="flex w-full text-xl pt-8 pb-12 lg:pb-8 gap-y-4 flex-col md:flex-row items-center justify-center"
+			className="flex w-full text-xl pt-8 pb-12 lg:pb-8 px-4 gap-y-4 flex-col md:flex-row items-center justify-center"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center md:text-start text-cocoa-120">
 				{!submitted ? (
@@ -160,14 +160,14 @@ export function Footer() {
 						className="inline-block w-fit text-accent hover:text-cocoa-120 focus-visible:text-cocoa-120 focus-visible:outline-none">
 						<Wordmark className="h-10 sm:h-14" />
 					</a>
-					<p className="mt-1 mb-4">
+					<p className="mt-1 mb-4 leading-normal">
 						we’re milktype, a design studio in foggy san francisco. we love our creations and the people who
 						use them.
 					</p>
 					<SendMessageButton className="lg:hidden" />
 				</div>
 				<div className="mt-14 md:mt-0 text-cocoa-100">
-					<div className="gap-y-4 flex flex-col md:grid grid-cols-2 grid-rows-2 mb-4 mx-8 md:mx-0">
+					<div className="gap-y-4 flex flex-col md:grid grid-cols-2 grid-rows-2 mb-4 mx-8 md:mx-0 text-center md:text-start">
 						{footerLinks.map((link) => (
 							<NavLink
 								key={link.href}
@@ -176,7 +176,7 @@ export function Footer() {
 								className={({ isActive }) =>
 									twJoin(
 										isActive && "underline",
-										"hover:text-accent focus-visible:text-accent rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
+										"rounded-sm hover:text-accent focus-visible:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
 									)
 								}
 								unstable_viewTransition>
