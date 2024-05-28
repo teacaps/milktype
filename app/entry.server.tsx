@@ -27,7 +27,7 @@ export default async function handleRequest(
 			"https://shopify.com",
 			"https://www.redditstatic.com",
 		],
-		connectSrc: ["https://www.redditstatic.com"],
+		connectSrc: ["https://www.redditstatic.com", "https://pixel-config.reddit.com"],
 		shop: {
 			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
 			storeDomain: context.env.PUBLIC_STORE_DOMAIN,
