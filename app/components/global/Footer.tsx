@@ -12,12 +12,12 @@ import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
 import { NavLink, useFetcher } from "@remix-run/react";
 import { useHasAnalyticsConsent } from "~/lib/util";
+import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 
 function NewsletterSignup() {
 	const fetcher = useFetcher({ key: "newsletter" });
-	const customer = (fetcher.data as any)?.customerCreate?.customer;
-	const submitted = !!customer;
-	const email = customer?.email ?? null;
+	const email = fetcher.data as string | undefined;
+	const submitted = !!email;
 
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 
@@ -45,38 +45,46 @@ function NewsletterSignup() {
 					</>
 				)}
 			</span>
-			{!submitted ? (
-				<label htmlFor="email" className="sr-only">
-					Email
-				</label>
-			) : null}
-			<div className="flex flex-row">
-				{!submitted ? (
-					<Input
-						type="email"
-						name="email"
-						placeholder="example@gmail.com"
-						className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
-					/>
-				) : null}
-				<Button
-					color={submitted ? "shrub" : "accent"}
-					icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-					className={twJoin(
-						"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
-						submitted && "bg-shrub cursor-default pointer-events-none",
-					)}
-					disabled={fetcher.state !== "idle" || submitted}
-					type="submit"
-					onClick={(ev) => {
-						if (hasAnalyticsConsent) {
-							// todo: track newsletter signup
-						}
+			{submitted ? null : (
+				<>
+					<label htmlFor="email" className="sr-only">
+						Email
+					</label>
+					<div className="flex flex-row">
+						<Input
+							type="email"
+							name="email"
+							placeholder="example@gmail.com"
+							className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
+						/>
+						<Button
+							color={submitted ? "shrub" : "accent"}
+							icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
+							className={twJoin(
+								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
+								submitted && "bg-shrub cursor-default pointer-events-none",
+							)}
+							disabled={fetcher.state !== "idle" || submitted}
+							type="submit"
+							onClick={(ev) => {
+								const email = ev.currentTarget.form?.email.value;
 
-						fetcher.submit(ev.currentTarget.form);
-					}}
-				/>
-			</div>
+								fetcher.submit(ev.currentTarget.form);
+
+								if (hasAnalyticsConsent && email) {
+									sendShopifyAnalytics({
+										eventName: "custom_newsletter_signup",
+										payload: {
+											// @ts-expect-error — custom payload
+											email,
+										},
+									});
+								}
+							}}
+						/>
+					</div>
+				</>
+			)}
 		</fetcher.Form>
 	);
 }

@@ -87,6 +87,19 @@ export function AnalyticsListener({ redditAdId }: { redditAdId: string }) {
 				});
 			}
 		});
+		subscribe(AnalyticsEvent.CUSTOM_EVENT, ({ eventName, payload }) => {
+			if (eventName === "custom_newsletter_signup") {
+				if (
+					!payload ||
+					typeof payload !== "object" ||
+					!("email" in payload) ||
+					typeof payload.email !== "string"
+				)
+					return;
+				console.log("[ANALYTICS] Newsletter signup:", payload.email);
+				window.rdt("track", "Lead", { conversionId: payload.email });
+			}
+		});
 	}, [subscribe]);
 
 	return null;

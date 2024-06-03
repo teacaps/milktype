@@ -44,7 +44,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		return json(null, { status: 500 });
 	}
 
-	return json(null, { status: 200 });
+	return json(email, { status: 200 });
 }
 
 async function fetchAccessTokenIfExpired(email: string, privateKey: string) {
