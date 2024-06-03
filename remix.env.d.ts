@@ -14,16 +14,20 @@ declare global {
 	 * Declare expected Env parameter in fetch handler.
 	 */
 	interface Env {
-		API_VERSION: string;
 		SESSION_SECRET: string;
 		PUBLIC_STORE_DOMAIN: string;
+		PUBLIC_CHECKOUT_DOMAIN: string;
+
 		PUBLIC_STOREFRONT_ID: string;
 		PUBLIC_CUSTOMER_ACCOUNT_API_CLIENT_ID: string;
 		PUBLIC_CUSTOMER_ACCOUNT_API_URL: string;
-		PUBLIC_CHECKOUT_DOMAIN: string;
 		PUBLIC_STOREFRONT_API_TOKEN: string;
 		PRIVATE_STOREFRONT_API_TOKEN: string;
-		PRIVATE_ADMIN_API_TOKEN: string;
+
+		PRIVATE_EMAILS_SHEET_ID: string;
+		PRIVATE_GSHEETS_KEY: string;
+		PRIVATE_GSHEETS_CLIENT_EMAIL: string;
+
 		REDDIT_AD_ID: string;
 	}
 }
