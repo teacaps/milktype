@@ -84,7 +84,8 @@ export default function Milktype75() {
 	const price = { amount: "99.00", currencyCode: "USD" as const };
 	const compareAtPrice = { amount: "125.00", currencyCode: "USD" as const };
 
-	const isOnSale = parseFloat(compareAtPrice.amount) > parseFloat(price.amount);
+	const isAvailable = (selectedVariant.quantityAvailable ?? -1) > 0;
+	const isOnSale = isAvailable && parseFloat(compareAtPrice.amount) > parseFloat(price.amount);
 
 	return (
 		<Layout>
@@ -108,7 +109,7 @@ export default function Milktype75() {
 								dangerouslySetInnerHTML={{ __html: product?.descriptionHtml }}></p>
 							<div className="mt-4 flex flex-row items-center gap-x-6 justify-between">
 								<div className="flex flex-col gap-y-1">
-									<span className="text-blurple font-semibold text-2xl inline-flex items-center">
+									<span className="font-semibold text-2xl inline-flex items-center">
 										{isOnSale ? (
 											<Money
 												as="span"
@@ -117,9 +118,48 @@ export default function Milktype75() {
 												data={compareAtPrice}
 											/>
 										) : null}
-										<Money as="span" withoutTrailingZeros data={price} />
+										<Money
+											as="span"
+											withoutTrailingZeros
+											data={price}
+											className={
+												isOnSale
+													? "text-blurple"
+													: isAvailable
+													? "text-cocoa-100"
+													: "text-cocoa-80"
+											}
+										/>
 									</span>
-									<span className="italic text-base font-semibold text-blurple">launch sale!</span>
+									{isOnSale ? (
+										<span className="italic text-base font-semibold text-blurple">
+											launch sale!
+										</span>
+									) : null}
+									{isAvailable ? null : (
+										<span className="text-cocoa-80 text-base font-semibold">
+											restocking soon, make sure to{" "}
+											<a
+												href="#newsletter-signup"
+												className="underline hover:no-underline hover:text-accent"
+												onClick={(e) => {
+													e.preventDefault();
+													const signup = document.getElementById("newsletter-signup");
+													if (signup) {
+														signup.scrollIntoView({
+															behavior: "smooth",
+														});
+														signup.classList.add("bg-lilac/20");
+														setTimeout(() => {
+															signup.classList.remove("bg-lilac/20");
+														}, 2000);
+													}
+												}}>
+												subscribe for email updates
+											</a>
+											!
+										</span>
+									)}
 								</div>
 								<AddToCartButton
 									lines={[
