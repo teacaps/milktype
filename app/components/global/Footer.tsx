@@ -25,12 +25,13 @@ function NewsletterSignup() {
 		<fetcher.Form
 			action="/signup"
 			method="POST"
-			className="flex w-full text-xl pt-8 pb-12 lg:pb-8 px-4 gap-y-4 flex-col md:flex-row items-center justify-center"
+			id="newsletter-signup"
+			className="flex w-fit text-xl mt-8 mb-12 lg:mb-8 py-4 px-8 gap-y-4 flex-col lg:flex-row items-center justify-center rounded-2xl transition-colors delay-300 duration-700"
 			style={{ viewTransitionName: "newsletter" }}>
-			<span className="font-medium text-center md:text-start text-cocoa-120">
+			<span className="font-medium text-center lg:text-start text-cocoa-120">
 				{!submitted ? (
 					<>
-						let’s keep in touch — we’ll send a monthly newsletter to<span className="md:hidden">:</span>
+						let’s keep in touch — we’ll send a monthly newsletter to<span className="lg:hidden">:</span>
 					</>
 				) : (
 					<>
