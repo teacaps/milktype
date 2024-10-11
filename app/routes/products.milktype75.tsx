@@ -4,7 +4,7 @@ import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { useLoaderData, json } from "@remix-run/react";
-import { Money, UNSTABLE_Analytics as Analytics } from "@shopify/hydrogen";
+import { Money, Analytics } from "@shopify/hydrogen";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
