@@ -1,4 +1,4 @@
-import { useNonce, UNSTABLE_Analytics as Analytics, getShopAnalytics, useShopifyCookies } from "@shopify/hydrogen";
+import { useNonce, Analytics, getShopAnalytics, useShopifyCookies } from "@shopify/hydrogen";
 import {
 	Links,
 	Meta,

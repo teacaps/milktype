@@ -1,4 +1,4 @@
-import { AnalyticsEvent, flattenConnection, unstable_useAnalytics as useAnalytics } from "@shopify/hydrogen";
+import { AnalyticsEvent, flattenConnection, useAnalytics } from "@shopify/hydrogen";
 import { useEffect } from "react";
 
 declare global {
