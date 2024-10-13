@@ -19,12 +19,12 @@ export function Navigation() {
 				className="mr-auto text-cocoa-120 hover:text-accent focus-visible:text-accent focus-visible:outline-none"
 				aria-label="Home"
 				unstable_viewTransition>
-				<Wordmark className="h-10" />
+				<Wordmark className="h-8 xs:h-10" />
 			</Link>
-			<nav className="flex flex-row flex-grow sm:flex-grow-0 justify-between sm:justify-start sm:gap-x-24 pl-8 sm:pl-0 font-medium text-cocoa-120 text-base leading-6 xs:text-lg">
+			<nav className="flex flex-row flex-grow sm:flex-grow-0 items-center justify-between sm:justify-start sm:gap-x-24 pl-8 sm:pl-0 font-medium text-cocoa-120 text-base leading-6 xs:text-lg">
 				<NavLink
 					prefetch="intent"
-					to="/products/milktype75"
+					to="/sprout75"
 					className={({ isActive }) =>
 						twJoin(
 							isActive && "underline",
@@ -32,7 +32,7 @@ export function Navigation() {
 						)
 					}
 					unstable_viewTransition>
-					milktype 75
+					sprout 75
 				</NavLink>
 				<button
 					type="button"

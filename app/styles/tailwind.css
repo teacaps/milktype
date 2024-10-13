@@ -21,3 +21,9 @@
 ::view-transition-old(product-image) {
     height: 100%;
 }
+
+@layer base {
+    img {
+        max-width: unset;
+    }
+}
