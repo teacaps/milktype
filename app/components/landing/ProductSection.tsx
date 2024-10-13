@@ -26,7 +26,9 @@ export function ProductSection(props: ProductSectionProps) {
 			)}
 			splatClasses="fill-accent h-full w-full transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:motion-safe:-rotate-90 group-focus-visible:fill-shrub group-hover:motion-safe:-rotate-90 group-hover:motion-reduce:fill-shrub">
 			<span className="text-yogurt-100 text-2xl sm:text-3xl ease-in-out duration-700 font-semibold rotate-12 transition-transform group-focus-visible:motion-safe:-rotate-12 group-hover:motion-safe:-rotate-12">
-				shop now
+				pre-order
+				<br />
+				now →
 			</span>
 		</Splat>
 	);
@@ -60,7 +62,7 @@ export function ProductSection(props: ProductSectionProps) {
 					<img
 						src={props.image.src}
 						alt={props.image.alt}
-						className="object-cover object-center aspect-video h-auto min-h-[20rem] rounded-3xl motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-in-out hover:motion-safe:lg:-translate-y-6 ranslate-x-12 hover:motion-safe:md:scale-110 hover:motion-safe:md:-rotate-6"
+						className="object-cover object-center aspect-video w-full h-auto min-h-[20rem] rounded-3xl motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-in-out hover:motion-safe:lg:-translate-y-6 ranslate-x-12 hover:motion-safe:md:scale-110 hover:motion-safe:md:-rotate-6"
 						style={isTransitioning ? { viewTransitionName: "product-image" } : {}}
 					/>
 				)}

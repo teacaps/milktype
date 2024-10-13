@@ -1,7 +1,6 @@
 import { Container } from "~/components/global/Container";
 import { HeartIcon } from "~/assets/icons/Heart";
 import { VerticalSpaghetti } from "~/assets/Spaghetti";
-import { BSBCurvedText } from "~/assets/BSBCurvedText";
 import { Milkleaf } from "~/assets/Milkleaf";
 
 export function Hero() {
@@ -21,14 +20,13 @@ export function Hero() {
 			</div>
 			<div className="h-auto flex flex-row gap-5 md:ml-auto">
 				<a
-					href="/products/milktype75"
-					className="relative w-32 lg:w-44 h-[17.25rem] lg:h-auto bg-accent rounded-full hover:motion-safe:animate-boogie hover:motion-reduce:bg-blurple">
+					href="/sprout75"
+					className="flex items-center justify-center w-32 lg:w-44 h-[17.25rem] lg:h-auto bg-accent rounded-full hover:motion-safe:animate-boogie hover:motion-reduce:bg-blurple">
 					<img
-						src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/gdtycebx9dt7bmhntytu"
+						src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_768/sprout75/BoardSpin_h2jybj.png"
 						alt=""
-						className="object-cover object-center w-full h-full rounded-full"
+						className="object-cover object-center w-full rounded-full h-3/4"
 					/>
-					<BSBCurvedText className="absolute w-4/5 bottom-4 left-1/2 transform -translate-x-1/2 fill-yogurt-100" />
 				</a>
 				<div className="flex flex-col gap-5">
 					<div className="group">

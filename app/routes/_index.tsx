@@ -50,7 +50,7 @@ export default function Landing() {
 			<ProductSection
 				name={
 					<>
-						milktype<span className="text-lg align-super ml-1 font-bold">75</span>
+						sprout<span className="text-lg align-sub ml-1 font-bold">75</span>
 					</>
 				}
 				description="the perfect keyboard for boba lovers. functional, stunning, and ready to use right out of the box."

@@ -3,8 +3,9 @@ import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
-import { useLoaderData, json } from "@remix-run/react";
-import { Money, Analytics } from "@shopify/hydrogen";
+import { json, useLoaderData } from "@remix-run/react";
+import { Analytics, Money } from "@shopify/hydrogen";
+import { InfoBubble } from "~/components/elements/InfoBubble";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
@@ -64,15 +65,6 @@ export async function loader({ context }: LoaderFunctionArgs) {
 	return json({
 		product,
 	});
-}
-
-function InfoBubble({ children }: { children: string }) {
-	const [highlighted, rest] = children.split("|");
-	return (
-		<div className="flex items-center justify-center p-3 lg:px-5 lg:py-4 font-medium text-base lg:text-lg text-cocoa-100 bg-yogurt-60 rounded-xl lg:rounded-2xl">
-			<span className="font-bold">{highlighted}</span>&nbsp;<span>{rest}</span>
-		</div>
-	);
 }
 
 export default function Milktype75() {

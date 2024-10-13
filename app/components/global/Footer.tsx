@@ -90,7 +90,7 @@ function NewsletterSignup() {
 	);
 }
 
-const socials = [
+export const socials = [
 	//	{ name: "Discord", icon: DiscordIcon, color: "fill-[#8292CA]", url: "..." },
 	{ name: "Bluesky", icon: BlueskyIcon, color: "fill-[#0CB5FE]", url: "https://bsky.app/profile/milktype.co" },
 	{ name: "TikTok", icon: TikTokIcon, color: "fill-[#D087BC]", url: "https://tiktok.com/@milktype" },
@@ -101,7 +101,7 @@ function Socials({ className }: { className?: string }) {
 	return (
 		<div
 			className={twJoin(
-				"flex flex-row lg:flex-col justify-between lg:justify-normal lg:-space-y-3 w-full lg:w-24 h-16 lg:h-auto mt-6 md:mt-12 lg:mt-0 text-yogurt-100",
+				"flex flex-row lg:flex-col justify-between lg:justify-normal lg:-space-y-3 w-full lg:w-24 h-16 lg:h-auto mt-6 md:mt-12 lg:mt-0",
 				className,
 			)}>
 			{socials.map((social, i) => (
@@ -117,7 +117,7 @@ function Socials({ className }: { className?: string }) {
 					<SocialBlob
 						className={twJoin(
 							"h-12 w-12 absolute transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:fill-accent",
-							i < 2
+							i % 2 !== 0
 								? "motion-safe:group-focus-visible:rotate-90 motion-safe:group-hover:rotate-90"
 								: "motion-safe:group-focus-visible:-rotate-90 motion-safe:group-hover:-rotate-90",
 							"motion-reduce:group-hover:fill-accent",
@@ -126,9 +126,9 @@ function Socials({ className }: { className?: string }) {
 					/>
 					<social.icon
 						className={twJoin(
-							"absolute ease-in-out duration-700 transition-transform",
+							"absolute ease-in-out duration-700 transition-transform text-yogurt-100",
 							"left-2 top-2 h-8 w-8",
-							i < 2
+							i % 2 !== 0
 								? "motion-safe:-rotate-12 group-focus-visible:motion-safe:rotate-12 group-hover:motion-safe:rotate-12"
 								: "motion-safe:rotate-12 group-focus-visible:motion-safe:-rotate-12 group-hover:motion-safe:-rotate-12",
 						)}

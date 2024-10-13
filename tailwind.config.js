@@ -1,5 +1,6 @@
 import formsPlugin from "@tailwindcss/forms";
 import typographyPlugin from "@tailwindcss/typography";
+import containerQueriesPlugin from "@tailwindcss/container-queries";
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -34,6 +35,7 @@ export default {
 			bold: 700,
 		},
 		screens: {
+			"2xs": "384px",
 			"xs": "480px",
 			"sm": "640px",
 			"md": "768px",
@@ -98,5 +100,5 @@ export default {
 			},
 		},
 	},
-	plugins: [formsPlugin, typographyPlugin],
+	plugins: [formsPlugin, typographyPlugin, containerQueriesPlugin],
 };

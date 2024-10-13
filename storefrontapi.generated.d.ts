@@ -43,6 +43,10 @@ interface GeneratedQueryTypes {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };
+  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n        id\n        title\n        description\n        descriptionHtml\n        vendor\n        variants(first: 1) {\n            nodes {\n                id\n                title\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n                quantityAvailable\n            }\n        }\n    }\n}\n': {
+    return: ProductQuery;
+    variables: ProductQueryVariables;
+  };
 }
 
 interface GeneratedMutationTypes {}
