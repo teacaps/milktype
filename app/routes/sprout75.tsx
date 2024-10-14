@@ -103,10 +103,6 @@ const Images = {
 		alt: "a bird's eye view of the bottom of the Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
 		big: true,
 	},
-	SwitchTransparent2: {
-		src: "sprout75/SwitchTransparent2_qatq0q.png",
-		alt: "the taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
-	},
 	BoardFloat: {
 		src: "sprout75/BoardFloat_zmlued.png",
 		alt: "one last shot of the Sprout 75, at an angle from above so it looks like it's floating.",
@@ -145,10 +141,6 @@ export default function Sprout75() {
 							smooth <span className="text-blurple">taro linear</span> switches and fine-tuned for the
 							best typing experience possible.
 						</p>
-						<Image
-							{...Images.SwitchTransparent}
-							className="w-36 xs:w-48 aspect-square absolute -bottom-6 md:-bottom-24 lg:-bottom-32 -left-36 2xs:-left-40 xs:-left-52 md:-left-48 lg:-right-36 lg:left-unset"
-						/>
 					</div>
 				</section>
 				<section className="mt-28 xs:mt-36 md:mt-56 xl:mt-36 2xl:mt-0 pl-8 md:pl-16 md:pr-8 lg:px-16 flex flex-col sm:flex-row lg:items-center sm:justify-between xl:justify-end lg:w-full lg:max-w-screen-lg lg:mx-auto 2xl:mr-24">
@@ -300,7 +292,7 @@ export default function Sprout75() {
 						<h2 className="text-2xl font-medium mb-4 xs:mb-8 relative inline-block">
 							taro switches
 							<Image
-								{...Images.SwitchTransparent2}
+								{...Images.SwitchTransparent}
 								className="h-[300%] aspect-square absolute -top-12 -right-32"
 							/>
 						</h2>
