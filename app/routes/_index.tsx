@@ -4,8 +4,8 @@ import { ProductSection } from "~/components/landing/ProductSection";
 import { Intro } from "~/components/landing/Intro";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { json } from "@shopify/remix-oxygen";
-import { MILKTYPE75_IMAGE } from "~/routes/products.milktype75";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
+import { SPROUT75_IMAGE } from "~/routes/sprout75";
 
 export const meta: MetaFunction = () => [
 	{
@@ -54,8 +54,8 @@ export default function Landing() {
 					</>
 				}
 				description="the perfect keyboard for boba lovers. functional, stunning, and ready to use right out of the box."
-				url="/products/milktype75"
-				image={MILKTYPE75_IMAGE}
+				url="/sprout75"
+				image={SPROUT75_IMAGE}
 			/>
 			<Intro />
 		</Layout>
