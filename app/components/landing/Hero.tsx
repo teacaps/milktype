@@ -23,9 +23,9 @@ export function Hero() {
 					href="/sprout75"
 					className="flex items-center justify-center w-32 lg:w-44 h-[17.25rem] lg:h-auto bg-accent rounded-full hover:motion-safe:animate-boogie hover:motion-reduce:bg-blurple">
 					<img
-						src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_768/sprout75/BoardSpin_h2jybj.png"
+						src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto,w_768/milktype75/gdtycebx9dt7bmhntytu.png"
 						alt=""
-						className="object-cover object-center w-full rounded-full h-3/4"
+						className="object-cover object-center w-full rounded-full h-full"
 					/>
 				</a>
 				<div className="flex flex-col gap-5">

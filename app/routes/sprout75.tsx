@@ -18,6 +18,11 @@ import { SocialBlob } from "~/assets/SocialBlob";
 const title = "sprout 75";
 const description = "PUT A DESCRIPTION HERE";
 
+export const SPROUT75_IMAGE = {
+	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_1500/sprout75/Sprout75Image_vjie5j.png",
+	alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle on an orange-yellow background.",
+};
+
 export const meta: MetaFunction = () => [
 	{
 		title,
@@ -40,11 +45,11 @@ export const meta: MetaFunction = () => [
 	},
 	{
 		property: "og:image",
-		content: "", // todo
+		content: SPROUT75_IMAGE.src,
 	},
 	{
 		property: "twitter:image",
-		content: "", // todo
+		content: SPROUT75_IMAGE.src,
 	},
 ];
 
@@ -57,15 +62,19 @@ const Images = {
 	},
 	NoveltiesTransparent: {
 		src: "sprout75/NoveltiesTransparent_jfalig.png",
-		alt: "a close-up of the right side of the Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup. in the macro column, delete key, and enter key, you can see novelties depicting cats and desserts.",
+		alt: "a close-up of the right side of the Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup. in the macro column, delete fetcherKey, and enter fetcherKey, you can see novelties depicting cats and desserts.",
 	},
 	SwitchTransparent: {
 		src: "sprout75/SwitchTransparent_yfcnbg.png",
-		alt: "the taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
+		alt: "the Taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
 	},
 	KnobTransparent: {
 		src: "sprout75/KnobTransparent_wqpu9b.png",
 		alt: "a silver aluminum knob. it's shaped like a bubble tea cup and has a straw sticking out of the top.",
+	},
+	TweakPreview: {
+		src: "sprout75/TweakPreview_kbzfhf.png",
+		alt: "a preview of Tweak, the configuration tool for the sprout 75. the bottom left corner of a keyboard layout is displayed, with the 'alt' fetcherKey highlighted and a cursor over it.",
 	},
 	DongleCloseUp: {
 		src: "sprout75/DongleCloseUp_x2igie.png",
@@ -118,7 +127,7 @@ export default function Sprout75() {
 					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
 						<span className="font-medium lg:mt-12">pre-order for $135 usd from oct ??</span>
-						<NotificationsSignup key="header" cta="get notified at" />
+						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 					</div>
 				</section>
 				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-4 xl:gap-x-20 lg:items-center lg:w-full">
@@ -165,9 +174,10 @@ export default function Sprout75() {
 				</section>
 				<section className="mt-28 px-8 sm:px-12 md:px-16 flex flex-col lg:flex-row lg:justify-between lg:max-w-screen-lg lg:mx-auto lg:w-full">
 					<div className="w-36 xs:w-52 sm:w-60 md:w-72 lg:w-60 self-end lg:self-auto">
-						<div className="w-full mb-8 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl">
-							<span className="text-2xl text-center font-medium text-wrap">placeholder</span>
-						</div>
+						<Image
+							{...Images.TweakPreview}
+							className="w-full mb-8 aspect-square rounded-3xl overflow-hidden"
+						/>
 						<h3 className="mb-4 text-xl xs:text-2xl xl:text-3xl font-medium">
 							make it <span className="text-accent">yours</span>
 						</h3>
@@ -242,23 +252,23 @@ export default function Sprout75() {
 						className="w-full lg:w-2/3 max-w-5xl aspect-[5/2] px-6 md:px-16 lg:mx-auto xl:px-0"
 						button={{ className: "w-full" }}
 					/>
-					<div className="w-full h-32 xs:h-44 sm:h-48 lg:h-64 xl:h-auto my-4 xl:mx-auto px-8 md:px-16 scroll-px-8 md:scroll-px-16 snap-x flex flex-row gap-8 overflow-x-scroll xl:overflow-x-visible">
-						<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start xl:ml-auto">
-							<span className="text-2xl text-center font-medium text-wrap">placeholder</span>
-						</div>
-						<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">
-							<span className="text-2xl text-center font-medium text-wrap">placeholder</span>
-						</div>
-						<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">
-							<span className="text-2xl text-center font-medium text-wrap">placeholder</span>
-						</div>
-						<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">
-							<span className="text-2xl text-center font-medium text-wrap">placeholder</span>
-						</div>
-						<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start xl:mr-auto">
-							<span className="text-2xl text-center font-medium text-wrap">placeholder</span>
-						</div>
-					</div>
+					{/*<div className="w-full h-32 xs:h-44 sm:h-48 lg:h-64 xl:h-auto my-4 xl:mx-auto px-8 md:px-16 scroll-px-8 md:scroll-px-16 snap-x flex flex-row gap-8 overflow-x-scroll xl:overflow-x-visible">*/}
+					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start xl:ml-auto">*/}
+					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+					{/*	</div>*/}
+					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
+					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+					{/*	</div>*/}
+					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
+					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+					{/*	</div>*/}
+					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
+					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+					{/*	</div>*/}
+					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start xl:mr-auto">*/}
+					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+					{/*	</div>*/}
+					{/*</div>*/}
 					<LightboxImage
 						{...Images.BoardBottom}
 						className="w-full lg:w-2/3 max-w-5xl aspect-[5/2] px-6 md:px-16 mb-8 lg:mx-auto xl:px-0"
@@ -305,29 +315,35 @@ export default function Sprout75() {
 						</div>
 					</div>
 				</section>
-				<section className="@container mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full">
-					<NotificationsSignup key="footer" cta="get updates at" />
-					<div className="mt-12 xs:mt-16 flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
-						<span>or our socials</span>
-						{socials.map((social, i) => (
-							<a
-								key={social.name}
-								href={social.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								className="relative h-12 w-12 group transition-transform focus-visible:outline-none focus-visible:scale-125">
-								<SocialBlob
-									className={twJoin(
-										"h-12 w-12 absolute transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:fill-accent",
-										"motion-safe:group-focus-visible:rotate-90 motion-safe:group-hover:rotate-90 motion-reduce:group-hover:fill-accent",
-										social.color,
-									)}
-								/>
-								<social.icon className="absolute ease-in-out duration-700 transition-transform text-yogurt-100 left-2 top-2 h-8 w-8 motion-safe:-rotate-12 group-focus-visible:motion-safe:rotate-12 group-hover:motion-safe:rotate-12" />
-							</a>
-						))}
+				<section className="@container flex flex-col mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full lg:flex-row">
+					<div>
+						<NotificationsSignup fetcherKey="footer" cta="get updates at" />
+						<div className="mt-12 xs:mt-16 flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
+							<span>or our socials</span>
+							{socials.map((social, i) => (
+								<a
+									key={social.name}
+									href={social.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="relative h-12 w-12 group transition-transform focus-visible:outline-none focus-visible:scale-125">
+									<SocialBlob
+										className={twJoin(
+											"h-12 w-12 absolute transition-transform ease-in-out duration-700 rotate-0 group-focus-visible:fill-accent",
+											"motion-safe:group-focus-visible:rotate-90 motion-safe:group-hover:rotate-90 motion-reduce:group-hover:fill-accent",
+											social.color,
+										)}
+									/>
+									<social.icon className="absolute ease-in-out duration-700 transition-transform text-yogurt-100 left-2 top-2 h-8 w-8 motion-safe:-rotate-12 group-focus-visible:motion-safe:rotate-12 group-hover:motion-safe:rotate-12" />
+								</a>
+							))}
+						</div>
 					</div>
-					<LightboxImage {...Images.BoardFloat} className="w-full md:px-12 mt-6 aspect-[5/3]" />
+					<LightboxImage
+						{...Images.BoardFloat}
+						button={{ className: "lg:w-1/2 lg:min-h-96" }}
+						className="w-full md:px-12 lg:px-0 mt-6 lg:mt-0 aspect-[5/3]"
+					/>
 				</section>
 			</Container>
 		</Layout>
@@ -340,8 +356,8 @@ const Sprout75Mark = ({ className }: { className?: string }) => (
 	</h1>
 );
 
-function NotificationsSignup({ key, cta }: { key: string; cta: string }) {
-	const fetcher = useFetcher({ key });
+function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: string }) {
+	const fetcher = useFetcher({ key: fetcherKey });
 	const email = fetcher.data as string | undefined;
 	const submitted = !!email;
 
