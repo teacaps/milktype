@@ -122,7 +122,7 @@ export default function Sprout75() {
 					/>
 					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<span className="font-medium lg:mt-12">pre-order for $135 usd from oct ??</span>
+						<span className="font-medium lg:mt-12">pre-order for $135 usd early nov</span>
 						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 					</div>
 				</section>
@@ -136,10 +136,9 @@ export default function Sprout75() {
 							for <span className="text-[#A8593F]">boba</span> lovers
 						</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
-							the sprout 75 launches in our signature <span className="text-[#9E7C6B]">cream beige</span>{" "}
-							with <span className="text-[#A8593F]">brown sugar boba</span> keycaps. fully built with
-							smooth <span className="text-blurple">taro linear</span> switches and fine-tuned for the
-							best typing experience possible.
+							sprout 75 launches in our signature <span className="text-[#9E7C6B]">cream beige</span> with{" "}
+							<span className="text-[#A8593F]">brown sugar boba</span> keycaps inspired by our favorite
+							drink. with included novelties and mac/win keycaps, there's something for everyone.
 						</p>
 					</div>
 				</section>
@@ -147,8 +146,8 @@ export default function Sprout75() {
 					<div className="space-y-4 max-w-[20ch] xs:max-w-[30ch] xl:max-w-[40ch] text-balance">
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">turn it up</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
-							with the exclusive <span className="text-[#7B7673]">silver boba knob</span>, included for
-							free if you pre-order on kickstarter.
+							or down with the exclusive <span className="text-[#7B7673]">silver boba knob</span>,
+							included for free if you pre-order on kickstarter. standard volume knob also included.
 						</p>
 					</div>
 					<div className="relative self-end w-80 h-80 xl:w-full xl:max-w-xl 2xl:max-w-2xl xl:h-unset xl:aspect-square -mt-8 xs:-mt-20 sm:mt-0">
@@ -175,7 +174,11 @@ export default function Sprout75() {
 						</h3>
 						<p className="xs:text-lg xl:text-xl xs:font-medium text-balance">
 							{/* todo: change link */}
-							fully configurable with <a href="https://usevia.app">milktype tweak</a>
+							configure keybinds and settings with{" "}
+							<a href="https://usevia.app" className="underline hover:no-underline hover:text-accent">
+								milktype tweak
+							</a>
+							, our lightweight design tool.
 						</p>
 					</div>
 					<div className="w-36 xs:w-52 sm:w-60 md:w-72 lg:w-60 -mt-16 lg:mt-48">
@@ -185,7 +188,7 @@ export default function Sprout75() {
 						/>
 						<h3 className="mb-4 text-xl xs:text-2xl xl:text-3xl font-medium">drop the wire</h3>
 						<p className="xs:text-lg xl:text-xl xs:font-medium text-balance">
-							usb dongle bluetooth wireless keywords etc
+							with bluetooth and usb wireless, and a battery that lasts for 6 weeks.
 						</p>
 					</div>
 					<div className="w-36 xs:w-52 sm:w-60 md:w-72 lg:w-60 -mt-16 self-end lg:self-auto lg:mt-96">
@@ -193,9 +196,10 @@ export default function Sprout75() {
 							{...Images.NoveltySwap}
 							className="w-full mb-8 aspect-square rounded-3xl overflow-hidden"
 						/>
-						<h3 className="mb-4 text-xl xs:text-2xl xl:text-3xl font-medium">woah novelties</h3>
+						<h3 className="mb-4 text-xl xs:text-2xl xl:text-3xl font-medium">switch it up</h3>
 						<p className="xs:text-lg xl:text-xl xs:font-medium text-balance">
-							very novel hotswap switches and it's taro wow
+							with hotswap compatibility and our taro switches, designed for a light, buttery smooth
+							typing experience.
 						</p>
 					</div>
 				</section>
@@ -208,11 +212,11 @@ export default function Sprout75() {
 						<div className="w-full 2xl:w-auto flex flex-col 2xl:mt-32 2xl:mx-auto">
 							<div className="w-4/5 xs:w-1/2 2xl:w-3/4 pl-8 md:pl-16 xs:-mt-16">
 								<h2 className="my-5 text-2xl xs:text-3xl xl:text-4xl font-medium">
-									spruce up your desk
+									sweeten your setup
 								</h2>
 								<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance">
 									with the matching <span className="text-[#A8593F]">brown sugar boba deskpad</span>{" "}
-									for +$10 usd when you pre-order ($18 sale price).
+									for +$10 usd when you pre-order ($18 retail).
 								</p>
 							</div>
 							<div className="w-full max-w-5xl relative hidden 2xl:block">
