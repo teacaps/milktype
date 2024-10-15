@@ -53,7 +53,7 @@ export default function Landing() {
 						sprout<span className="text-lg align-sub ml-1 font-bold">75</span>
 					</>
 				}
-				description="the perfect keyboard for boba lovers. functional, stunning, and ready to use right out of the box."
+				description="launching in cream beige featuring a boba theme, included novelties, and mac/win keycaps, there's something for everyone."
 				url="/sprout75"
 				image={SPROUT75_IMAGE}
 			/>

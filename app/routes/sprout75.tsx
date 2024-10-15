@@ -16,7 +16,7 @@ import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
 
 const title = "sprout 75";
-const description = "PUT A DESCRIPTION HERE";
+const description = "available for pre-order early nov 🌱";
 
 export const SPROUT75_IMAGE = {
 	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_1500/sprout75/Sprout75Image_vjie5j.png",
@@ -126,12 +126,12 @@ export default function Sprout75() {
 						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 					</div>
 				</section>
-				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-4 xl:gap-x-20 lg:items-center lg:w-full">
+				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-20 lg:items-center lg:w-full lg:max-w-screen-2xl lg:mr-auto">
 					<Image
 						{...Images.NoveltiesTransparent}
 						className="w-5/6 md:w-2/3 lg:w-1/2 lg:max-w-xl xl:max-w-3xl aspect-square"
 					/>
-					<div className="relative -mt-4 xs:-mt-12 md:-mt-48 lg:-mt-0 xl:mt-20 space-y-4 self-end lg:self-center max-w-[20ch] xs:max-w-[30ch] md:max-w-[35ch] text-balance">
+					<div className="relative -mt-4 xs:-mt-12 md:-mt-48 lg:-mt-0 xl:mt-20 space-y-4 self-end lg:self-center lg:flex-shrink-0 max-w-[20ch] xs:max-w-[30ch] md:max-w-[35ch] xl:max-w-[40ch] text-balance">
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">
 							for <span className="text-[#A8593F]">boba</span> lovers
 						</h2>
@@ -143,7 +143,7 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="mt-28 xs:mt-36 md:mt-56 xl:mt-36 2xl:mt-0 pl-8 md:pl-16 md:pr-8 lg:px-16 flex flex-col sm:flex-row lg:items-center sm:justify-between xl:justify-end lg:w-full lg:max-w-screen-lg lg:mx-auto 2xl:mr-24">
-					<div className="space-y-4 max-w-[20ch] xs:max-w-[30ch] xl:max-w-[40ch] text-balance">
+					<div className="space-y-4 lg:flex-shrink-0 max-w-[20ch] xs:max-w-[25ch] sm:max-w-[30ch] xl:max-w-[40ch] text-balance">
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">turn it up</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
 							or down with the exclusive <span className="text-[#7B7673]">silver boba knob</span>,
