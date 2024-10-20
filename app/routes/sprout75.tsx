@@ -19,7 +19,7 @@ const title = "sprout 75";
 const description = "available for pre-order nov 6 &#127793;";
 
 export const SPROUT75_IMAGE = {
-	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_1500/sprout75/Sprout75Image_vjie5j.png",
+	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best/sprout75/Sprout75Image_vjie5j.png",
 	alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle on an orange-yellow background.",
 };
 
