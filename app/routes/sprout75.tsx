@@ -16,7 +16,7 @@ import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
 
 const title = "sprout 75";
-const description = "available for pre-order early nov &#127793;";
+const description = "available for pre-order nov 6 &#127793;";
 
 export const SPROUT75_IMAGE = {
 	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_1500/sprout75/Sprout75Image_vjie5j.png",
@@ -122,7 +122,7 @@ export default function Sprout75() {
 					/>
 					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<span className="font-medium lg:mt-12">pre-order for $135 usd early nov</span>
+						<span className="font-medium lg:mt-12">pre-order for $135 usd on nov 6</span>
 						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 					</div>
 				</section>
