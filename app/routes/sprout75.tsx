@@ -16,7 +16,7 @@ import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
 
 const title = "sprout 75";
-const description = "available for pre-order early nov 🌱";
+const description = "available for pre-order early nov &#127793;";
 
 export const SPROUT75_IMAGE = {
 	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best,w_1500/sprout75/Sprout75Image_vjie5j.png",
