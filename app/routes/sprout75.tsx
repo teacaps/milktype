@@ -122,7 +122,7 @@ export default function Sprout75() {
 					/>
 					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<span className="font-medium lg:mt-12">pre-order for $135 usd on nov 6</span>
+						<span className="font-medium lg:mt-12">pre-order available on nov 6</span>
 						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 					</div>
 				</section>
