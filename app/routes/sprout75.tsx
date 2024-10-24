@@ -309,33 +309,35 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="mt-36 xl:mt-44 w-full lg:mx-auto">
-					<LightboxImage
-						{...Images.BoardTop}
-						className="w-full lg:w-2/3 max-w-5xl aspect-[5/2] px-6 md:px-16 lg:mx-auto xl:px-0"
-						button={{ className: "w-full" }}
-					/>
-					{/*<div className="w-full h-32 xs:h-44 sm:h-48 lg:h-64 xl:h-auto my-4 xl:mx-auto px-8 md:px-16 scroll-px-8 md:scroll-px-16 snap-x flex flex-row gap-8 overflow-x-scroll xl:overflow-x-visible">*/}
-					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start xl:ml-auto">*/}
-					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-					{/*	</div>*/}
-					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
-					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-					{/*	</div>*/}
-					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
-					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-					{/*	</div>*/}
-					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
-					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-					{/*	</div>*/}
-					{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start xl:mr-auto">*/}
-					{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-					{/*	</div>*/}
-					{/*</div>*/}
-					<LightboxImage
-						{...Images.BoardBottom}
-						className="w-full lg:w-2/3 max-w-5xl aspect-[5/2] px-6 md:px-16 mb-8 lg:mx-auto xl:px-0"
-						button={{ className: "w-full" }}
-					/>
+					<div className="w-full flex flex-col 2xl:flex-row 2xl:mb-24">
+						<LightboxImage
+							{...Images.BoardTop}
+							className="w-full lg:w-2/3 2xl:w-4/5 max-w-5xl aspect-[5/2] px-6 md:px-16 lg:mx-auto xl:px-0"
+							button={{ className: "w-full" }}
+						/>
+						{/*<div className="w-full h-32 xs:h-44 sm:h-48 lg:h-64 xl:h-auto my-4 xl:mx-auto px-8 md:px-16 scroll-px-8 md:scroll-px-16 snap-x flex flex-row gap-8 overflow-x-scroll xl:overflow-x-visible">*/}
+						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start xl:ml-auto">*/}
+						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+						{/*	</div>*/}
+						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
+						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+						{/*	</div>*/}
+						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
+						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+						{/*	</div>*/}
+						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
+						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+						{/*	</div>*/}
+						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start xl:mr-auto">*/}
+						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
+						{/*	</div>*/}
+						{/*</div>*/}
+						<LightboxImage
+							{...Images.BoardBottom}
+							className="w-full lg:w-2/3 2xl:w-4/5 max-w-5xl aspect-[5/2] px-6 md:px-16 mb-8 lg:mx-auto xl:px-0"
+							button={{ className: "w-full" }}
+						/>
+					</div>
 					<div className="px-7 md:px-16 w-full lg:max-w-screen-lg lg:mx-auto">
 						<h2 className="text-2xl xs:text-3xl font-medium mb-4 xs:mb-8">specs</h2>
 						<div className="flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
