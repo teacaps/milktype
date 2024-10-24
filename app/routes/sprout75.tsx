@@ -1,13 +1,13 @@
 import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
-import type { MetaFunction } from "@shopify/remix-oxygen";
+import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin, twMerge } from "tailwind-merge";
-import { useFetcher } from "@remix-run/react";
+import { json, useFetcher, useLoaderData, redirect } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
 import { Button } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
-import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
+import { BuyNowButton, sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import { Splat } from "~/assets/Splat";
 import lightboxStyles from "yet-another-react-lightbox/styles.css";
 import { Asteroid } from "~/assets/Asteroid";
@@ -54,6 +54,35 @@ export const meta: MetaFunction = () => [
 ];
 
 export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
+
+export async function loader({ context }: LoaderFunctionArgs) {
+	const RESERVATION_HANDLE = "sprout-75-reservation";
+	const { product } = await context.storefront.query(RESERVATION_QUERY, {
+		variables: {
+			handle: RESERVATION_HANDLE,
+		},
+	});
+
+	if (!product?.id || !product?.variants?.nodes?.[0]?.id) {
+		throw new Response(null, { status: 404 });
+	}
+
+	return json({
+		variantId: product.variants.nodes[0].id,
+	});
+}
+
+export async function action({ request, context }: ActionFunctionArgs) {
+	const { query, variables } = await request.json<{
+		query: string;
+		variables: Record<string, unknown>;
+	}>();
+	if (!query || !variables) return null;
+	const { cartCreate } = await context.storefront.mutate(query, { variables });
+	const checkoutUrl = cartCreate?.cart?.checkoutUrl;
+	if (checkoutUrl) return redirect(checkoutUrl, {});
+	return null;
+}
 
 const Images = {
 	BoardSpin: {
@@ -110,6 +139,9 @@ const Images = {
 } satisfies Record<string, ImageProps>;
 
 export default function Sprout75() {
+	const { cartCreate } = useCart();
+	const { variantId } = useLoaderData<typeof loader>();
+
 	return (
 		<Layout footer={false}>
 			<Container
@@ -203,43 +235,77 @@ export default function Sprout75() {
 						</p>
 					</div>
 				</section>
-				<section className="mt-28 lg:mt-40 flex flex-col">
-					<div className="flex flex-col lg:flex-row-reverse lg:items-center lg:gap-x-12 lg:w-full lg:ml-auto">
+				<section className="mt-28 lg:mt-40 flex flex-col lg:flex-row-reverse xl:pl-16 2xl:pl-32">
+					<div className="lg:w-auto lg:flex lg:flex-col lg:items-end xl:w-full xl:flex-grow">
 						<Image
 							{...Images.DeskpadCloseUp}
-							className="w-11/12 xs:w-3/4 lg:w-1/2 max-w-lg xl:max-w-xl 2xl:max-w-3xl mb-8 aspect-square self-end"
+							className="w-11/12 xs:w-3/4 lg:w-full 2xl:w-[34rem] max-w-lg lg:max-w-3xl xl:max-w-xl xs:mb-8 aspect-square ml-auto lg:ml-0"
 						/>
-						<div className="w-full 2xl:w-auto flex flex-col 2xl:mt-32 2xl:mx-auto">
-							<div className="w-4/5 xs:w-1/2 2xl:w-3/4 pl-8 md:pl-16 xs:-mt-16">
-								<h2 className="my-5 text-2xl xs:text-3xl xl:text-4xl font-medium">
+						<div className="w-full xl:w-5/6 lg:max-w-3xl xl:max-w-xl text-cocoa-120 self-end 2xl:self-start pl-10 pr-8 mt-12 2xl:-mt-2 3xl:-mt-32 mx-auto 2xl:mr-0 2xl:ml-[5%] hidden lg:block rounded-2xl xl:py-16 xl:border-4 xl:border-accent">
+							<h2
+								id="free-deskpad"
+								className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium inline-block">
+								get a free deskpad
+							</h2>
+							<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance 2xl:w-fit">
+								with your order if you put down $1 to reserve your spot right now! your order will be
+								the first to ship, and you’ll get access to our discord server for sneak peeks and
+								behind-the-scenes content.
+							</p>
+							<Button
+								type="button"
+								className="mt-5 py-4 text-yogurt-100 xs:text-lg xs_font-medium xl:text-xl hover:enabled:bg-shrub"
+								color="accent"
+								rainbow={false}
+								onClick={() => {
+									cartCreate({ lines: [{ merchandiseId: variantId, quantity: 1 }] });
+								}}>
+								let’s do it →
+							</Button>
+						</div>
+					</div>
+					<div className="flex flex-col lg:flex-grow max-w-screen-sm 2xl:max-w-screen-md">
+						<div className="w-full lg:w-auto flex flex-col mb-5 xs:mt-20 gap-y-6">
+							<div className="w-4/5 xs:w-2/3 lg:w-3/4 pl-8 sm:pl-12 md:pl-16 xs:-mt-16 sm:-mt-24 md:-mt-40 lg:mt-32">
+								<h2 className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium">
 									sweeten your setup
 								</h2>
 								<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance">
-									with the matching <span className="text-[#A8593F]">brown sugar boba deskpad</span>{" "}
-									for +$10 usd when you pre-order ($18 retail).
+									with the matching <span className="text-[#A8593F]">brown sugar boba deskpad</span>,
+									perfectly sized to fit all workspaces.
 								</p>
 							</div>
-							<div className="w-full max-w-5xl relative hidden 2xl:block">
+							<div className="w-full relative">
 								<LightboxImage {...Images.DeskpadFull} className="w-full object-contain" />
 								<Asteroid
-									className="h-24 xs:h-32 absolute top-0 right-0 xs:right-2 rotate-12"
+									className="h-24 xs:h-32 absolute top-0 right-0 rotate-12"
 									asteroidClasses="fill-blurple h-full w-full">
 									<span className="text-yogurt-100 text-sm xs:text-base text-center font-semibold leading-4 text-wrap w-full mt-1 px-5">
 										67.5x30 cm
 									</span>
 								</Asteroid>
 							</div>
+							<div className="w-full text-cocoa-120 self-end pl-8 sm:pl-12 md:pl-16 lg:hidden">
+								<h2 className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium inline-block">
+									get a free deskpad
+								</h2>
+								<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance">
+									with your order if you put down $1 to reserve your spot right now! your order will
+									be the first to ship, and you’ll get access to our discord server for sneak peeks
+									and behind-the-scenes content.
+								</p>
+								<Button
+									type="button"
+									className="mt-5 py-4 text-yogurt-100 xs:text-lg xs_font-medium xl:text-xl hover:enabled:bg-shrub"
+									color="accent"
+									rainbow={false}
+									onClick={() => {
+										cartCreate({ lines: [{ merchandiseId: variantId, quantity: 1 }] });
+									}}>
+									let’s do it →
+								</Button>
+							</div>
 						</div>
-					</div>
-					<div className="w-full lg:-mt-20 xl:-mt-40 lg:w-2/3 relative h-fit md:px-8 2xl:hidden">
-						<LightboxImage {...Images.DeskpadFull} className="w-full object-contain" />
-						<Asteroid
-							className="h-24 xs:h-32 absolute top-0 right-0 xs:right-2 rotate-12"
-							asteroidClasses="fill-blurple h-full w-full">
-							<span className="text-yogurt-100 text-sm xs:text-base text-center font-semibold leading-4 text-wrap w-full mt-1 px-5">
-								67.5x30 cm
-							</span>
-						</Asteroid>
 					</div>
 				</section>
 				<section className="mt-36 xl:mt-44 w-full lg:mx-auto">
@@ -425,3 +491,16 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 		</fetcher.Form>
 	);
 }
+
+const RESERVATION_QUERY = `#graphql
+query Reservation($handle: String!) {
+    product(handle: $handle) {
+        id
+		variants(first: 1) {
+			nodes {
+				id
+            }
+		}
+    }
+}
+`;

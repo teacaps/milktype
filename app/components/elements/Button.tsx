@@ -42,12 +42,14 @@ const LINK_HOVER_CLASSES: Record<Color, string> = {
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	color: Color;
+	rainbow?: boolean;
 	disabled?: boolean;
 	icon?: ReactNode | undefined | null;
 	type?: "button" | "submit" | "reset";
 }
 export function Button({
 	color: baseColor,
+	rainbow = true,
 	disabled,
 	icon,
 	type = "button",
@@ -56,7 +58,7 @@ export function Button({
 	...props
 }: ButtonProps) {
 	const bgClasses = disabled ? "bg-cocoa-80 active:bg-cocoa-80" : BG_CLASSES[baseColor];
-	const [hoverColor, setHoverColor] = useState(randomColor(baseColor));
+	const [hoverColor, setHoverColor] = useState(rainbow ? randomColor(baseColor) : baseColor);
 	const hoverBgClasses = HOVER_CLASSES[hoverColor];
 	return (
 		<button
@@ -71,11 +73,11 @@ export function Button({
 			{...props}
 			onMouseEnter={(ev) => {
 				props.onMouseEnter?.(ev);
-				if (!disabled) setHoverColor(randomColor(baseColor, hoverColor));
+				if (!disabled && rainbow) setHoverColor(randomColor(baseColor, hoverColor));
 			}}
 			onFocus={(ev) => {
 				props.onFocus?.(ev);
-				if (!disabled) setHoverColor(randomColor(baseColor, hoverColor));
+				if (!disabled && rainbow) setHoverColor(randomColor(baseColor, hoverColor));
 			}}>
 			{children}
 			{icon || null}

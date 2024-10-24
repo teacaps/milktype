@@ -34,6 +34,18 @@ export type ProductQuery = {
   >;
 };
 
+export type ReservationQueryVariables = StorefrontAPI.Exact<{
+  handle: StorefrontAPI.Scalars['String']['input'];
+}>;
+
+export type ReservationQuery = {
+  product?: StorefrontAPI.Maybe<
+    Pick<StorefrontAPI.Product, 'id'> & {
+      variants: {nodes: Array<Pick<StorefrontAPI.ProductVariant, 'id'>>};
+    }
+  >;
+};
+
 interface GeneratedQueryTypes {
   '#graphql\n\tquery Shop { shop { id } }': {
     return: ShopQuery;
@@ -43,9 +55,9 @@ interface GeneratedQueryTypes {
     return: ProductQuery;
     variables: ProductQueryVariables;
   };
-  '#graphql\nquery Product($handle: String!) {\n    product(handle: $handle) {\n        id\n        title\n        description\n        descriptionHtml\n        vendor\n        variants(first: 1) {\n            nodes {\n                id\n                title\n                price {\n                    amount\n                    currencyCode\n                }\n                compareAtPrice {\n                    amount\n                    currencyCode\n                }\n                quantityAvailable\n            }\n        }\n    }\n}\n': {
-    return: ProductQuery;
-    variables: ProductQueryVariables;
+  '#graphql\nquery Reservation($handle: String!) {\n    product(handle: $handle) {\n        id\n\t\tvariants(first: 1) {\n\t\t\tnodes {\n\t\t\t\tid\n            }\n\t\t}\n    }\n}\n': {
+    return: ReservationQuery;
+    variables: ReservationQueryVariables;
   };
 }
 
