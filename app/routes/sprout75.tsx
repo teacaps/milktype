@@ -292,10 +292,10 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="mt-36 xl:mt-44 w-full lg:mx-auto">
-					<div className="w-full flex flex-col 2xl:flex-row 2xl:mb-24">
+					<div className="w-full max-w-[73rem] flex flex-col xl:flex-row lg:mx-auto xl:mb-8 xl:justify-between xl:gap-x-24">
 						<LightboxImage
 							{...Images.BoardTop}
-							className="w-full lg:w-2/3 2xl:w-4/5 max-w-5xl aspect-[5/2] px-6 md:px-16 lg:mx-auto xl:px-0"
+							className="w-full lg:w-2/3 xl:w-full max-w-5xl aspect-[5/2] xl:aspect-[5/3] px-6 md:px-16 lg:mx-auto xl:px-0 xl:mx-0"
 							button={{ className: "w-full" }}
 						/>
 						{/*<div className="w-full h-32 xs:h-44 sm:h-48 lg:h-64 xl:h-auto my-4 xl:mx-auto px-8 md:px-16 scroll-px-8 md:scroll-px-16 snap-x flex flex-row gap-8 overflow-x-scroll xl:overflow-x-visible">*/}
@@ -317,7 +317,7 @@ export default function Sprout75() {
 						{/*</div>*/}
 						<LightboxImage
 							{...Images.BoardBottom}
-							className="w-full lg:w-2/3 2xl:w-4/5 max-w-5xl aspect-[5/2] px-6 md:px-16 mb-8 lg:mx-auto xl:px-0"
+							className="w-full lg:w-2/3 xl:w-full max-w-5xl aspect-[5/2] xl:aspect-[5/3] px-6 md:px-16 mb-8 lg:mx-auto xl:px-0 xl:mx-0 xl:mb-0"
 							button={{ className: "w-full" }}
 						/>
 					</div>
@@ -363,9 +363,10 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="@container flex flex-col mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full lg:flex-row">
-					<div>
+					<div className="flex flex-col gap-y-8 text-cocoa-120 font-medium xs:text-lg">
+						<span>pre-order from nov 6 for $135</span>
 						<NotificationsSignup fetcherKey="footer" cta="get updates at" />
-						<div className="mt-12 xs:mt-16 flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
+						<div className="flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
 							<span>or our socials</span>
 							{socials.map((social, i) => (
 								<a
