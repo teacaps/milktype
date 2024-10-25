@@ -205,11 +205,8 @@ export default function Sprout75() {
 						</h3>
 						<p className="xs:text-lg xl:text-xl xs:font-medium text-balance">
 							{/* todo: change link */}
-							configure keybinds and settings with{" "}
-							<a href="https://usevia.app" className="underline hover:no-underline hover:text-accent">
-								milktype tweak
-							</a>
-							, our lightweight design tool.
+							configure keybinds and settings with <span className="text-accent">milktype tweak</span>,
+							our lightweight design tool.
 						</p>
 					</div>
 					<div className="w-36 xs:w-52 sm:w-60 md:w-72 lg:w-60 -mt-16 lg:mt-48">
