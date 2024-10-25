@@ -3,17 +3,18 @@ import { Layout } from "~/components/global/Layout";
 import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin, twMerge } from "tailwind-merge";
-import { json, useFetcher, useLoaderData, redirect } from "@remix-run/react";
+import { json, useFetcher, useLoaderData, useNavigation, useActionData, Form } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
 import { Button } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
-import { BuyNowButton, sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
+import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import { Splat } from "~/assets/Splat";
 import lightboxStyles from "yet-another-react-lightbox/styles.css";
 import { Asteroid } from "~/assets/Asteroid";
 import { InfoBubble } from "~/components/elements/InfoBubble";
 import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
+import { useEffect, useState } from "react";
 
 const title = "sprout 75";
 const description = "available for pre-order nov 6 &#127793;";
@@ -73,15 +74,14 @@ export async function loader({ context }: LoaderFunctionArgs) {
 }
 
 export async function action({ request, context }: ActionFunctionArgs) {
-	const { query, variables } = await request.json<{
-		query: string;
-		variables: Record<string, unknown>;
-	}>();
-	if (!query || !variables) return null;
-	const { cartCreate } = await context.storefront.mutate(query, { variables });
+	const fd = await request.formData();
+	if (fd.get("action") !== "cartCreate") return null;
+	const variantId = fd.get("variantId");
+	if (!variantId || typeof variantId !== "string") return null;
+	const { cartCreate } = await context.storefront.mutate(CART_CREATE_MUTATION, { variables: { variantId } });
 	const checkoutUrl = cartCreate?.cart?.checkoutUrl;
-	if (checkoutUrl) return redirect(checkoutUrl, {});
-	return null;
+	if (checkoutUrl) return json({ checkoutUrl });
+	return json({ checkoutUrl: null });
 }
 
 const Images = {
@@ -139,7 +139,6 @@ const Images = {
 } satisfies Record<string, ImageProps>;
 
 export default function Sprout75() {
-	const { cartCreate } = useCart();
 	const { variantId } = useLoaderData<typeof loader>();
 
 	return (
@@ -242,9 +241,7 @@ export default function Sprout75() {
 							className="w-11/12 xs:w-3/4 lg:w-full 2xl:w-[34rem] max-w-lg lg:max-w-3xl xl:max-w-xl xs:mb-8 aspect-square ml-auto lg:ml-0"
 						/>
 						<div className="w-full xl:w-5/6 lg:max-w-3xl xl:max-w-xl text-cocoa-120 self-end 2xl:self-start pl-10 pr-8 mt-12 2xl:-mt-2 3xl:-mt-32 mx-auto 2xl:mr-0 2xl:ml-[5%] hidden lg:block rounded-2xl xl:py-16 xl:border-4 xl:border-accent">
-							<h2
-								id="free-deskpad"
-								className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium inline-block">
+							<h2 className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium inline-block">
 								get a free deskpad
 							</h2>
 							<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance 2xl:w-fit">
@@ -252,16 +249,7 @@ export default function Sprout75() {
 								the first to ship, and you’ll get access to our discord server for sneak peeks and
 								behind-the-scenes content.
 							</p>
-							<Button
-								type="button"
-								className="mt-5 py-4 text-yogurt-100 xs:text-lg xs_font-medium xl:text-xl hover:enabled:bg-shrub"
-								color="accent"
-								rainbow={false}
-								onClick={() => {
-									cartCreate({ lines: [{ merchandiseId: variantId, quantity: 1 }] });
-								}}>
-								let’s do it →
-							</Button>
+							<BuyNowButton variantId={variantId} />
 						</div>
 					</div>
 					<div className="flex flex-col lg:flex-grow max-w-screen-sm 2xl:max-w-screen-md">
@@ -276,7 +264,11 @@ export default function Sprout75() {
 								</p>
 							</div>
 							<div className="w-full relative">
-								<LightboxImage {...Images.DeskpadFull} className="w-full object-contain" />
+								<LightboxImage
+									{...Images.DeskpadFull}
+									className="w-full object-contain scroll-mt-72"
+									id="deskpad"
+								/>
 								<Asteroid
 									className="h-24 xs:h-32 absolute top-0 right-0 rotate-12"
 									asteroidClasses="fill-blurple h-full w-full">
@@ -294,16 +286,7 @@ export default function Sprout75() {
 									be the first to ship, and you’ll get access to our discord server for sneak peeks
 									and behind-the-scenes content.
 								</p>
-								<Button
-									type="button"
-									className="mt-5 py-4 text-yogurt-100 xs:text-lg xs_font-medium xl:text-xl hover:enabled:bg-shrub"
-									color="accent"
-									rainbow={false}
-									onClick={() => {
-										cartCreate({ lines: [{ merchandiseId: variantId, quantity: 1 }] });
-									}}>
-									let’s do it →
-								</Button>
+								<BuyNowButton variantId={variantId} />
 							</div>
 						</div>
 					</div>
@@ -494,6 +477,36 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 	);
 }
 
+function BuyNowButton({ variantId }: { variantId: string }) {
+	const navigation = useNavigation();
+	const { checkoutUrl } = useActionData<{ checkoutUrl: string | null }>() || {};
+	const { cartCreate } = useCart();
+	const [buyingNow, setBuyingNow] = useState(false);
+
+	useEffect(() => {
+		console.log("checkoutUrl", checkoutUrl);
+		if (checkoutUrl && buyingNow) {
+			window.open(checkoutUrl, "_blank");
+			setBuyingNow(false);
+		}
+	}, [checkoutUrl, buyingNow]);
+
+	return (
+		<Form method="POST" className="mt-5" onSubmit={() => setBuyingNow(true)}>
+			<input type="hidden" name="action" value="cartCreate" />
+			<input type="hidden" name="variantId" value={variantId} />
+			<Button
+				type="submit"
+				className="py-4 text-yogurt-100 xs:text-lg xs:font-medium xl:text-xl hover:enabled:bg-shrub"
+				color="accent"
+				rainbow={false}
+				disabled={navigation.state !== "idle"}>
+				{navigation.state === "idle" ? "let’s do it →" : "loading..."}
+			</Button>
+		</Form>
+	);
+}
+
 const RESERVATION_QUERY = `#graphql
 query Reservation($handle: String!) {
     product(handle: $handle) {
@@ -504,5 +517,15 @@ query Reservation($handle: String!) {
             }
 		}
     }
+}
+`;
+
+const CART_CREATE_MUTATION = `#graphql
+mutation CartCreate($variantId: ID!) {
+	cartCreate(input: { lines: [{ merchandiseId: $variantId, quantity: 1 }] }) {
+		cart {
+			checkoutUrl
+		}
+	}
 }
 `;

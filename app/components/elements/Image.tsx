@@ -1,19 +1,17 @@
 import { twMerge } from "tailwind-merge";
 import YARLightbox from "yet-another-react-lightbox";
 import ZoomPlugin from "yet-another-react-lightbox/plugins/zoom";
-import { type ButtonHTMLAttributes, useState } from "react";
+import { type ButtonHTMLAttributes, type ImgHTMLAttributes, useState } from "react";
 
 const CLOUDINARY_ID = "dpfhkaxk7";
 const CLOUDINARY_URL_PREFIX = "https://res.cloudinary.com/" + CLOUDINARY_ID + "/image/upload";
 
-export interface ImageProps {
+export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 	src: string;
-	alt: string;
-	className?: string;
 	big?: boolean;
 }
 
-export function Image({ src, alt, className, big }: ImageProps) {
+export function Image({ src, alt, className, big, ...props }: ImageProps) {
 	const { srcset, srcFull } = makeSrcs(src);
 	const sizes = big ? "(max-width: 768px) 768px, 2000px" : "768px";
 	return (
@@ -24,20 +22,18 @@ export function Image({ src, alt, className, big }: ImageProps) {
 				src={srcFull}
 				alt={alt}
 				className={twMerge("object-cover object-center", className)}
+				{...props}
 			/>
 		</>
 	);
 }
 
 export function LightboxImage({
-	src,
-	alt,
-	className,
-	big,
 	button,
+	...imageProps
 }: ImageProps & { button?: ButtonHTMLAttributes<HTMLButtonElement> }) {
 	const [open, setOpen] = useState(false);
-	const { srcSmall, srcFull } = makeSrcs(src);
+	const { srcSmall, srcFull } = makeSrcs(imageProps.src);
 	return (
 		<>
 			<button
@@ -46,7 +42,7 @@ export function LightboxImage({
 				aria-label="Open image in full screen"
 				{...button}
 				className={twMerge("focus-visible:outline-none", button?.className)}>
-				<Image src={src} alt={alt} className={className} big={big} />
+				<Image {...imageProps} />
 			</button>
 			<YARLightbox
 				open={open}
@@ -55,7 +51,7 @@ export function LightboxImage({
 				slides={[
 					{
 						src: srcFull,
-						alt,
+						alt: imageProps.alt,
 						srcSet: [
 							{ src: srcSmall, width: 768, height: 768 },
 							{ src: srcFull, width: 2000, height: 2000 },

@@ -46,6 +46,16 @@ export type ReservationQuery = {
   >;
 };
 
+export type CartCreateMutationVariables = StorefrontAPI.Exact<{
+  variantId: StorefrontAPI.Scalars['ID']['input'];
+}>;
+
+export type CartCreateMutation = {
+  cartCreate?: StorefrontAPI.Maybe<{
+    cart?: StorefrontAPI.Maybe<Pick<StorefrontAPI.Cart, 'checkoutUrl'>>;
+  }>;
+};
+
 interface GeneratedQueryTypes {
   '#graphql\n\tquery Shop { shop { id } }': {
     return: ShopQuery;
@@ -61,7 +71,12 @@ interface GeneratedQueryTypes {
   };
 }
 
-interface GeneratedMutationTypes {}
+interface GeneratedMutationTypes {
+  '#graphql\nmutation CartCreate($variantId: ID!) {\n\tcartCreate(input: { lines: [{ merchandiseId: $variantId, quantity: 1 }] }) {\n\t\tcart {\n\t\t\tcheckoutUrl\n\t\t}\n\t}\n}\n': {
+    return: CartCreateMutation;
+    variables: CartCreateMutationVariables;
+  };
+}
 
 declare module '@shopify/hydrogen' {
   interface StorefrontQueries extends GeneratedQueryTypes {}

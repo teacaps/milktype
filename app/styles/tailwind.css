@@ -26,4 +26,7 @@
     img {
         max-width: unset;
     }
+    html {
+        scroll-behavior: smooth;
+    }
 }
