@@ -17,7 +17,7 @@ import { SocialBlob } from "~/assets/SocialBlob";
 import { useEffect, useState } from "react";
 
 const title = "sprout 75";
-const description = "available for pre-order nov 6 &#127793;";
+const description = "available for pre-order nov 12 &#127793;";
 
 export const SPROUT75_IMAGE = {
 	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best/sprout75/Sprout75Image_vjie5j.png",
@@ -153,7 +153,7 @@ export default function Sprout75() {
 					/>
 					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<span className="font-medium lg:mt-12">pre-order available on nov 6</span>
+						<span className="font-medium lg:mt-12">pre-order available on nov 12</span>
 						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 					</div>
 				</section>
@@ -361,7 +361,7 @@ export default function Sprout75() {
 				</section>
 				<section className="@container flex flex-col mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full lg:flex-row">
 					<div className="flex flex-col gap-y-8 text-cocoa-120 font-medium xs:text-lg">
-						<span>pre-order from nov 6 for $135</span>
+						<span>pre-order from nov 12 for $135</span>
 						<NotificationsSignup fetcherKey="footer" cta="get updates at" />
 						<div className="flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
 							<span>or our socials</span>
