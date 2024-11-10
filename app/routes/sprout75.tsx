@@ -84,60 +84,6 @@ export async function action({ request, context }: ActionFunctionArgs) {
 	return json({ checkoutUrl: null });
 }
 
-const Images = {
-	BoardSpin: {
-		src: "sprout75/BoardSpin.png",
-		alt: "a photo of the Sprout 75 mechanical keyboard. it's placed vertically with just one corner on the ground. it's a cream-colored aluminum keyboard showcasing the brown sugar boba keycaps.",
-	},
-	NoveltiesTransparent: {
-		src: "sprout75/NoveltiesTransparent.png",
-		alt: "a close-up of the right side of the Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup. in the macro column, delete fetcherKey, and enter fetcherKey, you can see novelties depicting cats and desserts.",
-	},
-	SwitchTransparent: {
-		src: "sprout75/SwitchTransparent.png",
-		alt: "the Taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
-	},
-	KnobTransparent: {
-		src: "sprout75/KnobTransparent.png",
-		alt: "a silver aluminum knob. it's shaped like a bubble tea cup and has a straw sticking out of the top.",
-	},
-	TweakPreview: {
-		src: "sprout75/TweakPreview.png",
-		alt: "a preview of Tweak, the configuration tool for the sprout 75. the bottom left corner of a keyboard layout is displayed, with the 'alt' fetcherKey highlighted and a cursor over it.",
-	},
-	DongleCloseUp: {
-		src: "sprout75/DongleCloseUp.png",
-		alt: "a very close-up shot of the back of the Sprout 75. there's a 2.4ghz usb dongle leaning against the board, next to a switch for toggling between wireless and wired.",
-	},
-	NoveltySwap: {
-		src: "sprout75/NoveltySwap.png",
-		alt: "the top right of the Sprout 75. there's two keycaps floating above an exposed switch. one is the 'del' keycap, while the other is a novelty depicting a cup of bubble tea.",
-	},
-	DeskpadCloseUp: {
-		src: "sprout75/DeskmatCloseUp.png",
-		alt: "a close-up shot of the left side of the brown sugar boba deskpad. towards the right edge you can see the Sprout 75 board on it.",
-	},
-	DeskpadFull: {
-		src: "sprout75/DeskmatFull.png",
-		alt: "the brown sugar boba deskpad. it depicts cats hanging out at a boba café.",
-		big: true,
-	},
-	BoardTop: {
-		src: "sprout75/BoardTop.png",
-		alt: "a bird's eye view of the Sprout 75.",
-		big: true,
-	},
-	BoardBottom: {
-		src: "sprout75/BoardBottom.png",
-		alt: "a bird's eye view of the bottom of the Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
-		big: true,
-	},
-	BoardFloat: {
-		src: "sprout75/BoardFloat.png",
-		alt: "one last shot of the Sprout 75, at an angle from above so it looks like it's floating.",
-	},
-} satisfies Record<string, ImageProps>;
-
 export default function Sprout75() {
 	const { variantId } = useLoaderData<typeof loader>();
 
@@ -289,34 +235,15 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="mt-36 xl:mt-44 w-full lg:mx-auto">
-					<div className="w-full max-w-[73rem] flex flex-col xl:flex-row lg:mx-auto xl:mb-8 xl:justify-between xl:gap-x-24">
-						<LightboxImage
-							{...Images.BoardTop}
-							className="w-full lg:w-2/3 xl:w-full max-w-5xl aspect-[5/2] xl:aspect-[5/3] px-6 md:px-16 lg:mx-auto xl:px-0 xl:mx-0"
-							button={{ className: "w-full" }}
-						/>
-						{/*<div className="w-full h-32 xs:h-44 sm:h-48 lg:h-64 xl:h-auto my-4 xl:mx-auto px-8 md:px-16 scroll-px-8 md:scroll-px-16 snap-x flex flex-row gap-8 overflow-x-scroll xl:overflow-x-visible">*/}
-						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start xl:ml-auto">*/}
-						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-						{/*	</div>*/}
-						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
-						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-						{/*	</div>*/}
-						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
-						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-						{/*	</div>*/}
-						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start">*/}
-						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-						{/*	</div>*/}
-						{/*	<div className="xl:flex-1 h-full max-h-72 aspect-square flex items-center justify-center bg-yogurt-60 rounded-2xl snap-start xl:mr-auto">*/}
-						{/*		<span className="text-2xl text-center font-medium text-wrap">placeholder</span>*/}
-						{/*	</div>*/}
-						{/*</div>*/}
-						<LightboxImage
-							{...Images.BoardBottom}
-							className="w-full lg:w-2/3 xl:w-full max-w-5xl aspect-[5/2] xl:aspect-[5/3] px-6 md:px-16 mb-8 lg:mx-auto xl:px-0 xl:mx-0 xl:mb-0"
-							button={{ className: "w-full" }}
-						/>
+					<div className="w-full max-w-[96rem] flex flex-col xl:flex-row lg:mx-auto lg:mb-8 xl:justify-between xl:gap-x-24">
+						<div className="w-full my-4 lg:mx-auto px-8 md:px-16 lg:px-12 scroll-px-8 md:scroll-px-16 xl:scroll-px-64 snap-x snap-mandatory flex flex-row lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 overflow-x-scroll lg:overflow-auto">
+							{carouselImages.map((image, i) => (
+								<LightboxImage
+									key={image.src}
+									className="xl:flex-1 h-32 xs:h-44 sm:h-56 lg:h-auto lg:w-full flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start"
+									{...image}></LightboxImage>
+							))}
+						</div>
 					</div>
 					<div className="px-7 md:px-16 w-full lg:max-w-screen-lg lg:mx-auto">
 						<h2 className="text-2xl xs:text-3xl font-medium mb-4 xs:mb-8">specs</h2>
@@ -504,6 +431,87 @@ function BuyNowButton({ variantId }: { variantId: string }) {
 		</Form>
 	);
 }
+
+const Images = {
+	BoardSpin: {
+		src: "sprout75/BoardSpin.png",
+		alt: "a photo of the Sprout 75 mechanical keyboard. it's placed vertically with just one corner on the ground. it's a cream-colored aluminum keyboard showcasing the brown sugar boba keycaps.",
+	},
+	NoveltiesTransparent: {
+		src: "sprout75/NoveltiesTransparent.png",
+		alt: "a close-up of the right side of Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup. in the macro column, delete fetcherKey, and enter fetcherKey, you can see novelties depicting cats and desserts.",
+	},
+	SwitchTransparent: {
+		src: "sprout75/SwitchTransparent.png",
+		alt: "the Taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
+	},
+	KnobTransparent: {
+		src: "sprout75/KnobTransparent.png",
+		alt: "a silver aluminum knob. it's shaped like a bubble tea cup and has a straw sticking out of the top.",
+	},
+	TweakPreview: {
+		src: "sprout75/TweakPreview.png",
+		alt: "a preview of Tweak, the configuration tool for the sprout 75. the bottom left corner of a keyboard layout is displayed, with the 'alt' fetcherKey highlighted and a cursor over it.",
+	},
+	DongleCloseUp: {
+		src: "sprout75/DongleCloseUp.png",
+		alt: "a very close-up shot of the back of Sprout 75. there's a 2.4ghz usb dongle leaning against the board, next to a switch for toggling between wireless and wired.",
+	},
+	NoveltySwap: {
+		src: "sprout75/NoveltySwap.png",
+		alt: "the top right of Sprout 75. there's two keycaps floating above an exposed switch. one is the 'del' keycap, while the other is a novelty depicting a cup of bubble tea.",
+	},
+	DeskpadCloseUp: {
+		src: "sprout75/DeskmatCloseUp.png",
+		alt: "a close-up shot of the left side of the brown sugar boba deskpad. towards the right edge you can see Sprout 75 board on it.",
+	},
+	DeskpadFull: {
+		src: "sprout75/DeskmatFull.png",
+		alt: "the brown sugar boba deskpad. it depicts cats hanging out at a boba café.",
+		big: true,
+	},
+	BoardTop: {
+		src: "sprout75/BoardTop.png",
+		alt: "a bird's eye view of Sprout 75.",
+		big: true,
+	},
+	BoardBottom: {
+		src: "sprout75/BoardBottom.png",
+		alt: "a bird's eye view of the backside of Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
+		big: true,
+	},
+	BoardFloat: {
+		src: "sprout75/BoardFloat.png",
+		alt: "one last shot of Sprout 75, at an angle from above so it looks like it's floating.",
+	},
+} satisfies Record<string, ImageProps>;
+
+const carouselImages = [
+	{
+		src: "sprout75/photos/Photo1.png",
+		alt: "an angled birds-eye shot of Sprout 75 laying on the brown sugar boba deskpad. towards the upper edge of the image there's a white mug with a grid pattern, and a wooden to-do organizer with a card in it.",
+	},
+	{
+		src: "sprout75/photos/Photo2.png",
+		alt: "an angled birds-eye view of the backside of Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
+	},
+	{
+		src: "sprout75/photos/Photo3.png",
+		alt: "a close-up shot of the top right corner of Sprout 75. the silver knob is in focus, in the shape of a bubble tea cup with a straw sticking out of the top.",
+	},
+	{
+		src: "sprout75/photos/Photo4.png",
+		alt: "an angled birds-eye shot of the right sied of Sprout 75. it's on aw white surface, and scattered around the board are a few keycaps — cmd, pgup, end, enter, and pgdn.",
+	},
+	{
+		src: "sprout75/photos/Photo5.png",
+		alt: "a close-up shot of the Taro switches on Sprout 75. they have a light purple housing with a subtle cream-colored stem, and the milktype logo is etched into the housing.",
+	},
+	{
+		src: "sprout75/photos/Photo6.png",
+		alt: "a close-up shot of the right side of the back of Sprout 75. there's a silver aluminum toggle for switching between wireless and wired. next to it, there's a usb-c port.",
+	},
+] satisfies Array<ImageProps>;
 
 const RESERVATION_QUERY = `#graphql
 query Reservation($handle: String!) {
