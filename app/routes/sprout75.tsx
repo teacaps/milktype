@@ -20,7 +20,7 @@ const title = "sprout 75";
 const description = "available for pre-order nov 12 &#127793;";
 
 export const SPROUT75_IMAGE = {
-	src: "https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto:best/sprout75/Sprout75Image_vjie5j.png",
+	src: "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/sprout75/Sprout75Image.png",
 	alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle on an orange-yellow background.",
 };
 
@@ -86,54 +86,54 @@ export async function action({ request, context }: ActionFunctionArgs) {
 
 const Images = {
 	BoardSpin: {
-		src: "sprout75/BoardSpin_h2jybj.png",
+		src: "sprout75/BoardSpin.png",
 		alt: "a photo of the Sprout 75 mechanical keyboard. it's placed vertically with just one corner on the ground. it's a cream-colored aluminum keyboard showcasing the brown sugar boba keycaps.",
 	},
 	NoveltiesTransparent: {
-		src: "sprout75/NoveltiesTransparent_jfalig.png",
+		src: "sprout75/NoveltiesTransparent.png",
 		alt: "a close-up of the right side of the Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup. in the macro column, delete fetcherKey, and enter fetcherKey, you can see novelties depicting cats and desserts.",
 	},
 	SwitchTransparent: {
-		src: "sprout75/SwitchTransparent_yfcnbg.png",
+		src: "sprout75/SwitchTransparent.png",
 		alt: "the Taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
 	},
 	KnobTransparent: {
-		src: "sprout75/KnobTransparent_wqpu9b.png",
+		src: "sprout75/KnobTransparent.png",
 		alt: "a silver aluminum knob. it's shaped like a bubble tea cup and has a straw sticking out of the top.",
 	},
 	TweakPreview: {
-		src: "sprout75/TweakPreview_kbzfhf.png",
+		src: "sprout75/TweakPreview.png",
 		alt: "a preview of Tweak, the configuration tool for the sprout 75. the bottom left corner of a keyboard layout is displayed, with the 'alt' fetcherKey highlighted and a cursor over it.",
 	},
 	DongleCloseUp: {
-		src: "sprout75/DongleCloseUp_x2igie.png",
+		src: "sprout75/DongleCloseUp.png",
 		alt: "a very close-up shot of the back of the Sprout 75. there's a 2.4ghz usb dongle leaning against the board, next to a switch for toggling between wireless and wired.",
 	},
 	NoveltySwap: {
-		src: "sprout75/NoveltySwap_isgz6x.png",
+		src: "sprout75/NoveltySwap.png",
 		alt: "the top right of the Sprout 75. there's two keycaps floating above an exposed switch. one is the 'del' keycap, while the other is a novelty depicting a cup of bubble tea.",
 	},
 	DeskpadCloseUp: {
-		src: "sprout75/DeskmatCloseUp_vuxzm2.png",
+		src: "sprout75/DeskmatCloseUp.png",
 		alt: "a close-up shot of the left side of the brown sugar boba deskpad. towards the right edge you can see the Sprout 75 board on it.",
 	},
 	DeskpadFull: {
-		src: "sprout75/DeskmatFull_ikyer9.png",
+		src: "sprout75/DeskmatFull.png",
 		alt: "the brown sugar boba deskpad. it depicts cats hanging out at a boba café.",
 		big: true,
 	},
 	BoardTop: {
-		src: "sprout75/BoardTop_zl5ze3.png",
+		src: "sprout75/BoardTop.png",
 		alt: "a bird's eye view of the Sprout 75.",
 		big: true,
 	},
 	BoardBottom: {
-		src: "sprout75/BoardBottom_kl0xfq.png",
+		src: "sprout75/BoardBottom.png",
 		alt: "a bird's eye view of the bottom of the Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
 		big: true,
 	},
 	BoardFloat: {
-		src: "sprout75/BoardFloat_zmlued.png",
+		src: "sprout75/BoardFloat.png",
 		alt: "one last shot of the Sprout 75, at an angle from above so it looks like it's floating.",
 	},
 } satisfies Record<string, ImageProps>;

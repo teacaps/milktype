@@ -3,8 +3,7 @@ import YARLightbox from "yet-another-react-lightbox";
 import ZoomPlugin from "yet-another-react-lightbox/plugins/zoom";
 import { type ButtonHTMLAttributes, type ImgHTMLAttributes, useState } from "react";
 
-const CLOUDINARY_ID = "dpfhkaxk7";
-const CLOUDINARY_URL_PREFIX = "https://res.cloudinary.com/" + CLOUDINARY_ID + "/image/upload";
+const IMAGE_URL_PREFIX = "https://img.milktype.co/cdn-cgi/image";
 
 export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 	src: string;
@@ -67,8 +66,8 @@ export function LightboxImage({
 }
 
 function makeSrcs(path: string) {
-	const srcSmall = CLOUDINARY_URL_PREFIX + "/f_auto,q_auto:best,w_768/" + path;
-	const srcFull = CLOUDINARY_URL_PREFIX + "/f_auto,q_auto:best,w_2000/" + path;
+	const srcSmall = IMAGE_URL_PREFIX + "/width=768,format=auto,quality=65/" + path;
+	const srcFull = IMAGE_URL_PREFIX + "/width=2000,format=auto/" + path;
 	const srcset = `${srcSmall} 768w, ${srcFull} 2000w`;
 	return { srcset, srcSmall, srcFull };
 }

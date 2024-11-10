@@ -13,8 +13,8 @@ export default async function handleRequest(
 ) {
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
 		imgSrc: [
-			"https://res.cloudinary.com",
 			"http://localhost:*",
+			"https://img.milktype.co",
 			"https://milktype.co",
 			"https://cdn.shopify.com",
 			"https://alb.reddit.com",
