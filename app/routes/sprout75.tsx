@@ -5,7 +5,7 @@ import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin, twMerge } from "tailwind-merge";
 import { json, useFetcher, useLoaderData, useNavigation, useActionData, Form } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
-import { Button } from "~/components/elements/Button";
+import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
 import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import { Splat } from "~/assets/Splat";
@@ -101,6 +101,13 @@ export default function Sprout75() {
 						<Sprout75Mark />
 						<span className="font-medium lg:mt-12">pre-order available on nov 12</span>
 						<NotificationsSignup fetcherKey="header" cta="get notified at" />
+						<ButtonLink
+							url="https://kickstarter.com/projects/milktype/sprout-75-the-bubble-tea-mechanical-keyboard"
+							color="shrub"
+							external
+							className="text-yogurt-100 py-3 px-6 mt-8 -ml-1">
+							view on kickstarter →
+						</ButtonLink>
 					</div>
 				</section>
 				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-20 lg:items-center lg:w-full lg:max-w-screen-2xl lg:mr-auto">
