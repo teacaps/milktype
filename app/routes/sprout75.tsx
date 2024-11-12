@@ -1,9 +1,8 @@
 import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
-import type { ActionFunctionArgs, LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin, twMerge } from "tailwind-merge";
-import { json, useFetcher, useLoaderData, useNavigation, useActionData, Form } from "@remix-run/react";
+import { useFetcher, useNavigation, useActionData, Form } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
@@ -24,7 +23,7 @@ export const SPROUT75_IMAGE = {
 	alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle on an orange-yellow background.",
 };
 
-export const meta: MetaFunction = () => [
+export const meta = () => [
 	{
 		title,
 	},
@@ -56,37 +55,7 @@ export const meta: MetaFunction = () => [
 
 export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
 
-export async function loader({ context }: LoaderFunctionArgs) {
-	const RESERVATION_HANDLE = "sprout-75-reservation";
-	const { product } = await context.storefront.query(RESERVATION_QUERY, {
-		variables: {
-			handle: RESERVATION_HANDLE,
-		},
-	});
-
-	if (!product?.id || !product?.variants?.nodes?.[0]?.id) {
-		throw new Response(null, { status: 404 });
-	}
-
-	return json({
-		variantId: product.variants.nodes[0].id,
-	});
-}
-
-export async function action({ request, context }: ActionFunctionArgs) {
-	const fd = await request.formData();
-	if (fd.get("action") !== "cartCreate") return null;
-	const variantId = fd.get("variantId");
-	if (!variantId || typeof variantId !== "string") return null;
-	const { cartCreate } = await context.storefront.mutate(CART_CREATE_MUTATION, { variables: { variantId } });
-	const checkoutUrl = cartCreate?.cart?.checkoutUrl;
-	if (checkoutUrl) return json({ checkoutUrl });
-	return json({ checkoutUrl: null });
-}
-
 export default function Sprout75() {
-	const { variantId } = useLoaderData<typeof loader>();
-
 	return (
 		<Layout footer={false}>
 			<Container
@@ -501,26 +470,3 @@ const carouselImages = [
 		alt: "a close-up shot of the right side of the back of Sprout 75. there's a silver aluminum toggle for switching between wireless and wired. next to it, there's a usb-c port.",
 	},
 ] satisfies Array<ImageProps>;
-
-const RESERVATION_QUERY = `#graphql
-query Reservation($handle: String!) {
-    product(handle: $handle) {
-        id
-		variants(first: 1) {
-			nodes {
-				id
-            }
-		}
-    }
-}
-`;
-
-const CART_CREATE_MUTATION = `#graphql
-mutation CartCreate($variantId: ID!) {
-	cartCreate(input: { lines: [{ merchandiseId: $variantId, quantity: 1 }] }) {
-		cart {
-			checkoutUrl
-		}
-	}
-}
-`;
