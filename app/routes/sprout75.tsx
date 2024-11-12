@@ -99,14 +99,12 @@ export default function Sprout75() {
 					/>
 					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<span className="font-medium lg:mt-12">pre-order available on nov 12</span>
-						<NotificationsSignup fetcherKey="header" cta="get notified at" />
 						<ButtonLink
 							url="https://kickstarter.com/projects/milktype/sprout-75-the-bubble-tea-mechanical-keyboard"
 							color="shrub"
 							external
-							className="text-yogurt-100 py-3 px-6 mt-8 -ml-1">
-							view on kickstarter →
+							className="text-yogurt-100 py-3 px-6 mt-8 lg:mt-12 -ml-1">
+							pre-order now on kickstarter →
 						</ButtonLink>
 					</div>
 				</section>
@@ -190,17 +188,6 @@ export default function Sprout75() {
 							{...Images.DeskpadCloseUp}
 							className="w-11/12 xs:w-3/4 lg:w-full 2xl:w-[34rem] max-w-lg lg:max-w-3xl xl:max-w-xl xs:mb-8 aspect-square ml-auto lg:ml-0"
 						/>
-						<div className="w-full xl:w-5/6 lg:max-w-3xl xl:max-w-xl text-cocoa-120 self-end 2xl:self-start pl-10 pr-8 mt-12 2xl:-mt-2 3xl:-mt-32 mx-auto 2xl:mr-0 2xl:ml-[5%] hidden lg:block rounded-2xl xl:py-16 xl:border-4 xl:border-accent">
-							<h2 className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium inline-block">
-								get a free deskpad
-							</h2>
-							<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance 2xl:w-fit">
-								with your order if you put down $1 to reserve your spot right now! your order will be
-								the first to ship, and you’ll get access to our discord server for sneak peeks and
-								behind-the-scenes content.
-							</p>
-							<BuyNowButton variantId={variantId} />
-						</div>
 					</div>
 					<div className="flex flex-col lg:flex-grow max-w-screen-sm 2xl:max-w-screen-md">
 						<div className="w-full lg:w-auto flex flex-col mb-5 xs:mt-20 gap-y-6">
@@ -220,23 +207,12 @@ export default function Sprout75() {
 									id="deskpad"
 								/>
 								<Asteroid
-									className="h-24 xs:h-32 absolute top-0 right-0 rotate-12"
+									className="h-24 xs:h-32 absolute top-8 right-0 rotate-12"
 									asteroidClasses="fill-blurple h-full w-full">
 									<span className="text-yogurt-100 text-sm xs:text-base text-center font-semibold leading-4 text-wrap w-full mt-1 px-5">
 										67.5x30 cm
 									</span>
 								</Asteroid>
-							</div>
-							<div className="w-full text-cocoa-120 self-end pl-8 sm:pl-12 md:pl-16 lg:hidden">
-								<h2 className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium inline-block">
-									get a free deskpad
-								</h2>
-								<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance">
-									with your order if you put down $1 to reserve your spot right now! your order will
-									be the first to ship, and you’ll get access to our discord server for sneak peeks
-									and behind-the-scenes content.
-								</p>
-								<BuyNowButton variantId={variantId} />
 							</div>
 						</div>
 					</div>
@@ -293,9 +269,15 @@ export default function Sprout75() {
 						</div>
 					</div>
 				</section>
-				<section className="@container flex flex-col mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full lg:flex-row">
+				<section className="@container flex flex-col mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full lg:flex-row lg:justify-between">
 					<div className="flex flex-col gap-y-8 text-cocoa-120 font-medium xs:text-lg">
-						<span>pre-order from nov 12 for $135</span>
+						<ButtonLink
+							url="https://kickstarter.com/projects/milktype/sprout-75-the-bubble-tea-mechanical-keyboard"
+							color="shrub"
+							external
+							className="text-yogurt-100 py-3 -ml-1">
+							pre-order now on kickstarter →
+						</ButtonLink>
 						<NotificationsSignup fetcherKey="footer" cta="get updates at" />
 						<div className="flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
 							<span>or our socials</span>
