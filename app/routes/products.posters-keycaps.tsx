@@ -86,7 +86,7 @@ export default function PostersKeycaps() {
 							<p
 								className="text-cocoa-100 font-medium prose-xl prose-a:text-accent prose-a:underline hover:prose-a:no-underline"
 								dangerouslySetInnerHTML={{ __html: product?.descriptionHtml }}></p>
-							<div className="mt-4 flex flex-row items-center gap-x-6 justify-between">
+							<div className="mt-4 flex flex-row items-center gap-x-6">
 								<div className="flex flex-col gap-y-1">
 									<span className="font-semibold text-2xl inline-flex items-center">
 										{isOnSale ? (
