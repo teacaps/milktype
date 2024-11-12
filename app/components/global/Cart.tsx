@@ -103,17 +103,12 @@ function CartLineItem({ line }: { line: CartLine | ComponentizableCartLine }) {
 	const image = line.merchandise.image || null;
 
 	return (
-		<div className="w-full flex flex-row gap-6">
-			<div className="aspect-square h-24 flex-shrink-0 rounded-2xl overflow-clip object-cover bg-cocoa-80">
-				{image && (
-					<img
-						src={image.url}
-						alt={image.altText || undefined}
-						height={image.height || undefined}
-						width={image.width || undefined}
-					/>
-				)}
-			</div>
+		<div className="w-full flex flex-row justify-between">
+			{!!image && (
+				<div className="mr-6 aspect-square h-24 flex-shrink-0 rounded-2xl overflow-clip object-cover bg-cocoa-80">
+					<img className="w-full" src={image.url} alt={image.altText || undefined} />
+				</div>
+			)}
 			<div className="w-full flex flex-col items-start justify-between py-2">
 				<span className="font-semibold text-lg text-cocoa-120">{line.merchandise.product.title}</span>
 				<div className="w-full flex flex-row items-center justify-between">
