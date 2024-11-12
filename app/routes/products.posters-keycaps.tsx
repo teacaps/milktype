@@ -6,23 +6,23 @@ import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { useLoaderData, json } from "@remix-run/react";
 import { Money, Analytics } from "@shopify/hydrogen";
 
-const META_SRC = "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/posters-keycaos/meta.png";
+const META_SRC = "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/posters-keycaps/meta.png";
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => [
 	{
-		title: data?.product?.title,
+		title: data?.product?.seo?.title ?? data?.product?.title,
 	},
 	{
 		name: "description",
-		content: data?.product?.description,
+		content: data?.product?.seo?.description ?? data?.product?.description,
 	},
 	{
 		property: "og:title",
-		content: data?.product?.title,
+		content: data?.product?.seo?.title ?? data?.product?.title,
 	},
 	{
 		property: "og:description",
-		content: data?.product?.description,
+		content: data?.product?.seo?.description ?? data?.product?.description,
 	},
 	{
 		property: "og:url",
@@ -145,13 +145,17 @@ export default function PostersKeycaps() {
 }
 
 const PRODUCT_QUERY = `#graphql
-query Product($handle: String!) {
+query PostersKeycapsProduct($handle: String!) {
     product(handle: $handle) {
         id
         title
         description
         descriptionHtml
         vendor
+		seo {
+			title
+			description
+        }
         variants(first: 1) {
             nodes {
                 id
