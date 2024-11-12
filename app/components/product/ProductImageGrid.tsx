@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { twJoin, twMerge } from "tailwind-merge";
+import { Image } from "~/components/elements/Image";
 
 const makeSquareAtIndexTakeUpWholeGrid = [
 	"grid-cols-[1fr,0fr,0fr] grid-rows-[1fr,0fr,0fr]", // 0 1 2
@@ -41,7 +42,7 @@ export function ProductImageGrid({ images }: { images: Array<string> }) {
 					role="button"
 					tabIndex={0}
 					aria-label={`Expand image ${i + 1}`}>
-					<img
+					<Image
 						src={url}
 						alt={`Image ${i + 1}`}
 						className="object-cover object-center w-full h-full rounded-2xl sm:rounded-3xl"
