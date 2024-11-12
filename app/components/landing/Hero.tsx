@@ -2,6 +2,7 @@ import { Container } from "~/components/global/Container";
 import { HeartIcon } from "~/assets/icons/Heart";
 import { VerticalSpaghetti } from "~/assets/Spaghetti";
 import { Milkleaf } from "~/assets/Milkleaf";
+import { Image } from "~/components/elements/Image";
 
 export function Hero() {
 	return (
@@ -20,10 +21,11 @@ export function Hero() {
 			</div>
 			<div className="h-auto flex flex-row gap-5 md:ml-auto">
 				<a
+					aria-label="Sprout 75 product page"
 					href="/sprout75"
 					className="flex items-center justify-center w-32 lg:w-44 h-[17.25rem] lg:h-auto bg-accent rounded-full hover:motion-safe:animate-boogie hover:motion-reduce:bg-blurple">
-					<img
-						src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto,w_768/milktype75/gdtycebx9dt7bmhntytu.png"
+					<Image
+						src="web/PeekingSprout.png"
 						alt=""
 						className="object-cover object-center w-full rounded-full h-full"
 					/>
@@ -31,8 +33,8 @@ export function Hero() {
 				<div className="flex flex-col gap-5">
 					<div className="group">
 						<div className="h-32 w-32 lg:h-44 lg:w-44 bg-shrub rounded-t-full group-hover:motion-safe:animate-bounce group-hover:motion-reduce:bg-blurple">
-							<img
-								src="https://res.cloudinary.com/dpfhkaxk7/image/upload/f_auto,q_auto/v1/milktype75/ehcnxhhhghukeotgxal1"
+							<Image
+								src="web/FloatingKeycap.png"
 								alt=""
 								className="object-cover object-center w-full h-full rounded-t-full"
 							/>
