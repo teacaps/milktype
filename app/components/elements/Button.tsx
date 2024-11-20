@@ -16,7 +16,6 @@ import { useState } from "react";
 
 const randomColor = throttle((base?: string, current?: string): Color => {
 	const colors = ["accent", "shrub", "blurple", "lilac"];
-	console.log("random", base, current);
 	const random = () => colors[Math.floor(Math.random() * colors.length)] as Color;
 	let color = random();
 	while ((base && color === base) || (current && color === current)) color = random();
@@ -81,7 +80,6 @@ export function Button({
 	useEffect(() => {
 		const ref = hoverRef?.current ?? buttonRef.current;
 		if (!ref) return;
-		console.log("ref", ref);
 
 		ref.addEventListener("mouseenter", updateHoverColor);
 		ref.addEventListener("focus", updateHoverColor);

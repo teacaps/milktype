@@ -19,6 +19,7 @@ import { PlusIcon } from "~/assets/icons/Plus";
 import { CheckIcon } from "~/assets/icons/Check";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { ActionFunctionArgs } from "@shopify/remix-oxygen";
+import { ArrowUpIcon } from "~/assets/icons/ArrowUp";
 
 const title = "sprout 75";
 const description = "available for pre-order nov 12 &#127793;";
@@ -122,9 +123,8 @@ export default function Sprout75() {
 							for <span className="text-[#A8593F]">boba</span> lovers
 						</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
-							sprout 75 launches in our signature <span className="text-[#9E7C6B]">cream beige</span> with{" "}
-							<span className="text-[#A8593F]">brown sugar boba</span> keycaps inspired by our favorite
-							drink. with included novelties and mac/win keycaps, there's something for everyone.
+							sprout 75 comes with a variety of swappable keycaps — from mac + windows support to adorable
+							dessert-themed keys, we've got you covered.
 						</p>
 					</div>
 				</section>
@@ -133,7 +133,7 @@ export default function Sprout75() {
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">turn it up</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
 							or down with the exclusive <span className="text-[#7B7673]">silver boba knob</span>,
-							included for free if you pre-order on kickstarter. standard volume knob also included.
+							included for free if you pre-order. standard volume knob also included.
 						</p>
 					</div>
 					<div className="relative self-end w-80 h-80 xl:w-full xl:max-w-xl 2xl:max-w-2xl xl:h-unset xl:aspect-square -mt-8 xs:-mt-20 sm:mt-0">
@@ -142,7 +142,7 @@ export default function Sprout75() {
 							className="h-36 xl:h-56 2xl:h-64 absolute bottom-4 xl:bottom-16 2xl:bottom-24 -left-4 xl:left-unset xl:-right-4"
 							splatClasses="fill-accent h-full w-full">
 							<span className="text-yogurt-100 text-xl xl:text-2xl 2xl:text-3xl text-center font-semibold rotate-[24deg]">
-								kickstarter
+								pre-order
 								<br />
 								exclusive
 							</span>
@@ -186,6 +186,35 @@ export default function Sprout75() {
 						</p>
 					</div>
 				</section>
+				<section className="max-w-screen-lg mx-auto mt-16 xs:mt-24 md:mt-40 xl:mt-24 flex flex-col-reverse gap-x-16 sm:flex-row sm:items-center sm:justify-center lg:w-full">
+					<Image
+						{...Images.SwitchTransparent}
+						className="aspect-square self-end sm:self-start w-80 h-80 max-w-sm xl:w-full xl:h-unset xl:aspect-square -mt-8 xs:-mt-20 sm:mt-0"
+					/>
+					<div className="space-y-4 lg:flex-shrink-0 max-w-[20ch] xs:max-w-[25ch] sm:max-w-[30ch] xl:max-w-[40ch] text-balance">
+						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">taro switches</h2>
+						<p className="xs:text-lg xl:text-xl xs:font-medium">
+							our custom designed <span className="text-blurple">taro switches</span> are fabulously
+							lightweight and smooth for easy typing. they'll arrive pre-lubricated and perfectly tuned
+							for your fingers.
+						</p>
+					</div>
+				</section>
+				<section className="mt-16 mx-auto px-6 md:px-8 lg:px-12 py-5 flex flex-col md:flex-row-reverse gap-y-9 md:gap-x-4 items-center w-4/5 max-w-screen-lg bg-yogurt-60 rounded-2xl">
+					<div className="flex flex-row items-center gap-x-3 xl:gap-x-6">
+						<Image {...Images.SwitchTransparent2} className="aspect-square w-16 xs:w-20 xl:w-28" />
+						<h3 className="text-xl xs:text-2xl xl:text-3xl font-semibold text-cocoa-100">spec sheet</h3>
+					</div>
+					<div className="w-full flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
+						<InfoBubble className="bg-yogurt-80">linear</InfoBubble>
+						<InfoBubble className="bg-yogurt-80">55g | bottom-out</InfoBubble>
+						<InfoBubble className="bg-yogurt-80">pre-lubed</InfoBubble>
+						<InfoBubble className="bg-yogurt-80">3.5mm | travel</InfoBubble>
+						<InfoBubble className="bg-yogurt-80">pom | body</InfoBubble>
+						<InfoBubble className="bg-yogurt-80">13.6mm | stem</InfoBubble>
+						<InfoBubble className="bg-yogurt-80">15mm | spring</InfoBubble>
+					</div>
+				</section>
 				<section className="mt-28 lg:mt-40 flex flex-col lg:flex-row-reverse xl:pl-16 2xl:pl-32">
 					<div className="lg:w-auto lg:flex lg:flex-col lg:items-end xl:w-full xl:flex-grow">
 						<Image
@@ -221,56 +250,37 @@ export default function Sprout75() {
 						</div>
 					</div>
 				</section>
-				<section className="mt-36 xl:mt-44 w-full lg:mx-auto">
-					<div className="px-7 md:px-16 w-full lg:max-w-screen-lg lg:mx-auto">
-						<h2 className="text-2xl xs:text-3xl font-medium mb-4 xs:mb-8">specs</h2>
-						<div className="flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
-							<InfoBubble>75% | layout</InfoBubble>
-							<InfoBubble>gasket | mount</InfoBubble>
-							<InfoBubble>full aluminum | case</InfoBubble>
-							<InfoBubble>silver pvd | weight (4lbs)</InfoBubble>
-							<InfoBubble>silver anodized | volume knob</InfoBubble>
-							<InfoBubble>plate mount | stabilizers</InfoBubble>
-							<InfoBubble>bluetooth | enabled</InfoBubble>
-							<InfoBubble>2.4ghz | usb receiver (1000hz)</InfoBubble>
-							<InfoBubble>usb-c | charging</InfoBubble>
-							<InfoBubble>mac/win | support</InfoBubble>
-							<InfoBubble>backlight | effects</InfoBubble>
-							<InfoBubble>south-facing | pcb</InfoBubble>
-							<InfoBubble>5-pin hotswap | switches</InfoBubble>
-							<InfoBubble>6 week | battery life</InfoBubble>
-							<InfoBubble>qmk | compatible</InfoBubble>
-							<InfoBubble>1.5mm pbt | keycaps</InfoBubble>
-							<InfoBubble>kca | profile keycaps</InfoBubble>
-						</div>
-					</div>
-					<div className="px-7 md:px-16 w-full mt-16 md:mt-24 lg:max-w-screen-lg lg:mx-auto relative">
-						<h2 className="text-2xl font-medium mb-4 xs:mb-8 relative inline-block">
-							taro switches
-							<Image
-								{...Images.SwitchTransparent}
-								className="h-[300%] aspect-square absolute -top-12 -right-32"
-							/>
-						</h2>
-						<div className="flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
-							<InfoBubble>linear</InfoBubble>
-							<InfoBubble>55g | bottom-out</InfoBubble>
-							<InfoBubble>pre-lubed</InfoBubble>
-							<InfoBubble>3.5mm | total travel</InfoBubble>
-							<InfoBubble>pom | stem + housing</InfoBubble>
-							<InfoBubble>13.6mm | stem</InfoBubble>
-							<InfoBubble>15mm | spring</InfoBubble>
-						</div>
+				<section className="mt-20 xl:mt-32 px-7 md:px-16 w-full lg:mx-auto lg:max-w-screen-lg">
+					<LightboxImage {...Images.BoardTilt} className="w-full overflow-hidden" />
+					<h2 className="text-2xl xs:text-3xl font-medium mb-4 xs:mb-8">specs</h2>
+					<div className="flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
+						<InfoBubble>75% | layout</InfoBubble>
+						<InfoBubble>gasket | mount</InfoBubble>
+						<InfoBubble>full aluminum | case</InfoBubble>
+						<InfoBubble>silver pvd | weight (4lbs)</InfoBubble>
+						<InfoBubble>silver anodized | volume knob</InfoBubble>
+						<InfoBubble>plate mount | stabilizers</InfoBubble>
+						<InfoBubble>bluetooth | enabled</InfoBubble>
+						<InfoBubble>2.4ghz | usb receiver (1000hz)</InfoBubble>
+						<InfoBubble>usb-c | charging</InfoBubble>
+						<InfoBubble>mac/win | support</InfoBubble>
+						<InfoBubble>backlight | effects</InfoBubble>
+						<InfoBubble>south-facing | pcb</InfoBubble>
+						<InfoBubble>5-pin hotswap | switches</InfoBubble>
+						<InfoBubble>6 week | battery life</InfoBubble>
+						<InfoBubble>qmk | compatible</InfoBubble>
+						<InfoBubble>1.5mm pbt | keycaps</InfoBubble>
+						<InfoBubble>kca | profile keycaps</InfoBubble>
 					</div>
 				</section>
 				<section className="@container flex flex-col mt-28 mb-16 px-8 md:px-16 xs:text-lg md:text-xl font-medium lg:mx-auto lg:max-w-screen-lg lg:w-full lg:flex-row lg:justify-between">
 					<div className="flex flex-col gap-y-8 text-cocoa-120 font-medium xs:text-lg">
 						<ButtonLink
-							url="https://kickstarter.com/projects/milktype/sprout-75-the-bubble-tea-mechanical-keyboard"
+							url="#"
 							color="shrub"
-							external
-							className="text-yogurt-100 py-3 -ml-1">
-							pre-order now on kickstarter →
+							className="text-yogurt-100 py-3 -ml-1"
+							icon={<ArrowUpIcon className="w-4 fill-yogurt-100" />}>
+							pre-order now
 						</ButtonLink>
 						<NotificationsSignup fetcherKey="footer" cta="get updates at" />
 						<div className="flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
@@ -478,6 +488,10 @@ const Images = {
 		src: "sprout75/SwitchTransparent.png",
 		alt: "the Taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
 	},
+	SwitchTransparent2: {
+		src: "sprout75/SwitchTransparent2.png",
+		alt: "a bird's-eye view of the Taro linear switch. it has a light purple housing with a subtle cream-colored stem.",
+	},
 	KnobTransparent: {
 		src: "sprout75/KnobTransparent.png",
 		alt: "a silver aluminum knob. it's shaped like a bubble tea cup and has a straw sticking out of the top.",
@@ -503,15 +517,9 @@ const Images = {
 		alt: "the brown sugar boba deskpad. it depicts cats hanging out at a boba café.",
 		big: true,
 	},
-	BoardTop: {
-		src: "sprout75/BoardTop.png",
-		alt: "a bird's eye view of Sprout 75.",
-		big: true,
-	},
-	BoardBottom: {
-		src: "sprout75/BoardBottom.png",
-		alt: "a bird's eye view of the backside of Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
-		big: true,
+	BoardTilt: {
+		src: "sprout75/BoardTilt.png",
+		alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle.",
 	},
 	BoardFloat: {
 		src: "sprout75/BoardFloat.png",
