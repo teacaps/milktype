@@ -12,7 +12,7 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 
 export function Image({ src, alt, className, big, ...props }: ImageProps) {
 	const { srcset, srcFull } = makeSrcs(src);
-	const sizes = big ? "(max-width: 768px) 768px, 2000px" : "768px";
+	const sizes = big ? "(max-width: 768px) 1024px, 2000px" : "1024px";
 	return (
 		<>
 			<img
@@ -40,7 +40,10 @@ export function LightboxImage({
 				onClick={() => setOpen(true)}
 				aria-label="Open image in full screen"
 				{...button}
-				className={twMerge("focus-visible:outline-none", button?.className)}>
+				className={twMerge(
+					"rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent",
+					button?.className,
+				)}>
 				<Image {...imageProps} />
 			</button>
 			<YARLightbox
@@ -66,7 +69,7 @@ export function LightboxImage({
 }
 
 function makeSrcs(path: string) {
-	const srcSmall = IMAGE_URL_PREFIX + "/width=768,format=auto,quality=65/" + path;
+	const srcSmall = IMAGE_URL_PREFIX + "/width=1024,format=auto,quality=85/" + path;
 	const srcFull = IMAGE_URL_PREFIX + "/width=2000,format=auto/" + path;
 	const srcset = `${srcSmall} 768w, ${srcFull} 2000w`;
 	return { srcset, srcSmall, srcFull };

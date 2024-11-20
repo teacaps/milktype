@@ -2,16 +2,26 @@ import { Link } from "@remix-run/react";
 import { twMerge } from "tailwind-merge";
 import type { Color, MakePropertiesOptional } from "~/lib/util";
 import { throttle } from "~/lib/util";
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from "react";
+import {
+	ButtonHTMLAttributes,
+	HTMLAttributes,
+	ReactNode,
+	RefObject,
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+} from "react";
 import { useState } from "react";
 
 const randomColor = throttle((base?: string, current?: string): Color => {
 	const colors = ["accent", "shrub", "blurple", "lilac"];
+	console.log("random", base, current);
 	const random = () => colors[Math.floor(Math.random() * colors.length)] as Color;
 	let color = random();
 	while ((base && color === base) || (current && color === current)) color = random();
 	return color;
-}, 250);
+}, 150);
 
 const BG_CLASSES: Record<Color, string> = {
 	accent: "bg-accent active:bg-accent",
@@ -23,21 +33,21 @@ const BG_CLASSES: Record<Color, string> = {
 };
 
 const HOVER_CLASSES: Record<Color, string> = {
-	accent: "hover:enabled:bg-accent",
-	shrub: "hover:enabled:bg-shrub",
-	blurple: "hover:enabled:bg-blurple",
-	lilac: "hover:enabled:bg-lilac",
-	yogurt: "hover:enabled:bg-yogurt",
-	cocoa: "hover:enabled:bg-cocoa",
+	accent: "hover:enabled:bg-accent group-hover:enabled:bg-accent",
+	shrub: "hover:enabled:bg-shrub group-hover:enabled:bg-shrub",
+	blurple: "hover:enabled:bg-blurple group-hover:enabled:bg-blurple",
+	lilac: "hover:enabled:bg-lilac group-hover:enabled:bg-lilac",
+	yogurt: "hover:enabled:bg-yogurt group-hover:enabled:bg-yogurt",
+	cocoa: "hover:enabled:bg-cocoa group-hover:enabled:bg-cocoa",
 };
 
 const LINK_HOVER_CLASSES: Record<Color, string> = {
-	accent: "hover:bg-accent",
-	shrub: "hover:bg-shrub",
-	blurple: "hover:bg-blurple",
-	lilac: "hover:bg-lilac",
-	yogurt: "hover:bg-yogurt",
-	cocoa: "hover:bg-cocoa",
+	accent: "hover:bg-accent group-hover:bg-accent",
+	shrub: "hover:bg-shrub group-hover:bg-shrub",
+	blurple: "hover:bg-blurple group-hover:bg-blurple",
+	lilac: "hover:bg-lilac group-hover:bg-lilac",
+	yogurt: "hover:bg-yogurt group-hover:bg-yogurt",
+	cocoa: "hover:bg-cocoa group-hover:bg-cocoa",
 };
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -46,6 +56,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	disabled?: boolean;
 	icon?: ReactNode | undefined | null;
 	type?: "button" | "submit" | "reset";
+	hoverRef?: RefObject<HTMLElement>;
 }
 export function Button({
 	color: baseColor,
@@ -53,32 +64,45 @@ export function Button({
 	disabled,
 	icon,
 	type = "button",
+	hoverRef,
 	className,
 	children,
 	...props
 }: ButtonProps) {
 	const bgClasses = disabled ? "bg-cocoa-80 active:bg-cocoa-80" : BG_CLASSES[baseColor];
 	const [hoverColor, setHoverColor] = useState(rainbow ? randomColor(baseColor) : baseColor);
-	const hoverBgClasses = HOVER_CLASSES[hoverColor];
+	const hoverBgClasses = useMemo(() => HOVER_CLASSES[hoverColor], [hoverColor]);
+
+	const updateHoverColor = useCallback(() => {
+		setHoverColor((hover) => randomColor(baseColor, hover));
+	}, [baseColor, hoverColor]);
+
+	const buttonRef = useRef<HTMLButtonElement>(null);
+	useEffect(() => {
+		const ref = hoverRef?.current ?? buttonRef.current;
+		if (!ref) return;
+		console.log("ref", ref);
+
+		ref.addEventListener("mouseenter", updateHoverColor);
+		ref.addEventListener("focus", updateHoverColor);
+		return () => {
+			ref.removeEventListener("mouseenter", updateHoverColor);
+			ref.removeEventListener("focus", updateHoverColor);
+		};
+	}, [hoverRef, buttonRef]);
+
 	return (
 		<button
+			ref={buttonRef}
 			className={twMerge(
 				bgClasses,
 				hoverBgClasses,
-				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium text-nowrap focus-visible:scale-110 focus-visible:outline-none disabled:cursor-not-allowed`,
+				`flex items-center justify-center gap-3 rounded-full p-7 w-fit font-medium text-nowrap focus-visible:scale-110 group-focus-visible:scale-110 focus-visible:outline-none group-focus-visible:outline-none disabled:cursor-not-allowed`,
 				className,
 			)}
 			type={type}
 			disabled={disabled}
-			{...props}
-			onMouseEnter={(ev) => {
-				props.onMouseEnter?.(ev);
-				if (!disabled && rainbow) setHoverColor(randomColor(baseColor, hoverColor));
-			}}
-			onFocus={(ev) => {
-				props.onFocus?.(ev);
-				if (!disabled && rainbow) setHoverColor(randomColor(baseColor, hoverColor));
-			}}>
+			{...props}>
 			{children}
 			{icon || null}
 		</button>

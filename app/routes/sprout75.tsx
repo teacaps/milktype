@@ -1,22 +1,30 @@
 import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
-import { twJoin, twMerge } from "tailwind-merge";
-import { useFetcher, useNavigation, useActionData, Form } from "@remix-run/react";
+import { twJoin } from "tailwind-merge";
+import { useFetcher, useNavigation, useActionData, Form, json } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
-import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
+import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import { Splat } from "~/assets/Splat";
 import lightboxStyles from "yet-another-react-lightbox/styles.css";
 import { Asteroid } from "~/assets/Asteroid";
 import { InfoBubble } from "~/components/elements/InfoBubble";
 import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
-import { useEffect, useState } from "react";
+import { MouseEventHandler, useEffect, useRef, useState } from "react";
+import { TruckIcon } from "~/assets/icons/Truck";
+import { PlusIcon } from "~/assets/icons/Plus";
+import { CheckIcon } from "~/assets/icons/Check";
+import { MinusIcon } from "~/assets/icons/Minus";
+import { ActionFunctionArgs } from "@shopify/remix-oxygen";
 
 const title = "sprout 75";
 const description = "available for pre-order nov 12 &#127793;";
+
+const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45575282786531";
+const BSB_DESKPAD_MERCHANDISE_ID = "gid://shopify/ProductVariant/45729711849699";
 
 export const SPROUT75_IMAGE = {
 	src: "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/sprout75/Sprout75Image.png",
@@ -55,26 +63,53 @@ export const meta = () => [
 
 export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
 
+export async function action({ request, context }: ActionFunctionArgs) {
+	const fd = await request.formData();
+	if (fd.get("action") !== "cartCreate") return null;
+
+	const deskpad = fd.get("deskpad") === "true";
+
+	const lines = [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }];
+	if (deskpad) lines.push({ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 });
+
+	const { cartCreate } = await context.storefront.mutate(CART_CREATE_MUTATION, {
+		variables: { lines: lines },
+	});
+	const checkoutUrl = cartCreate?.cart?.checkoutUrl || null;
+	return json({ checkoutUrl });
+}
+
 export default function Sprout75() {
 	return (
 		<Layout footer={false}>
 			<Container
 				as="main"
 				className="w-full sm:w-full px-0 sm:px-0 lg:px-0 lg:max-w-unset overflow-x-visible flex flex-col">
-				<section className="w-full px-8 md:px-16 flex flex-col lg:flex-row-reverse lg:items-center lg:max-w-screen-lg lg:mx-auto">
+				<section className="w-full px-8 md:px-16 flex flex-col sm:flex-row-reverse sm:items-center lg:max-w-screen-lg sm:mx-auto">
 					<Image
 						{...Images.BoardSpin}
-						className="self-end aspect-square w-[25rem] xs:w-[30rem] sm:w-[35rem] lg:w-[40rem] -mr-28"
+						className="self-end sm:self-start aspect-[2/3] w-[15rem] xs:w-[20rem] sm:w-[25rem] md:w-[30rem] -mr-4 xs:-mr-8 sm:-mr-12 md:-mr-24"
 					/>
-					<div className="@container -mt-12 sm:-mt-20 lg:mt-0 flex flex-col gap-y-2 lg:gap-y-4 w-full xs:text-lg">
+					<div className=" -mt-12 sm:mt-36 flex flex-col gap-y-2 sm:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<ButtonLink
-							url="https://kickstarter.com/projects/milktype/sprout-75-the-bubble-tea-mechanical-keyboard"
-							color="shrub"
-							external
-							className="text-yogurt-100 py-3 px-6 mt-8 lg:mt-12 -ml-1">
-							pre-order now on kickstarter →
-						</ButtonLink>
+						<div className="flex flex-row gap-2 sm:gap-3 items-center text-cocoa-80 xs:text-lg xl:text-xl xs:font-medium">
+							<TruckIcon className="w-5 xl:w-6 h-auto" />
+							<span>ships in jan 2025</span>
+						</div>
+						<span className="text-cocoa-120 text-balance xs:text-lg xl:text-xl xs:font-medium">
+							a fully assembled mechanical keyboard inspired by our favorite drink — brown sugar boba.
+						</span>
+						<CheckoutForm />
+					</div>
+				</section>
+				<section className="w-full max-w-[96rem] flex flex-col xl:flex-row my-24 lg:mx-auto xl:justify-between xl:gap-x-24">
+					<div className="w-full my-4 lg:mx-auto px-8 md:px-16 lg:px-12 scroll-px-8 md:scroll-px-16 xl:scroll-px-64 snap-x snap-mandatory flex flex-row lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 overflow-x-scroll lg:overflow-auto">
+						{carouselImages.map((image, i) => (
+							<LightboxImage
+								key={image.src}
+								className="xl:flex-1 h-32 xs:h-44 sm:h-56 lg:h-auto lg:w-full flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start"
+								{...image}></LightboxImage>
+						))}
 					</div>
 				</section>
 				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-20 lg:items-center lg:w-full lg:max-w-screen-2xl lg:mr-auto">
@@ -187,16 +222,6 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="mt-36 xl:mt-44 w-full lg:mx-auto">
-					<div className="w-full max-w-[96rem] flex flex-col xl:flex-row lg:mx-auto lg:mb-8 xl:justify-between xl:gap-x-24">
-						<div className="w-full my-4 lg:mx-auto px-8 md:px-16 lg:px-12 scroll-px-8 md:scroll-px-16 xl:scroll-px-64 snap-x snap-mandatory flex flex-row lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 overflow-x-scroll lg:overflow-auto">
-							{carouselImages.map((image, i) => (
-								<LightboxImage
-									key={image.src}
-									className="xl:flex-1 h-32 xs:h-44 sm:h-56 lg:h-auto lg:w-full flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start"
-									{...image}></LightboxImage>
-							))}
-						</div>
-					</div>
 					<div className="px-7 md:px-16 w-full lg:max-w-screen-lg lg:mx-auto">
 						<h2 className="text-2xl xs:text-3xl font-medium mb-4 xs:mb-8">specs</h2>
 						<div className="flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
@@ -280,8 +305,8 @@ export default function Sprout75() {
 	);
 }
 
-const Sprout75Mark = ({ className }: { className?: string }) => (
-	<h1 className={twMerge("text-4xl xs:text-5xl lg:text-7xl font-semibold text-shrub", className)}>
+const Sprout75Mark = () => (
+	<h1 className="-ml-px text-4xl xs:text-5xl lg:text-7xl font-semibold text-shrub">
 		sprout<span className="ml-1 align-sub text-3xl xs:text-4xl lg:text-6xl font-[728] text-blurple">75</span>
 	</h1>
 );
@@ -343,7 +368,7 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 								fetcher.submit(ev.currentTarget.form);
 
 								if (email) {
-									sendShopifyAnalytics({
+									void sendShopifyAnalytics({
 										eventName: "custom_newsletter_signup",
 										payload: {
 											// @ts-expect-error — custom payload
@@ -360,31 +385,81 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 	);
 }
 
-function BuyNowButton({ variantId }: { variantId: string }) {
+function CheckoutForm() {
 	const navigation = useNavigation();
 	const { checkoutUrl } = useActionData<{ checkoutUrl: string | null }>() || {};
-	const { cartCreate } = useCart();
+	const [addedDeskpad, setAddedDeskpad] = useState(false);
+	const [justAddedDeskpad, setJustAddedDeskpad] = useState(false);
 	const [buyingNow, setBuyingNow] = useState(false);
+	const deskpadRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		console.log("checkoutUrl", checkoutUrl);
 		if (checkoutUrl && buyingNow) {
 			window.open(checkoutUrl, "_blank");
 			setBuyingNow(false);
 		}
 	}, [checkoutUrl, buyingNow]);
 
+	const handleDeskpadAdd: MouseEventHandler = (e) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setAddedDeskpad((prev) => !prev);
+		setJustAddedDeskpad(true);
+		setTimeout(() => setJustAddedDeskpad(false), 2000);
+	};
+
 	return (
-		<Form method="POST" className="mt-5" onSubmit={() => setBuyingNow(true)}>
+		<Form method="POST" className="flex flex-col gap-8" onSubmit={() => setBuyingNow(true)}>
 			<input type="hidden" name="action" value="cartCreate" />
-			<input type="hidden" name="variantId" value={variantId} />
+			<input type="hidden" name="deskpad" value={addedDeskpad ? "true" : "false"} />
+			<div
+				ref={deskpadRef}
+				className="w-full xs:w-3/4 sm:w-full relative group rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
+				tabIndex={0}
+				aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+				<LightboxImage
+					{...Images.DeskpadFull}
+					className="w-full object-contain"
+					button={{
+						"onClick": handleDeskpadAdd,
+						"aria-label": addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart",
+						"tabIndex": -1,
+					}}
+				/>
+				<Button
+					color={addedDeskpad ? "lilac" : "blurple"}
+					onClick={handleDeskpadAdd}
+					hoverRef={deskpadRef}
+					className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
+					aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+					{!addedDeskpad ? (
+						<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
+					) : (
+						<>
+							<CheckIcon
+								className={twJoin(
+									"w-[1.375rem] xs:w-6 lg:w-7 h-auto",
+									!justAddedDeskpad && "group-hover:hidden",
+								)}
+							/>
+							<MinusIcon
+								className={twJoin(
+									"w-[1.375rem] xs:w-6 lg:w-7 h-auto hidden",
+									!justAddedDeskpad && "group-hover:block",
+								)}
+							/>
+						</>
+					)}
+					<span>matching deskpad $10</span>
+				</Button>
+			</div>
 			<Button
 				type="submit"
-				className="py-4 text-yogurt-100 xs:text-lg xs:font-medium xl:text-xl hover:enabled:bg-shrub"
-				color="accent"
+				className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
+				color="shrub"
 				rainbow={false}
 				disabled={navigation.state !== "idle"}>
-				{navigation.state === "idle" ? "let’s do it →" : "loading..."}
+				{navigation.state === "idle" ? "pre-order now ⋅ $135 usd" : "loading..."}
 			</Button>
 		</Form>
 	);
@@ -470,3 +545,13 @@ const carouselImages = [
 		alt: "a close-up shot of the right side of the back of Sprout 75. there's a silver aluminum toggle for switching between wireless and wired. next to it, there's a usb-c port.",
 	},
 ] satisfies Array<ImageProps>;
+
+const CART_CREATE_MUTATION = `#graphql
+mutation CartCreate($lines: [CartLineInput!]!) {
+    cartCreate(input: { lines: $lines }) {
+        cart {
+            checkoutUrl
+        }
+    }
+}
+`;
