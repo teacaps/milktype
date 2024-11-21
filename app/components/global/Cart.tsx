@@ -4,8 +4,16 @@ import type {
 	CartLineUpdateInput,
 	CartLine,
 } from "@shopify/hydrogen-react/storefront-api-types";
-import { Suspense, type ReactNode } from "react";
-import { CartForm, Money, OptimisticInput, useOptimisticData, flattenConnection, Analytics } from "@shopify/hydrogen";
+import { Suspense, type ReactNode, createContext, useContext } from "react";
+import {
+	CartForm,
+	Money,
+	OptimisticInput,
+	useOptimisticData,
+	flattenConnection,
+	Analytics,
+	useOptimisticCart,
+} from "@shopify/hydrogen";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { PlusIcon } from "~/assets/icons/Plus";
 import { useRootLoaderData } from "~/root";
@@ -122,30 +130,31 @@ function CartLineItem({ line }: { line: CartLine | ComponentizableCartLine }) {
 	);
 }
 
-export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean) => void }) {
+export function Cart() {
 	const { cart } = useRootLoaderData();
+	const { cartVisible, setCartVisible } = useCartVisibility();
 
 	return (
 		<>
-			{show ? (
+			{cartVisible ? (
 				<div
 					className="fixed w-screen h-screen top-0 left-0"
-					onClick={() => setShow(false)}
-					onKeyDown={(e) => e.key === "Escape" && setShow(false)}
+					onClick={() => setCartVisible(false)}
+					onKeyDown={(e) => e.key === "Escape" && setCartVisible(false)}
 					role="presentation"
-					aria-hidden={!show}
+					aria-hidden={!cartVisible}
 					tabIndex={-1}
 					aria-label="Close cart"></div>
 			) : null}
 			<div
 				className={twJoin(
-					"cart absolute left-0 right-0 top-28 sm:left-unset sm:top-20 sm:right-10 w-6/7 sm:w-96 mx-auto sm:mx-unset px-10 py-8 bg-yogurt-60 border border-cocoa-60 rounded-2xl transition-[opacity,visibility]",
-					show ? "opacity-100 pointer-events-auto shadow-md" : "opacity-0 pointer-events-none invisible",
+					"cart absolute left-0 right-0 top-28 sm:left-unset sm:top-20 sm:right-10 w-6/7 sm:w-96 mx-auto sm:mx-unset px-10 py-8 bg-yogurt-60 border-2 border-cocoa-60 rounded-2xl transition-[opacity,visibility]",
+					cartVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none invisible",
 				)}
 				role="dialog"
 				aria-modal="true"
 				aria-label="Cart"
-				aria-hidden={!show}>
+				aria-hidden={!cartVisible}>
 				<div
 					className="flex flex-col items-center gap-8 w-full"
 					role="presentation"
@@ -155,14 +164,19 @@ export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean
 						<Await resolve={cart}>
 							{(cart) => {
 								const lines = cart?.lines ? flattenConnection(cart.lines) : [];
+
 								const amount = cart?.cost?.subtotalAmount;
 								const checkoutUrl = cart?.checkoutUrl;
+
 								if (!lines?.length)
 									return (
 										<span className="font-medium text-base text-cocoa-100">
 											your cart is empty!
 										</span>
 									);
+
+								console.log(lines);
+
 								return (
 									<>
 										{lines.map((line) => (
@@ -203,7 +217,19 @@ export function Cart({ show, setShow }: { show: boolean; setShow: (show: boolean
 					</Suspense>
 				</div>
 			</div>
-			{show ? <Analytics.CartView /> : null}
+			{cartVisible ? <Analytics.CartView /> : null}
 		</>
 	);
+}
+
+export const CartVisibilityContext = createContext<{
+	cartVisible: boolean;
+	setCartVisible: (cartVisible: boolean | ((cartVisible: boolean) => boolean)) => void;
+}>({
+	cartVisible: false,
+	setCartVisible: () => {},
+});
+
+export function useCartVisibility() {
+	return useContext(CartVisibilityContext);
 }

@@ -2,7 +2,7 @@ import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin } from "tailwind-merge";
-import { useFetcher, useNavigation, useActionData, Form, json } from "@remix-run/react";
+import { useFetcher, useNavigation } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
@@ -18,8 +18,10 @@ import { TruckIcon } from "~/assets/icons/Truck";
 import { PlusIcon } from "~/assets/icons/Plus";
 import { CheckIcon } from "~/assets/icons/Check";
 import { MinusIcon } from "~/assets/icons/Minus";
-import { ActionFunctionArgs } from "@shopify/remix-oxygen";
 import { ArrowUpIcon } from "~/assets/icons/ArrowUp";
+import { CartForm, OptimisticInput } from "@shopify/hydrogen";
+import { useCartVisibility } from "~/components/global/Cart";
+import { usePrevious } from "~/lib/util";
 
 const title = "sprout 75";
 const description = "available for pre-order nov 12 &#127793;";
@@ -63,22 +65,6 @@ export const meta = () => [
 ];
 
 export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
-
-export async function action({ request, context }: ActionFunctionArgs) {
-	const fd = await request.formData();
-	if (fd.get("action") !== "cartCreate") return null;
-
-	const deskpad = fd.get("deskpad") === "true";
-
-	const lines = [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }];
-	if (deskpad) lines.push({ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 });
-
-	const { cartCreate } = await context.storefront.mutate(CART_CREATE_MUTATION, {
-		variables: { lines: lines },
-	});
-	const checkoutUrl = cartCreate?.cart?.checkoutUrl || null;
-	return json({ checkoutUrl });
-}
 
 export default function Sprout75() {
 	return (
@@ -396,19 +382,20 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 }
 
 function CheckoutForm() {
+	const { setCartVisible } = useCartVisibility();
 	const navigation = useNavigation();
-	const { checkoutUrl } = useActionData<{ checkoutUrl: string | null }>() || {};
 	const [addedDeskpad, setAddedDeskpad] = useState(false);
 	const [justAddedDeskpad, setJustAddedDeskpad] = useState(false);
-	const [buyingNow, setBuyingNow] = useState(false);
 	const deskpadRef = useRef<HTMLDivElement>(null);
 
+	const fetcher = useFetcher({ key: "checkout" });
+	const previousFetcherState = usePrevious(fetcher.state);
+
 	useEffect(() => {
-		if (checkoutUrl && buyingNow) {
-			window.open(checkoutUrl, "_blank");
-			setBuyingNow(false);
+		if (fetcher.state === "idle" && previousFetcherState === "loading") {
+			setCartVisible(true);
 		}
-	}, [checkoutUrl, buyingNow]);
+	}, [fetcher.state]);
 
 	const handleDeskpadAdd: MouseEventHandler = (e) => {
 		e.preventDefault();
@@ -418,60 +405,66 @@ function CheckoutForm() {
 		setTimeout(() => setJustAddedDeskpad(false), 2000);
 	};
 
+	const lines = [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }];
+	if (addedDeskpad) lines.push({ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 });
+
 	return (
-		<Form method="POST" className="flex flex-col gap-8" onSubmit={() => setBuyingNow(true)}>
-			<input type="hidden" name="action" value="cartCreate" />
-			<input type="hidden" name="deskpad" value={addedDeskpad ? "true" : "false"} />
-			<div
-				ref={deskpadRef}
-				className="w-full xs:w-3/4 sm:w-full relative group rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
-				tabIndex={0}
-				aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
-				<LightboxImage
-					{...Images.DeskpadFull}
-					className="w-full object-contain"
-					button={{
-						"onClick": handleDeskpadAdd,
-						"aria-label": addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart",
-						"tabIndex": -1,
-					}}
-				/>
-				<Button
-					color={addedDeskpad ? "lilac" : "blurple"}
-					onClick={handleDeskpadAdd}
-					hoverRef={deskpadRef}
-					className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
-					aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
-					{!addedDeskpad ? (
-						<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
-					) : (
-						<>
-							<CheckIcon
-								className={twJoin(
-									"w-[1.375rem] xs:w-6 lg:w-7 h-auto",
-									!justAddedDeskpad && "group-hover:hidden",
-								)}
-							/>
-							<MinusIcon
-								className={twJoin(
-									"w-[1.375rem] xs:w-6 lg:w-7 h-auto hidden",
-									!justAddedDeskpad && "group-hover:block",
-								)}
-							/>
-						</>
-					)}
-					<span>matching deskpad $10</span>
-				</Button>
-			</div>
-			<Button
-				type="submit"
-				className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
-				color="shrub"
-				rainbow={false}
-				disabled={navigation.state !== "idle"}>
-				{navigation.state === "idle" ? "pre-order now ⋅ $135 usd" : "loading..."}
-			</Button>
-		</Form>
+		<CartForm route="/cart" action={CartForm.ACTIONS.LinesAdd} inputs={{ lines }} fetcherKey="checkout">
+			{(fetcher) => (
+				<>
+					<OptimisticInput id={SPROUT_75_MERCHANDISE_ID} data={{}} />
+					<div
+						ref={deskpadRef}
+						className="relative group w-full xs:w-3/4 sm:w-full mb-8 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
+						tabIndex={0}
+						aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+						<LightboxImage
+							{...Images.DeskpadFull}
+							className="w-full object-contain"
+							button={{
+								"onClick": handleDeskpadAdd,
+								"aria-label": addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart",
+								"tabIndex": -1,
+							}}
+						/>
+						<Button
+							color={addedDeskpad ? "lilac" : "blurple"}
+							onClick={handleDeskpadAdd}
+							hoverRef={deskpadRef}
+							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
+							aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+							{!addedDeskpad ? (
+								<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
+							) : (
+								<>
+									<CheckIcon
+										className={twJoin(
+											"w-[1.375rem] xs:w-6 lg:w-7 h-auto",
+											!justAddedDeskpad && "group-hover:hidden",
+										)}
+									/>
+									<MinusIcon
+										className={twJoin(
+											"w-[1.375rem] xs:w-6 lg:w-7 h-auto hidden",
+											!justAddedDeskpad && "group-hover:block",
+										)}
+									/>
+								</>
+							)}
+							<span>matching deskpad $10</span>
+						</Button>
+					</div>
+					<Button
+						type="submit"
+						className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
+						color="shrub"
+						rainbow={false}
+						disabled={navigation.state !== "idle"}>
+						{fetcher.state === "submitting" ? "loading..." : "pre-order now ⋅ $135 usd"}
+					</Button>
+				</>
+			)}
+		</CartForm>
 	);
 }
 
@@ -553,13 +546,3 @@ const carouselImages = [
 		alt: "a close-up shot of the right side of the back of Sprout 75. there's a silver aluminum toggle for switching between wireless and wired. next to it, there's a usb-c port.",
 	},
 ] satisfies Array<ImageProps>;
-
-const CART_CREATE_MUTATION = `#graphql
-mutation CartCreate($lines: [CartLineInput!]!) {
-    cartCreate(input: { lines: $lines }) {
-        cart {
-            checkoutUrl
-        }
-    }
-}
-`;

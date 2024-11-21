@@ -1,4 +1,5 @@
 import { useCookies } from "react-cookie";
+import { useEffect, useRef } from "react";
 
 export type Color =
 	| "accent"
@@ -55,4 +56,12 @@ export const useConsentLevel = (): [consentLevel: ConsentLevel, setConsentLevel:
 export const useHasAnalyticsConsent = (): boolean => {
 	const [consentLevel] = useConsentLevel();
 	return consentLevel === ConsentLevel.FULL_CONSENT;
+};
+
+export const usePrevious = <T>(value: T) => {
+	const ref = useRef<T>();
+	useEffect(() => {
+		ref.current = value;
+	}, [value]);
+	return ref.current;
 };

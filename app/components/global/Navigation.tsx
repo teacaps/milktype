@@ -4,11 +4,11 @@ import { CartIcon } from "~/assets/icons/Cart";
 import { useRootLoaderData } from "~/root";
 import { Container } from "~/components/global/Container";
 import { twJoin } from "tailwind-merge";
-import { Suspense, useState } from "react";
-import { Cart } from "~/components/global/Cart";
+import { Suspense } from "react";
+import { Cart, useCartVisibility } from "~/components/global/Cart";
 
 export function Navigation() {
-	const [showCart, setShowCart] = useState(false);
+	const { cartVisible, setCartVisible } = useCartVisibility();
 	return (
 		<Container
 			as="header"
@@ -37,18 +37,18 @@ export function Navigation() {
 				<button
 					type="button"
 					className="relative flex group rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-8 focus-visible:ring-accent"
-					onClick={() => setShowCart((show) => !show)}>
+					onClick={() => setCartVisible((show) => !show)}>
 					<CartIcon
 						className={twJoin(
 							"h-4 xs:h-5 sm:h-6",
-							showCart ? "fill-accent" : "fill-cocoa-120",
+							cartVisible ? "fill-accent" : "fill-cocoa-120",
 							"group-hover:fill-accent group-focus-visible:fill-accent",
 						)}
 					/>
 					<CartBadge />
 				</button>
 			</nav>
-			<Cart show={showCart} setShow={setShowCart} />
+			<Cart />
 		</Container>
 	);
 }
