@@ -86,10 +86,10 @@ export default function Sprout75() {
 			<Container
 				as="main"
 				className="w-full sm:w-full px-0 sm:px-0 lg:px-0 lg:max-w-unset overflow-x-visible flex flex-col">
-				<section className="w-full px-8 md:px-16 flex flex-col sm:flex-row-reverse sm:items-center lg:max-w-screen-lg sm:mx-auto">
+				<section className="w-full px-8 md:pl-16 md:pr-12 flex flex-col sm:flex-row-reverse sm:items-center lg:max-w-screen-lg sm:mx-auto">
 					<Image
 						{...Images.BoardSpin}
-						className="self-end sm:self-start aspect-[2/3] w-[15rem] xs:w-[20rem] sm:w-[25rem] md:w-[30rem] -mr-4 xs:-mr-8 sm:-mr-12 md:-mr-24"
+						className="self-end sm:self-start aspect-[2/3] w-[15rem] xs:w-[22rem] md:w-[30rem] -mr-4 xs:-mr-8 sm:-mr-12 md:-mr-24"
 					/>
 					<div className=" -mt-12 sm:mt-36 flex flex-col gap-y-2 sm:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
@@ -136,12 +136,12 @@ export default function Sprout75() {
 							included for free if you pre-order. standard volume knob also included.
 						</p>
 					</div>
-					<div className="relative self-end w-80 h-80 xl:w-full xl:max-w-xl 2xl:max-w-2xl xl:h-unset xl:aspect-square -mt-8 xs:-mt-20 sm:mt-0">
+					<div className="relative self-end w-52 h-52 sm:w-80 sm:h-80 lg:w-full lg:max-w-xl 2xl:max-w-2xl lg:h-unset lg:aspect-square -mt-8 xs:-mt-20 sm:mt-0">
 						<Image {...Images.KnobTransparent} className="aspect-square h-full" />
 						<Splat
-							className="h-36 xl:h-56 2xl:h-64 absolute bottom-4 xl:bottom-16 2xl:bottom-24 -left-4 xl:left-unset xl:-right-4"
+							className="h-32 lg:h-56 2xl:h-64 absolute -bottom-4 sm:bottom-4 lg:bottom-16 2xl:bottom-24 -left-8 sm:left-unset lg:-right-4"
 							splatClasses="fill-accent h-full w-full">
-							<span className="text-yogurt-100 text-xl xl:text-2xl 2xl:text-3xl text-center font-semibold rotate-[24deg]">
+							<span className="text-yogurt-100 text-lg lg:text-2xl 2xl:text-3xl text-center font-semibold rotate-[24deg]">
 								pre-order
 								<br />
 								exclusive
@@ -186,10 +186,10 @@ export default function Sprout75() {
 						</p>
 					</div>
 				</section>
-				<section className="max-w-screen-lg mx-auto mt-16 xs:mt-24 md:mt-40 xl:mt-24 flex flex-col-reverse gap-x-16 sm:flex-row sm:items-center sm:justify-center lg:w-full">
+				<section className="w-full max-w-md sm:max-w-screen-lg mx-auto mt-16 xs:mt-24 md:mt-40 xl:mt-24 pl-12 sm:pr-12 flex flex-col-reverse gap-x-12 md:gap-x-16 sm:flex-row sm:items-center sm:justify-center">
 					<Image
 						{...Images.SwitchTransparent}
-						className="aspect-square self-end sm:self-start w-80 h-80 max-w-sm xl:w-full xl:h-unset xl:aspect-square -mt-8 xs:-mt-20 sm:mt-0"
+						className="aspect-square self-end sm:self-start w-60 h-60 max-w-sm xl:w-full xl:h-unset xl:aspect-square -mt-8 xs:-mt-8 sm:mt-0"
 					/>
 					<div className="space-y-4 lg:flex-shrink-0 max-w-[20ch] xs:max-w-[25ch] sm:max-w-[30ch] xl:max-w-[40ch] text-balance">
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">taro switches</h2>
@@ -200,7 +200,7 @@ export default function Sprout75() {
 						</p>
 					</div>
 				</section>
-				<section className="mt-16 mx-auto px-6 md:px-8 lg:px-12 py-5 flex flex-col md:flex-row-reverse gap-y-9 md:gap-x-4 items-center w-4/5 max-w-screen-lg bg-yogurt-60 rounded-2xl">
+				<section className="mt-16 mx-auto px-6 md:px-8 lg:px-12 py-5 flex flex-col md:flex-row-reverse gap-y-9 md:gap-x-3 items-center w-4/5 max-w-screen-lg bg-yogurt-60 rounded-2xl">
 					<div className="flex flex-row items-center gap-x-3 xl:gap-x-6">
 						<Image {...Images.SwitchTransparent2} className="aspect-square w-16 xs:w-20 xl:w-28" />
 						<h3 className="text-xl xs:text-2xl xl:text-3xl font-semibold text-cocoa-100">spec sheet</h3>
@@ -316,8 +316,8 @@ export default function Sprout75() {
 }
 
 const Sprout75Mark = () => (
-	<h1 className="-ml-px text-4xl xs:text-5xl lg:text-7xl font-semibold text-shrub">
-		sprout<span className="ml-1 align-sub text-3xl xs:text-4xl lg:text-6xl font-[728] text-blurple">75</span>
+	<h1 className="-ml-px text-4xl xs:text-5xl md:text-7xl font-semibold text-shrub">
+		sprout<span className="ml-1 align-sub text-3xl xs:text-4xl md:text-6xl font-[728] text-blurple">75</span>
 	</h1>
 );
 
