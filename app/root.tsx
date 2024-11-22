@@ -12,6 +12,7 @@ import {
 	defer,
 	useMatches,
 	useLoaderData,
+	useSearchParams,
 } from "@remix-run/react";
 import favicon from "../public/favicon.svg";
 import styles from "./styles/tailwind.css";
@@ -135,6 +136,8 @@ export default function App() {
 const AnalyticsWrapper = ({ children }: { children: ReactNode }) => {
 	const data = useLoaderData<typeof loader>();
 
+	const [queryParams] = useSearchParams();
+
 	const [consentLevel, setConsentLevel] = useConsentLevel();
 	const hasAnalyticsConsent = consentLevel !== ConsentLevel.NECESSARY_ONLY;
 
@@ -154,7 +157,10 @@ const AnalyticsWrapper = ({ children }: { children: ReactNode }) => {
 			canTrack={() => hasAnalyticsConsent}
 			cart={data.cart}
 			shop={data.shop}
-			consent={data.consent}>
+			consent={data.consent}
+			customData={{
+				fbclid: queryParams.get("fbclid"),
+			}}>
 			{children}
 			{showConsentNotice ? <CookieConsentNotice setConsentLevel={setConsentLevel} /> : null}
 		</Analytics.Provider>

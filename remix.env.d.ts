@@ -28,6 +28,9 @@ declare global {
 		PRIVATE_GSHEETS_KEY: string;
 		PRIVATE_GSHEETS_CLIENT_EMAIL: string;
 
+		PRIVATE_META_PIXEL_ACCESS_TOKEN: string;
+
+		META_PIXEL_ID: string;
 		REDDIT_AD_ID: string;
 	}
 }

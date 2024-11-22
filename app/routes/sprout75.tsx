@@ -2,7 +2,7 @@ import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin } from "tailwind-merge";
-import { useFetcher, useNavigation } from "@remix-run/react";
+import { json, useFetcher, useLoaderData, useNavigation } from "@remix-run/react";
 import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
@@ -19,9 +19,10 @@ import { PlusIcon } from "~/assets/icons/Plus";
 import { CheckIcon } from "~/assets/icons/Check";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { ArrowUpIcon } from "~/assets/icons/ArrowUp";
-import { CartForm, OptimisticInput } from "@shopify/hydrogen";
+import { AnalyticsEvent, CartForm, OptimisticInput, ProductViewPayload, useAnalytics } from "@shopify/hydrogen";
 import { useCartVisibility } from "~/components/global/Cart";
 import { usePrevious } from "~/lib/util";
+import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 
 const title = "sprout 75";
 const description = "available for pre-order nov 12 &#127793;";
@@ -66,7 +67,41 @@ export const meta = () => [
 
 export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
 
+export async function loader({ request, context }: LoaderFunctionArgs) {
+	const { product } = await context.storefront.query(SPROUT75_PRODUCT_QUERY, {
+		variables: {
+			handle: "sprout-75-brown-sugar-boba",
+		},
+	});
+
+	if (!product?.id) {
+		throw new Response(null, { status: 404 });
+	}
+
+	const productPayload: ProductViewPayload["products"][number] = {
+		id: product.id,
+		title: product.title,
+		price: product.variants.nodes[0].price.amount,
+		vendor: product.vendor,
+		variantId: product.variants.nodes[0].id,
+		variantTitle: product.variants.nodes[0].title,
+		quantity: 1,
+	};
+
+	return json({
+		productPayload,
+		url: request.url,
+	});
+}
+
 export default function Sprout75() {
+	const { productPayload, url } = useLoaderData<typeof loader>();
+	const { publish, shop } = useAnalytics();
+
+	useEffect(() => {
+		publish(AnalyticsEvent.PRODUCT_VIEWED, { products: [productPayload], shop, url });
+	}, []);
+
 	return (
 		<Layout footer={false}>
 			<Container
@@ -546,3 +581,22 @@ const carouselImages = [
 		alt: "a close-up shot of the right side of the back of Sprout 75. there's a silver aluminum toggle for switching between wireless and wired. next to it, there's a usb-c port.",
 	},
 ] satisfies Array<ImageProps>;
+
+const SPROUT75_PRODUCT_QUERY = `#graphql
+query Sprout75Product($handle: String!) {
+    product(handle: $handle) {
+        id
+        title
+        vendor
+        variants(first: 1) {
+            nodes {
+                id
+                title
+                price {
+                    amount
+                }
+            }
+        }
+    }
+}
+`;

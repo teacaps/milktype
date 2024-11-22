@@ -175,8 +175,6 @@ export function Cart() {
 										</span>
 									);
 
-								console.log(lines);
-
 								return (
 									<>
 										{lines.map((line) => (
