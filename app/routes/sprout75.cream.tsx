@@ -24,15 +24,14 @@ import { useCartVisibility } from "~/components/global/Cart";
 import { usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 
-const title = "sprout 75";
+const title = "sprout 75 – cream";
 const description = "available for pre-order now";
 
-const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45575282786531";
-const BSB_DESKPAD_MERCHANDISE_ID = "gid://shopify/ProductVariant/45729711849699";
+const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45826342420707";
 
 export const SPROUT75_IMAGE = {
-	src: "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/sprout75/Sprout75Image.png",
-	alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle on an orange-yellow background.",
+	src: "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/sprout75/cream/Sprout75CreamImage.png",
+	alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle on a light orange background.",
 };
 
 export const meta = () => [
@@ -53,7 +52,7 @@ export const meta = () => [
 	},
 	{
 		property: "og:url",
-		content: "https://milktype.co/sprout75",
+		content: "https://milktype.co/sprout75/cream",
 	},
 	{
 		property: "og:image",
@@ -70,7 +69,7 @@ export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
 export async function loader({ request, context }: LoaderFunctionArgs) {
 	const { product } = await context.storefront.query(SPROUT75_PRODUCT_QUERY, {
 		variables: {
-			handle: "sprout-75-brown-sugar-boba",
+			handle: "sprout-75-cream",
 		},
 	});
 
@@ -116,22 +115,12 @@ export default function Sprout75() {
 						<Sprout75Mark />
 						<div className="flex flex-row gap-2 sm:gap-3 items-center text-cocoa-80 xs:text-lg xl:text-xl xs:font-medium">
 							<TruckIcon className="w-5 xl:w-6 h-auto" />
-							<span>ships in jan 2025</span>
+							<span>ships in feb 2025</span>
 						</div>
 						<span className="text-cocoa-120 text-balance xs:text-lg xl:text-xl xs:font-medium">
-							a fully assembled mechanical keyboard inspired by our favorite drink — brown sugar boba.
+							a fully assembled mechanical keyboard in our signature cream colorway.
 						</span>
 						<CheckoutForm />
-					</div>
-				</section>
-				<section className="w-full max-w-[96rem] flex flex-col xl:flex-row my-24 lg:mx-auto xl:justify-between xl:gap-x-24">
-					<div className="w-full my-4 lg:mx-auto px-8 md:px-16 lg:px-12 scroll-px-8 md:scroll-px-16 xl:scroll-px-64 snap-x snap-mandatory flex flex-row lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 overflow-x-scroll lg:overflow-auto">
-						{carouselImages.map((image, i) => (
-							<LightboxImage
-								key={image.src}
-								className="xl:flex-1 h-32 xs:h-44 sm:h-56 lg:h-auto lg:w-full flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start"
-								{...image}></LightboxImage>
-						))}
 					</div>
 				</section>
 				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-20 lg:items-center lg:w-full lg:max-w-screen-2xl lg:mr-auto">
@@ -141,11 +130,11 @@ export default function Sprout75() {
 					/>
 					<div className="relative -mt-4 xs:-mt-12 md:-mt-48 lg:-mt-0 xl:mt-20 space-y-4 self-end lg:self-center lg:flex-shrink-0 max-w-[20ch] xs:max-w-[30ch] md:max-w-[35ch] xl:max-w-[40ch] text-balance">
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">
-							for <span className="text-[#A8593F]">boba</span> lovers
+							the perfect keyboard
 						</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
-							sprout 75 comes with a variety of swappable keycaps — from mac + windows support to adorable
-							dessert-themed keys, we've got you covered.
+							sprout 75 comes with a variety of swappable keycaps — we've got you covered from mac to
+							windows.
 						</p>
 					</div>
 				</section>
@@ -234,41 +223,6 @@ export default function Sprout75() {
 						<InfoBubble className="bg-yogurt-80">pom | body</InfoBubble>
 						<InfoBubble className="bg-yogurt-80">13.6mm | stem</InfoBubble>
 						<InfoBubble className="bg-yogurt-80">15mm | spring</InfoBubble>
-					</div>
-				</section>
-				<section className="mt-28 lg:mt-40 flex flex-col lg:flex-row-reverse xl:pl-16 2xl:pl-32">
-					<div className="lg:w-auto lg:flex lg:flex-col lg:items-end xl:w-full xl:flex-grow">
-						<Image
-							{...Images.DeskpadCloseUp}
-							className="w-11/12 xs:w-3/4 lg:w-full 2xl:w-[34rem] max-w-lg lg:max-w-3xl xl:max-w-xl xs:mb-8 aspect-square ml-auto lg:ml-0"
-						/>
-					</div>
-					<div className="flex flex-col lg:flex-grow max-w-screen-sm 2xl:max-w-screen-md">
-						<div className="w-full lg:w-auto flex flex-col mb-5 xs:mt-20 gap-y-6">
-							<div className="w-4/5 xs:w-2/3 lg:w-3/4 pl-8 sm:pl-12 md:pl-16 xs:-mt-16 sm:-mt-24 md:-mt-40 lg:mt-32">
-								<h2 className="mb-5 text-2xl xs:text-3xl xl:text-4xl font-medium">
-									sweeten your setup
-								</h2>
-								<p className="xs:text-lg xs:font-medium xl:text-xl max-w-[40ch] text-balance">
-									with the matching <span className="text-[#A8593F]">brown sugar boba deskpad</span>,
-									perfectly sized to fit all workspaces.
-								</p>
-							</div>
-							<div className="w-full relative">
-								<LightboxImage
-									{...Images.DeskpadFull}
-									className="w-full object-contain scroll-mt-72"
-									id="deskpad"
-								/>
-								<Asteroid
-									className="h-24 xs:h-32 absolute top-8 right-0 rotate-12"
-									asteroidClasses="fill-blurple h-full w-full">
-									<span className="text-yogurt-100 text-sm xs:text-base text-center font-semibold leading-4 text-wrap w-full mt-1 px-5">
-										67.5x30 cm
-									</span>
-								</Asteroid>
-							</div>
-						</div>
 					</div>
 				</section>
 				<section className="mt-20 xl:mt-32 px-7 md:px-16 w-full lg:mx-auto lg:max-w-screen-lg">
@@ -419,9 +373,6 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 function CheckoutForm() {
 	const { setCartVisible } = useCartVisibility();
 	const navigation = useNavigation();
-	const [addedDeskpad, setAddedDeskpad] = useState(false);
-	const [justAddedDeskpad, setJustAddedDeskpad] = useState(false);
-	const deskpadRef = useRef<HTMLDivElement>(null);
 
 	const fetcher = useFetcher({ key: "checkout" });
 	const previousFetcherState = usePrevious(fetcher.state);
@@ -432,66 +383,16 @@ function CheckoutForm() {
 		}
 	}, [fetcher.state]);
 
-	const handleDeskpadAdd: MouseEventHandler = (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-		setAddedDeskpad((prev) => !prev);
-		setJustAddedDeskpad(true);
-		setTimeout(() => setJustAddedDeskpad(false), 2000);
-	};
-
 	const lines = [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }];
-	if (addedDeskpad) lines.push({ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 });
 
 	return (
 		<CartForm route="/cart" action={CartForm.ACTIONS.LinesAdd} inputs={{ lines }} fetcherKey="checkout">
 			{(fetcher) => (
 				<>
 					<OptimisticInput id={SPROUT_75_MERCHANDISE_ID} data={{}} />
-					<div
-						ref={deskpadRef}
-						className="relative group w-full xs:w-3/4 sm:w-full mb-8 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
-						tabIndex={0}
-						aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
-						<LightboxImage
-							{...Images.DeskpadFull}
-							className="w-full object-contain"
-							button={{
-								"onClick": handleDeskpadAdd,
-								"aria-label": addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart",
-								"tabIndex": -1,
-							}}
-						/>
-						<Button
-							color={addedDeskpad ? "lilac" : "blurple"}
-							onClick={handleDeskpadAdd}
-							hoverRef={deskpadRef}
-							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
-							aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
-							{!addedDeskpad ? (
-								<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
-							) : (
-								<>
-									<CheckIcon
-										className={twJoin(
-											"w-[1.375rem] xs:w-6 lg:w-7 h-auto",
-											!justAddedDeskpad && "group-hover:hidden",
-										)}
-									/>
-									<MinusIcon
-										className={twJoin(
-											"w-[1.375rem] xs:w-6 lg:w-7 h-auto hidden",
-											!justAddedDeskpad && "group-hover:block",
-										)}
-									/>
-								</>
-							)}
-							<span>matching deskpad $10</span>
-						</Button>
-					</div>
 					<Button
 						type="submit"
-						className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
+						className="w-full max-w-96 py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
 						color="shrub"
 						rainbow={false}
 						disabled={navigation.state !== "idle"}>
@@ -505,12 +406,12 @@ function CheckoutForm() {
 
 const Images = {
 	BoardSpin: {
-		src: "sprout75/BoardSpin.png",
-		alt: "a photo of the Sprout 75 mechanical keyboard. it's placed vertically with just one corner on the ground. it's a cream-colored aluminum keyboard showcasing the brown sugar boba keycaps.",
+		src: "sprout75/cream/BoardSpin.png",
+		alt: "a photo of the Sprout 75 mechanical keyboard. it's placed vertically with just one corner on the ground. it's a cream-colored aluminum keyboard with matching keycaps.",
 	},
 	NoveltiesTransparent: {
-		src: "sprout75/NoveltiesTransparent.png",
-		alt: "a close-up of the right side of Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup. in the macro column, delete fetcherKey, and enter fetcherKey, you can see novelties depicting cats and desserts.",
+		src: "sprout75/cream/NoveltiesTransparent.png",
+		alt: "a close-up of the right side of Sprout 75. it's got a silver aluminum knob at the top right corner, shaped like a bubble tea cup.",
 	},
 	SwitchTransparent: {
 		src: "sprout75/SwitchTransparent.png",
@@ -526,61 +427,25 @@ const Images = {
 	},
 	TweakPreview: {
 		src: "sprout75/TweakPreview.png",
-		alt: "a preview of Tweak, the configuration tool for the sprout 75. the bottom left corner of a keyboard layout is displayed, with the 'alt' fetcherKey highlighted and a cursor over it.",
+		alt: "a preview of Tweak, the configuration tool for the sprout 75. the bottom left corner of a keyboard layout is displayed, with the 'alt' key highlighted and a cursor over it.",
 	},
 	DongleCloseUp: {
-		src: "sprout75/DongleCloseUp.png",
+		src: "sprout75/cream/DongleCloseUp.png",
 		alt: "a very close-up shot of the back of Sprout 75. there's a 2.4ghz usb dongle leaning against the board, next to a switch for toggling between wireless and wired.",
 	},
 	NoveltySwap: {
-		src: "sprout75/NoveltySwap.png",
-		alt: "the top right of Sprout 75. there's two keycaps floating above an exposed switch. one is the 'del' keycap, while the other is a novelty depicting a cup of bubble tea.",
-	},
-	DeskpadCloseUp: {
-		src: "sprout75/DeskmatCloseUp.png",
-		alt: "a close-up shot of the left side of the brown sugar boba deskpad. towards the right edge you can see Sprout 75 board on it.",
-	},
-	DeskpadFull: {
-		src: "sprout75/DeskmatFull.png",
-		alt: "the brown sugar boba deskpad. it depicts cats hanging out at a boba café.",
-		big: true,
+		src: "sprout75/cream/NoveltySwap.png",
+		alt: "the top right of Sprout 75. there's a 'del' keycap floating above an exposed switch.",
 	},
 	BoardTilt: {
-		src: "sprout75/BoardTilt.png",
+		src: "sprout75/cream/BoardTilt.png",
 		alt: "a photo of the Sprout 75 mechanical keyboard. it's floating just above the ground at an angle.",
 	},
 	BoardFloat: {
-		src: "sprout75/BoardFloat.png",
+		src: "sprout75/cream/BoardFloat.png",
 		alt: "one last shot of Sprout 75, at an angle from above so it looks like it's floating.",
 	},
 } satisfies Record<string, ImageProps>;
-
-const carouselImages = [
-	{
-		src: "sprout75/photos/Photo1.png",
-		alt: "an angled birds-eye shot of Sprout 75 laying on the brown sugar boba deskpad. towards the upper edge of the image there's a white mug with a grid pattern, and a wooden to-do organizer with a card in it.",
-	},
-	{
-		src: "sprout75/photos/Photo2.png",
-		alt: "an angled birds-eye view of the backside of Sprout 75. it has a reflective silver aluminum weight with a circle, a triangle, and a pentagon etched into the middle.",
-	},
-	{
-		src: "sprout75/photos/Photo3.png",
-		alt: "a close-up shot of the top right corner of Sprout 75. the silver knob is in focus, in the shape of a bubble tea cup with a straw sticking out of the top.",
-	},
-	{
-		src: "sprout75/photos/Photo4.png",
-		alt: "an angled birds-eye shot of the right sied of Sprout 75. it's on aw white surface, and scattered around the board are a few keycaps — cmd, pgup, end, enter, and pgdn.",
-	},
-	{
-		src: "sprout75/photos/Photo5.png",
-		alt: "a close-up shot of the Taro switches on Sprout 75. they have a light purple housing with a subtle cream-colored stem, and the milktype logo is etched into the housing.",
-	},
-	{
-		src: "sprout75/photos/Photo6.png",
-		alt: "a close-up shot of the right side of the back of Sprout 75. there's a silver aluminum toggle for switching between wireless and wired. next to it, there's a usb-c port.",
-	},
-] satisfies Array<ImageProps>;
 
 const SPROUT75_PRODUCT_QUERY = `#graphql
 query Sprout75Product($handle: String!) {
