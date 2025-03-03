@@ -114,10 +114,6 @@ export default function Sprout75() {
 					/>
 					<div className=" -mt-12 sm:mt-36 flex flex-col gap-y-2 sm:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<div className="flex flex-row gap-2 sm:gap-3 items-center text-cocoa-80 xs:text-lg xl:text-xl xs:font-medium">
-							<TruckIcon className="w-5 xl:w-6 h-auto" />
-							<span>ships in jan 2025</span>
-						</div>
 						<span className="text-cocoa-120 text-balance xs:text-lg xl:text-xl xs:font-medium">
 							a fully assembled mechanical keyboard inspired by our favorite drink — brown sugar boba.
 						</span>
@@ -154,20 +150,11 @@ export default function Sprout75() {
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">turn it up</h2>
 						<p className="xs:text-lg xl:text-xl xs:font-medium">
 							or down with the exclusive <span className="text-[#7B7673]">silver boba knob</span>,
-							included for free if you pre-order. standard volume knob also included.
+							included for free alongside a standard volume knob.
 						</p>
 					</div>
 					<div className="relative self-end w-52 h-52 sm:w-80 sm:h-80 lg:w-full lg:max-w-xl 2xl:max-w-2xl lg:h-unset lg:aspect-square -mt-8 xs:-mt-20 sm:mt-0">
 						<Image {...Images.KnobTransparent} className="aspect-square h-full" />
-						<Splat
-							className="h-32 lg:h-56 2xl:h-64 absolute -bottom-4 sm:bottom-4 lg:bottom-16 2xl:bottom-24 -left-8 sm:left-unset lg:-right-4"
-							splatClasses="fill-accent h-full w-full">
-							<span className="text-yogurt-100 text-lg lg:text-2xl 2xl:text-3xl text-center font-semibold rotate-[24deg]">
-								pre-order
-								<br />
-								exclusive
-							</span>
-						</Splat>
 					</div>
 				</section>
 				<section className="mt-28 px-8 sm:px-12 md:px-16 flex flex-col lg:flex-row lg:justify-between lg:max-w-screen-lg lg:mx-auto lg:w-full">
@@ -180,9 +167,14 @@ export default function Sprout75() {
 							make it <span className="text-accent">yours</span>
 						</h3>
 						<p className="xs:text-lg xl:text-xl xs:font-medium text-balance">
-							{/* todo: change link */}
-							configure keybinds and settings with <span className="text-accent">milktype tweak</span>,
-							our lightweight design tool.
+							configure keybinds and settings with{" "}
+							<a
+								className="underline hover:no-underline text-accent"
+								href="https://tweak.milktype.co"
+								target="_blank">
+								milktype tweak
+							</a>
+							, our lightweight design tool.
 						</p>
 					</div>
 					<div className="w-36 xs:w-52 sm:w-60 md:w-72 lg:w-60 -mt-16 lg:mt-48">
@@ -301,7 +293,7 @@ export default function Sprout75() {
 							color="shrub"
 							className="text-yogurt-100 py-3 -ml-1"
 							icon={<ArrowUpIcon className="w-4 fill-yogurt-100" />}>
-							pre-order now
+							order now
 						</ButtonLink>
 						<NotificationsSignup fetcherKey="footer" cta="get updates at" />
 						<div className="flex flex-row w-full gap-x-3 xs:gap-x-4 items-center">
@@ -467,6 +459,7 @@ function CheckoutForm() {
 							onClick={handleDeskpadAdd}
 							hoverRef={deskpadRef}
 							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
+							disabled={true /*navigation.state !== "idle"*/}
 							aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
 							{!addedDeskpad ? (
 								<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
@@ -494,8 +487,8 @@ function CheckoutForm() {
 						className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
 						color="shrub"
 						rainbow={false}
-						disabled={navigation.state !== "idle"}>
-						{fetcher.state === "submitting" ? "loading..." : "pre-order now ⋅ $135 usd"}
+						disabled={true /*navigation.state !== "idle"*/}>
+						{fetcher.state === "submitting" ? "loading..." : "available soon..." /*"order now ⋅ $140 usd"*/}
 					</Button>
 				</>
 			)}
