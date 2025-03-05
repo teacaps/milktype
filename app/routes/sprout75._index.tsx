@@ -459,7 +459,7 @@ function CheckoutForm() {
 							onClick={handleDeskpadAdd}
 							hoverRef={deskpadRef}
 							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
-							disabled={true /*navigation.state !== "idle"*/}
+							disabled={navigation.state !== "idle"}
 							aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
 							{!addedDeskpad ? (
 								<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
@@ -487,8 +487,8 @@ function CheckoutForm() {
 						className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
 						color="shrub"
 						rainbow={false}
-						disabled={true /*navigation.state !== "idle"*/}>
-						{fetcher.state === "submitting" ? "loading..." : "available soon..." /*"order now ⋅ $140 usd"*/}
+						disabled={navigation.state !== "idle"}>
+						{fetcher.state === "submitting" ? "loading..." : "order now ⋅ $140 usd"}
 					</Button>
 				</>
 			)}
