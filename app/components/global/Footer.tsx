@@ -140,7 +140,7 @@ function Socials({ className }: { className?: string }) {
 }
 
 const footerLinks = [
-	{ text: "milktype 75", href: "/products/milktype75" },
+	{ text: "sprout 75", href: "/sprout75" },
 	{ text: "terms and privacy", href: "/terms" },
 	{ text: "about", href: "/" }, // TODO: about page
 	{ text: "shipping and returns", href: "/shipping" },
