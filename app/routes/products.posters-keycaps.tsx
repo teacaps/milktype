@@ -77,7 +77,7 @@ export default function PostersKeycaps() {
 		<Layout>
 			<Container className="py-8 sm:py-16 sm:w-full">
 				<main className="flex flex-col md:flex-row w-full">
-					<div className="md:basis-1/2 lg:basis-2/5 w-full max-h-[40vh] sm:max-h-[50vh] self-center md:self-start aspect-square">
+					<div className="md:basis-1/2 lg:basis-2/5 w-full self-center md:self-start aspect-square">
 						<ProductImageGrid images={GRID_IMAGES} />
 					</div>
 					<section className="md:basis-1/2 lg:basis-3/5 flex flex-col gap-y-12 mt-10 md:mt-0 md:ml-10">
