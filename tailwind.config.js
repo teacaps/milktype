@@ -27,6 +27,9 @@ export default {
 			lilac: "#BEA5CE",
 			blurple: "#8882CA",
 			shrub: "#74AE6E",
+			sky: "#44B3E2",
+			mango: "#F6BA3C",
+			cherry: "#DA7D6C",
 		},
 		fontWeight: {
 			regular: 400,

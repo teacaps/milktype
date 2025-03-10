@@ -142,7 +142,7 @@ function Socials({ className }: { className?: string }) {
 const footerLinks = [
 	{ text: "sprout 75", href: "/sprout75" },
 	{ text: "terms and privacy", href: "/terms" },
-	{ text: "about", href: "/" }, // TODO: about page
+	{ text: "about", href: "/about" },
 	{ text: "shipping and returns", href: "/shipping" },
 ];
 
