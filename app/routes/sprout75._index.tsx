@@ -7,14 +7,12 @@ import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
-import { Splat } from "~/assets/Splat";
 import lightboxStyles from "yet-another-react-lightbox/styles.css";
 import { Asteroid } from "~/assets/Asteroid";
 import { InfoBubble } from "~/components/elements/InfoBubble";
 import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
-import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { TruckIcon } from "~/assets/icons/Truck";
+import { MouseEventHandler, useEffect, useMemo, useRef, useState } from "react";
 import { PlusIcon } from "~/assets/icons/Plus";
 import { CheckIcon } from "~/assets/icons/Check";
 import { MinusIcon } from "~/assets/icons/Minus";
@@ -23,6 +21,7 @@ import { AnalyticsEvent, CartForm, OptimisticInput, ProductViewPayload, useAnaly
 import { useCartVisibility } from "~/components/global/Cart";
 import { usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import Tracker from "@openreplay/tracker";
 
 const title = "sprout 75";
 const description = "available for pre-order now";
@@ -74,6 +73,8 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 		},
 	});
 
+	const { searchParams } = new URL(request.url);
+
 	if (!product?.id) {
 		throw new Response(null, { status: 404 });
 	}
@@ -91,14 +92,27 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 	return json({
 		productPayload,
 		url: request.url,
+		trackerProjectKey: context.env.OPENREPLAY_PROJECT_KEY,
+		searchParams: Object.fromEntries(searchParams.entries()),
 	});
 }
 
 export default function Sprout75() {
-	const { productPayload, url } = useLoaderData<typeof loader>();
+	const { productPayload, url, trackerProjectKey, searchParams } = useLoaderData<typeof loader>();
 	const { publish, shop } = useAnalytics();
 
+	const tracker = useMemo(() => new Tracker({ projectKey: trackerProjectKey }), [trackerProjectKey]);
+
 	useEffect(() => {
+		void tracker.start({
+			metadata: {
+				aud: searchParams["aud"],
+				utm_source: searchParams["utm_source"],
+				utm_source_platform: searchParams["utm_source_platform"],
+				utm_campaign: searchParams["utm_campaign"],
+				utm_content: searchParams["utm_content"],
+			},
+		});
 		publish(AnalyticsEvent.PRODUCT_VIEWED, { products: [productPayload], shop, url });
 	}, []);
 

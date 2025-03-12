@@ -32,6 +32,8 @@ declare global {
 
 		META_PIXEL_ID: string;
 		REDDIT_AD_ID: string;
+
+		OPENREPLAY_PROJECT_KEY: string;
 	}
 }
 
