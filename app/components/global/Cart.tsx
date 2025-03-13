@@ -229,5 +229,13 @@ export const CartVisibilityContext = createContext<{
 });
 
 export function useCartVisibility() {
-	return useContext(CartVisibilityContext);
+	const { cartVisible: _cartVisible, setCartVisible: _setCartVisible } = useContext(CartVisibilityContext);
+	return {
+		cartVisible: _cartVisible,
+		setCartVisible: (cartVisible: boolean | ((cartVisible: boolean) => boolean)) => {
+			const newValue = typeof cartVisible === "function" ? cartVisible(_cartVisible) : cartVisible;
+			_setCartVisible(cartVisible);
+			if (newValue === true) window.scrollTo(0, 0);
+		},
+	};
 }
