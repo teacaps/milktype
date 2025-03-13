@@ -23,6 +23,8 @@ import { usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import Tracker from "@openreplay/tracker";
 import { CartIcon } from "~/assets/icons/Cart";
+import { TruckIcon } from "~/assets/icons/Truck";
+import { ShoppingBagIcon } from "~/assets/icons/ShoppingBag";
 
 const title = "sprout 75";
 const description = "available now for $140 usd";
@@ -475,7 +477,7 @@ function CheckoutForm() {
 					<OptimisticInput id={SPROUT_75_MERCHANDISE_ID} data={{}} />
 					<div
 						ref={deskpadRef}
-						className="relative group w-full xs:w-3/4 sm:w-full mb-8 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
+						className="relative group w-full xs:w-3/4 sm:w-full rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
 						tabIndex={0}
 						aria-label={deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart"}>
 						<LightboxImage
@@ -512,8 +514,25 @@ function CheckoutForm() {
 									/>
 								</>
 							)}
-							<span>{fetcher.state === "submitting" ? "loading..." : "matching deskpad ⋅ $10"}</span>
+							<span>
+								{fetcher.state === "submitting" ? (
+									"loading..."
+								) : (
+									<>
+										matching deskpad ⋅ $10{" "}
+										<span className="text-yogurt-60 opacity-75 line-through">$18</span>
+									</>
+								)}
+							</span>
 						</Button>
+					</div>
+					<div className="flex flex-row mb-4 gap-2 sm:gap-3 items-center text-cocoa-80 text-sm sm:text-lg xl:text-xl font-medium">
+						<TruckIcon className="w-4 sm:w-5 xl:w-6 h-auto" />
+						<span>free shipping in the us</span>
+					</div>
+					<div className="flex flex-row mb-4 gap-2 sm:gap-3 items-center text-cocoa-80 text-sm sm:text-lg xl:text-xl font-medium">
+						<ShoppingBagIcon className="w-4 sm:w-5 xl:w-6 h-auto" />
+						<span>save on a deskpad when you bundle</span>
 					</div>
 					<Button
 						type="submit"
