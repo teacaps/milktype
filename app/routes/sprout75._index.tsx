@@ -123,9 +123,12 @@ export default function Sprout75() {
 				as="main"
 				className="w-full sm:w-full px-0 sm:px-0 lg:px-0 lg:max-w-unset overflow-x-visible flex flex-col">
 				<section className="w-full px-8 md:pl-16 md:pr-12 flex flex-col sm:flex-row-reverse sm:items-center lg:max-w-screen-lg sm:mx-auto">
-					<Image
+					<LightboxImage
 						{...Images.BoardSpin}
-						className="self-end sm:self-start aspect-[2/3] w-[15rem] xs:w-[22rem] md:w-[30rem] -mr-4 xs:-mr-8 sm:-mr-12 md:-mr-24"
+						className="aspect-[2/3] w-[15rem] xs:w-[22rem] md:w-[30rem]"
+						button={{
+							className: "self-end sm:self-start -mr-4 xs:-mr-8 sm:-mr-12 md:-mr-24",
+						}}
 					/>
 					<div className=" -mt-8 sm:mt-36 flex flex-col gap-y-2 sm:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
