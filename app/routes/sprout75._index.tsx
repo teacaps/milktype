@@ -6,7 +6,7 @@ import { json, useFetcher, useLoaderData, useNavigation } from "@remix-run/react
 import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
-import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
+import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import lightboxStyles from "yet-another-react-lightbox/styles.css";
 import { Asteroid } from "~/assets/Asteroid";
 import { InfoBubble } from "~/components/elements/InfoBubble";
@@ -22,6 +22,7 @@ import { useCartVisibility } from "~/components/global/Cart";
 import { usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import Tracker from "@openreplay/tracker";
+import { CartIcon } from "~/assets/icons/Cart";
 
 const title = "sprout 75";
 const description = "available for pre-order now";
@@ -126,25 +127,25 @@ export default function Sprout75() {
 						{...Images.BoardSpin}
 						className="self-end sm:self-start aspect-[2/3] w-[15rem] xs:w-[22rem] md:w-[30rem] -mr-4 xs:-mr-8 sm:-mr-12 md:-mr-24"
 					/>
-					<div className=" -mt-12 sm:mt-36 flex flex-col gap-y-2 sm:gap-y-4 w-full xs:text-lg">
+					<div className=" -mt-8 sm:mt-36 flex flex-col gap-y-2 sm:gap-y-4 w-full xs:text-lg">
 						<Sprout75Mark />
-						<span className="text-cocoa-120 text-balance xs:text-lg xl:text-xl xs:font-medium">
+						<span className="text-cocoa-120 text-balance sm:text-lg xl:text-xl font-medium">
 							a fully assembled mechanical keyboard inspired by our favorite drink — brown sugar boba.
 						</span>
 						<CheckoutForm />
 					</div>
 				</section>
-				<section className="w-full max-w-[96rem] flex flex-col xl:flex-row my-24 lg:mx-auto xl:justify-between xl:gap-x-24">
-					<div className="w-full my-4 lg:mx-auto px-8 md:px-16 lg:px-12 scroll-px-8 md:scroll-px-16 xl:scroll-px-64 snap-x snap-mandatory flex flex-row lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 overflow-x-scroll lg:overflow-auto">
-						{carouselImages.map((image, i) => (
+				<section className="w-full max-w-[96rem] flex flex-col xl:flex-row my-16 lg:my-24 lg:mx-auto xl:justify-between xl:gap-x-24">
+					<div className="w-full my-4 lg:mx-auto pr-8 pl-0 xs:px-8 md:px-16 lg:px-12 scroll-px-8 md:scroll-px-16 xl:scroll-px-64 snap-x snap-mandatory flex flex-row lg:grid lg:grid-cols-3 lg:grid-rows-2 gap-8 overflow-x-scroll lg:overflow-auto">
+						{carouselImages.map((image) => (
 							<LightboxImage
 								key={image.src}
-								className="xl:flex-1 h-32 xs:h-44 sm:h-56 lg:h-auto lg:w-full flex items-center justify-center bg-yogurt-60 rounded-2xl md:snap-start"
+								className="xl:flex-1 h-44 xs:h-44 sm:h-56 lg:h-auto lg:w-full flex items-center justify-center bg-yogurt-60 rounded-2xl"
 								{...image}></LightboxImage>
 						))}
 					</div>
 				</section>
-				<section className="mt-28 xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-20 lg:items-center lg:w-full lg:max-w-screen-2xl lg:mr-auto">
+				<section className="xs:mt-36 lg:mt-0 pr-8 flex flex-col lg:flex-row lg:gap-x-20 lg:items-center lg:w-full lg:max-w-screen-2xl lg:mr-auto">
 					<Image
 						{...Images.NoveltiesTransparent}
 						className="w-5/6 md:w-2/3 lg:w-1/2 lg:max-w-xl xl:max-w-3xl aspect-square"
@@ -423,11 +424,13 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 }
 
 function CheckoutForm() {
+	const { lines } = useCart();
 	const { setCartVisible } = useCartVisibility();
 	const navigation = useNavigation();
-	const [addedDeskpad, setAddedDeskpad] = useState(false);
 	const [justAddedDeskpad, setJustAddedDeskpad] = useState(false);
 	const deskpadRef = useRef<HTMLDivElement>(null);
+
+	const deskpadInCart = lines?.some((line) => line?.merchandise?.id === BSB_DESKPAD_MERCHANDISE_ID) || false;
 
 	const fetcher = useFetcher({ key: "checkout" });
 	const previousFetcherState = usePrevious(fetcher.state);
@@ -441,16 +444,29 @@ function CheckoutForm() {
 	const handleDeskpadAdd: MouseEventHandler = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
-		setAddedDeskpad((prev) => !prev);
+
 		setJustAddedDeskpad(true);
 		setTimeout(() => setJustAddedDeskpad(false), 2000);
+
+		fetcher.submit(
+			{
+				[CartForm.INPUT_NAME]: JSON.stringify({
+					action: CartForm.ACTIONS.LinesAdd,
+					inputs: {
+						lines: [{ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 }],
+					},
+				}),
+			},
+			{ method: "POST", action: "/cart", preventScrollReset: true },
+		);
 	};
 
-	const lines = [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }];
-	if (addedDeskpad) lines.push({ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 });
-
 	return (
-		<CartForm route="/cart" action={CartForm.ACTIONS.LinesAdd} inputs={{ lines }} fetcherKey="checkout">
+		<CartForm
+			route="/cart"
+			action={CartForm.ACTIONS.LinesAdd}
+			inputs={{ lines: [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }] }}
+			fetcherKey="checkout">
 			{(fetcher) => (
 				<>
 					<OptimisticInput id={SPROUT_75_MERCHANDISE_ID} data={{}} />
@@ -458,25 +474,25 @@ function CheckoutForm() {
 						ref={deskpadRef}
 						className="relative group w-full xs:w-3/4 sm:w-full mb-8 rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
 						tabIndex={0}
-						aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+						aria-label={deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart"}>
 						<LightboxImage
 							{...Images.DeskpadFull}
 							className="w-full object-contain"
 							button={{
 								"onClick": handleDeskpadAdd,
-								"aria-label": addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart",
+								"aria-label": deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart",
 								"tabIndex": -1,
 							}}
 						/>
 						<Button
-							color={addedDeskpad ? "lilac" : "blurple"}
+							color={deskpadInCart ? "lilac" : "blurple"}
 							onClick={handleDeskpadAdd}
 							hoverRef={deskpadRef}
 							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
 							disabled={navigation.state !== "idle"}
-							aria-label={addedDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
-							{!addedDeskpad ? (
-								<PlusIcon className="w-[1.375rem] xs:w-6 lg:w-7 h-auto" />
+							aria-label={deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+							{!deskpadInCart ? (
+								<CartIcon className="w-4 xs:w-5 h-auto mr-3" />
 							) : (
 								<>
 									<CheckIcon
@@ -493,7 +509,7 @@ function CheckoutForm() {
 									/>
 								</>
 							)}
-							<span>matching deskpad $10</span>
+							<span>{fetcher.state === "submitting" ? "loading..." : "matching deskpad ⋅ $10"}</span>
 						</Button>
 					</div>
 					<Button
@@ -502,7 +518,7 @@ function CheckoutForm() {
 						color="shrub"
 						rainbow={false}
 						disabled={navigation.state !== "idle"}>
-						{fetcher.state === "submitting" ? "loading..." : "order now ⋅ $140 usd"}
+						{fetcher.state === "submitting" ? "loading..." : "add to cart ⋅ $140 usd"}
 					</Button>
 				</>
 			)}
