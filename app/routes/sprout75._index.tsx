@@ -25,7 +25,7 @@ import Tracker from "@openreplay/tracker";
 import { CartIcon } from "~/assets/icons/Cart";
 
 const title = "sprout 75";
-const description = "available for pre-order now";
+const description = "available now for $140 usd";
 
 const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45575282786531";
 const BSB_DESKPAD_MERCHANDISE_ID = "gid://shopify/ProductVariant/45729711849699";
