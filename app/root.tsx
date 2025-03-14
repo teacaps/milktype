@@ -18,12 +18,12 @@ import favicon from "../public/favicon.svg";
 import styles from "./styles/tailwind.css";
 import { CartProvider } from "@shopify/hydrogen-react";
 import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
-import { CookieConsentNotice } from "~/components/global/CookieConsentNotice";
 import { AnalyticsListener } from "~/lib/AnalyticsListener";
 import { CookiesProvider } from "react-cookie";
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
 import { ConsentLevel, useConsentLevel } from "~/lib/util";
+import { ModalProvider, withModalDelay } from "~/lib/ModalContext";
+import { CookieConsentModal } from "~/components/global/modals/CookieConsentModal";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -118,15 +118,17 @@ export default function App() {
 			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
 				<CookiesProvider
 					defaultSetOptions={{ path: "/", expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) }}>
-					<AnalyticsWrapper>
-						<CartProvider>
-							<Outlet />
-							<ScrollRestoration nonce={nonce} />
-							<Scripts nonce={nonce} />
-							<LiveReload nonce={nonce} />
-							<AnalyticsListener redditAdId={data.redditAdId} />
-						</CartProvider>
-					</AnalyticsWrapper>
+					<ModalProvider>
+						<AnalyticsWrapper>
+							<CartProvider>
+								<Outlet />
+								<ScrollRestoration nonce={nonce} />
+								<Scripts nonce={nonce} />
+								<LiveReload nonce={nonce} />
+								<AnalyticsListener redditAdId={data.redditAdId} />
+							</CartProvider>
+						</AnalyticsWrapper>
+					</ModalProvider>
 				</CookiesProvider>
 			</body>
 		</html>
@@ -135,20 +137,16 @@ export default function App() {
 
 const AnalyticsWrapper = ({ children }: { children: ReactNode }) => {
 	const data = useLoaderData<typeof loader>();
-
 	const [queryParams] = useSearchParams();
-
 	const [consentLevel, setConsentLevel] = useConsentLevel();
 	const hasAnalyticsConsent = consentLevel !== ConsentLevel.NECESSARY_ONLY;
 
-	const [showConsentNotice, setShowConsentNotice] = useState(false);
-	useEffect(() => {
-		if (consentLevel === ConsentLevel.NOT_SET) {
-			setShowConsentNotice(true);
-		} else {
-			setShowConsentNotice(false);
-		}
-	}, [consentLevel]);
+	const ConsentModal = withModalDelay(
+		"cookie-consent",
+		<CookieConsentModal setConsentLevel={setConsentLevel} />,
+		2500,
+		[setConsentLevel],
+	);
 
 	useShopifyCookies({ hasUserConsent: hasAnalyticsConsent });
 
@@ -162,7 +160,7 @@ const AnalyticsWrapper = ({ children }: { children: ReactNode }) => {
 				fbclid: queryParams.get("fbclid"),
 			}}>
 			{children}
-			{showConsentNotice ? <CookieConsentNotice setConsentLevel={setConsentLevel} /> : null}
+			{consentLevel === ConsentLevel.NOT_SET && <ConsentModal />}
 		</Analytics.Provider>
 	);
 };
