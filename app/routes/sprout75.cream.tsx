@@ -23,6 +23,7 @@ import { AnalyticsEvent, CartForm, OptimisticInput, ProductViewPayload, useAnaly
 import { useCartVisibility } from "~/components/global/Cart";
 import { usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
+import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 
 const title = "sprout 75 – cream";
 const description = "available for pre-order now";
@@ -303,8 +304,10 @@ const Sprout75Mark = () => (
 
 function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: string }) {
 	const fetcher = useFetcher({ key: fetcherKey });
-	const email = fetcher.data as string | undefined;
-	const submitted = !!email;
+	const { customerCreate: { customer = null } = {} } =
+		(fetcher.data as { customerCreate: { customer: Pick<Customer, "email"> | null } }) ?? {};
+	const submitted = !!customer;
+	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
 	return (
 		<fetcher.Form

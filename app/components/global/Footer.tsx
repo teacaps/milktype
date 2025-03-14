@@ -13,11 +13,14 @@ import { twJoin } from "tailwind-merge";
 import { NavLink, useFetcher } from "@remix-run/react";
 import { useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
+import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 
 function NewsletterSignup() {
 	const fetcher = useFetcher({ key: "newsletter" });
-	const email = fetcher.data as string | undefined;
-	const submitted = !!email;
+	const { customerCreate: { customer = null } = {} } =
+		(fetcher.data as { customerCreate: { customer: Pick<Customer, "email"> | null } }) ?? {};
+	const submitted = !!customer;
+	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 

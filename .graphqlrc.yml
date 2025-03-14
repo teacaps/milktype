@@ -1,7 +1,9 @@
-schema: "node_modules/@shopify/hydrogen/dist/storefront.schema.json"
-documents:
-    - "!*.d.ts"
-    - "*.{ts,tsx,js,jsx}"
-    - "app/**/*.{ts,tsx,js,jsx}"
-    - "!app/graphql/**/*.{ts,tsx,js,jsx}"
-    - "!app/routes/signup.tsx"
+projects:
+    admin:
+        schema: "https://shopify.dev/admin-graphql-direct-proxy/2025-04"
+        documents:
+            - "app/routes/signup.tsx"
+    storefront:
+        schema: "node_modules/@shopify/hydrogen/dist/storefront.schema.json"
+        documents:
+            - "app/**/*.{ts,tsx,js,jsx}"

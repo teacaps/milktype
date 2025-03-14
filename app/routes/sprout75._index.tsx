@@ -25,6 +25,7 @@ import Tracker from "@openreplay/tracker";
 import { CartIcon } from "~/assets/icons/Cart";
 import { TruckIcon } from "~/assets/icons/Truck";
 import { ShoppingBagIcon } from "~/assets/icons/ShoppingBag";
+import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 
 const title = "sprout 75";
 const description = "available now for $140 usd";
@@ -356,8 +357,10 @@ const Sprout75Mark = () => (
 
 function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: string }) {
 	const fetcher = useFetcher({ key: fetcherKey });
-	const email = fetcher.data as string | undefined;
-	const submitted = !!email;
+	const { customerCreate: { customer = null } = {} } =
+		(fetcher.data as { customerCreate: { customer: Pick<Customer, "email"> | null } }) ?? {};
+	const submitted = !!customer;
+	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
 	return (
 		<fetcher.Form
