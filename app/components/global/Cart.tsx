@@ -19,6 +19,7 @@ import { PlusIcon } from "~/assets/icons/Plus";
 import { useRootLoaderData } from "~/root";
 import { ButtonLink } from "~/components/elements/Button";
 import { twJoin } from "tailwind-merge";
+import { CartActions } from "~/routes/cart";
 
 type OptimisticData = {
 	action?: string;
@@ -35,7 +36,7 @@ function UpdateCartButton({ children, line }: CartQuantityButtonProps) {
 	return (
 		<CartForm
 			route="/cart"
-			action={CartForm.ACTIONS.LinesUpdate}
+			action={CartActions.LinesUpdate}
 			inputs={{
 				lines: [line],
 			}}>
@@ -48,7 +49,7 @@ function RemoveFromCartButton({ children, line }: CartQuantityButtonProps) {
 	return (
 		<CartForm
 			route="/cart"
-			action={CartForm.ACTIONS.LinesRemove}
+			action={CartActions.LinesRemove}
 			inputs={{
 				lineIds: [line.id],
 			}}>

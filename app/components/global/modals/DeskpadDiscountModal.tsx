@@ -66,7 +66,7 @@ export function DeskpadDiscountModal() {
 
 										cartFetcher.submit(
 											{
-												cartFormInput: JSON.stringify({
+												[CartForm.INPUT_NAME]: JSON.stringify({
 													action: CartActions.DiscountCodesUpdate,
 													inputs: { discountCodes: ["WELCOMEFRIEND"] },
 												} satisfies CartActionInput),
@@ -80,7 +80,7 @@ export function DeskpadDiscountModal() {
 										) {
 											cartFetcher.submit(
 												{
-													cartFormInput: JSON.stringify({
+													[CartForm.INPUT_NAME]: JSON.stringify({
 														action: CartActions.LinesUpsert,
 														inputs: {
 															lines: [

@@ -24,6 +24,7 @@ import { useCartVisibility } from "~/components/global/Cart";
 import { usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
+import { CartActions } from "~/routes/cart";
 
 const title = "sprout 75 – cream";
 const description = "available for pre-order now";
@@ -394,7 +395,7 @@ function CheckoutForm() {
 	const lines = [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }];
 
 	return (
-		<CartForm route="/cart" action={CartForm.ACTIONS.LinesAdd} inputs={{ lines }} fetcherKey="checkout">
+		<CartForm route="/cart" action={CartActions.LinesAdd} inputs={{ lines }} fetcherKey="checkout">
 			{(fetcher) => (
 				<>
 					<OptimisticInput id={SPROUT_75_MERCHANDISE_ID} data={{}} />

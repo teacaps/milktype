@@ -27,6 +27,7 @@ import { ShoppingBagIcon } from "~/assets/icons/ShoppingBag";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 import { withModalDelay } from "~/lib/ModalContext";
 import { DeskpadDiscountModal } from "~/components/global/modals/DeskpadDiscountModal";
+import { CartActions } from "~/routes/cart";
 
 const title = "sprout 75";
 const description = "available now for $140 usd";
@@ -463,7 +464,7 @@ function CheckoutForm() {
 		fetcher.submit(
 			{
 				[CartForm.INPUT_NAME]: JSON.stringify({
-					action: CartForm.ACTIONS.LinesAdd,
+					action: CartActions.LinesAdd,
 					inputs: {
 						lines: [{ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 }],
 					},
@@ -476,7 +477,7 @@ function CheckoutForm() {
 	return (
 		<CartForm
 			route="/cart"
-			action={CartForm.ACTIONS.LinesAdd}
+			action={CartActions.LinesAdd}
 			inputs={{ lines: [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }] }}
 			fetcherKey="checkout">
 			{(fetcher) => (
