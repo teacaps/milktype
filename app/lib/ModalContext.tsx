@@ -16,6 +16,7 @@ export interface ModalProps {
 
 interface ModalContextType {
 	modals: ModalProps[];
+	dismissedModals: Set<string>;
 	pushModal: (modal: ModalProps) => void;
 	popModal: (id: string) => void;
 	clearModals: () => void;
@@ -25,15 +26,27 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
 	const [modals, setModals] = useState<ModalProps[]>([]);
+	const [dismissedModals, setDismissedModals] = useState<Set<string>>(new Set());
 
-	const pushModal = useCallback((modal: ModalProps) => {
-		setModals((prev) => {
-			const exists = prev.some((m) => m.id === modal.id);
-			return exists ? prev : [...prev, modal];
-		});
-	}, []);
+	const pushModal = useCallback(
+		(modal: ModalProps) => {
+			if (dismissedModals.has(modal.id)) return;
+
+			setModals((prev) => {
+				const exists = prev.some((m) => m.id === modal.id);
+				return exists ? prev : [...prev, modal];
+			});
+		},
+		[dismissedModals],
+	);
 
 	const popModal = useCallback((id: string) => {
+		setDismissedModals((prev) => {
+			const newSet = new Set(prev);
+			newSet.add(id);
+			return newSet;
+		});
+
 		setModals((prev) => {
 			const modalToRemove = prev.find((modal) => modal.id === id);
 			if (modalToRemove?.onClose) {
@@ -48,6 +61,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 			if (modal.onClose) {
 				modal.onClose();
 			}
+
+			setDismissedModals((prev) => {
+				const newSet = new Set(prev);
+				newSet.add(modal.id);
+				return newSet;
+			});
 		});
 		setModals([]);
 	}, [modals]);
@@ -55,14 +74,14 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 	const currentModal = modals[modals.length - 1];
 
 	return (
-		<ModalContext.Provider value={{ modals, pushModal, popModal, clearModals }}>
+		<ModalContext.Provider value={{ modals, dismissedModals, pushModal, popModal, clearModals }}>
 			{children}
 			{modals.length > 0 && (
 				<div
 					className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
 					aria-hidden={modals.length === 0}>
-					<div className="fixed bottom-0 left-0 right-0 flex justify-center pointer-events-auto">
-						<div className="w-full max-w-2xl mx-4 mb-4 bg-yogurt-60 rounded-lg shadow-lg overflow-hidden">
+					<div className="fixed bottom-4 left-0 right-0 flex justify-center pointer-events-auto">
+						<div className="w-full max-w-2xl px-6 py-4 bg-yogurt-60 rounded-lg shadow-lg overflow-hidden">
 							{currentModal.component}
 						</div>
 					</div>
@@ -73,11 +92,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 };
 
 export const ModalHeader = ({ title }: { title: string }) => {
-	const { clearModals } = useModal();
+	const { popModal, modals } = useModal();
+	const id = modals[modals.length - 1].id;
 	return (
-		<div className="flex flex-row justify-between items-center mt-4 mb-2 px-6">
+		<div className="flex flex-row justify-between items-center mb-2">
 			<h3 className="text-lg font-semibold text-cocoa-120">{title}</h3>
-			<button className="p-1 hover:bg-cocoa-60 rounded" onClick={() => clearModals()} aria-label="Close modal">
+			<button className="p-1 hover:bg-cocoa-60 rounded" onClick={() => popModal(id)} aria-label="Close modal">
 				<svg
 					className="w-5 h-5 stroke-cocoa-100"
 					fill="none"
@@ -91,7 +111,7 @@ export const ModalHeader = ({ title }: { title: string }) => {
 };
 
 export const ModalBody = ({ children }: { children: ReactNode }) => {
-	return <div className="px-6 pb-6">{children}</div>;
+	return <div className="mb-4">{children}</div>;
 };
 
 export const useModal = () => {
@@ -104,22 +124,24 @@ export const useModal = () => {
 
 export function withModalDelay(id: string, Component: ReactNode, delayMs = 0, deps: DependencyList = []) {
 	return () => {
-		const { pushModal, popModal } = useModal();
-		const [mounted, setMounted] = useState(false);
+		const { pushModal, dismissedModals } = useModal();
+
+		const isModalDismissed = dismissedModals.has(id);
 
 		useEffect(() => {
-			setMounted(true);
+			if (isModalDismissed) return;
+
 			const timer = setTimeout(() => {
-				pushModal({ id, component: Component });
+				pushModal({
+					id,
+					component: Component,
+				});
 			}, delayMs);
 
 			return () => {
 				clearTimeout(timer);
-				if (mounted) {
-					popModal(id);
-				}
 			};
-		}, deps);
+		}, [...deps, isModalDismissed]);
 
 		return null;
 	};

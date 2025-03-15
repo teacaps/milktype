@@ -118,17 +118,17 @@ export default function App() {
 			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
 				<CookiesProvider
 					defaultSetOptions={{ path: "/", expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) }}>
-					<ModalProvider>
-						<AnalyticsWrapper>
-							<CartProvider>
+					<CartProvider>
+						<ModalProvider>
+							<AnalyticsWrapper>
 								<Outlet />
 								<ScrollRestoration nonce={nonce} />
 								<Scripts nonce={nonce} />
 								<LiveReload nonce={nonce} />
 								<AnalyticsListener redditAdId={data.redditAdId} />
-							</CartProvider>
-						</AnalyticsWrapper>
-					</ModalProvider>
+							</AnalyticsWrapper>
+						</ModalProvider>
+					</CartProvider>
 				</CookiesProvider>
 			</body>
 		</html>

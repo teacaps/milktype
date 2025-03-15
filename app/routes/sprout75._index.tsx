@@ -13,7 +13,6 @@ import { InfoBubble } from "~/components/elements/InfoBubble";
 import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { MouseEventHandler, useEffect, useMemo, useRef, useState } from "react";
-import { PlusIcon } from "~/assets/icons/Plus";
 import { CheckIcon } from "~/assets/icons/Check";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { ArrowUpIcon } from "~/assets/icons/ArrowUp";
@@ -107,7 +106,7 @@ export default function Sprout75() {
 	const { productPayload, url, trackerProjectKey, searchParams } = useLoaderData<typeof loader>();
 	const { publish, shop } = useAnalytics();
 
-	const DeskpadModal = withModalDelay("deskpad-modal", <DeskpadDiscountModal />, 5000);
+	const DeskpadModal = withModalDelay("deskpad-modal", <DeskpadDiscountModal />, 10_000);
 
 	const tracker = useMemo(() => new Tracker({ projectKey: trackerProjectKey }), [trackerProjectKey]);
 
@@ -527,7 +526,7 @@ function CheckoutForm() {
 									"loading..."
 								) : (
 									<>
-										matching deskpad ⋅ $10{" "}
+										matching deskpad ⋅ $12{" "}
 										<span className="text-yogurt-60 opacity-75 line-through">$18</span>
 									</>
 								)}

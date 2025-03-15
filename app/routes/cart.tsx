@@ -20,6 +20,9 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		case CartForm.ACTIONS.LinesRemove:
 			result = await cart.removeLines(inputs.lineIds);
 			break;
+		case CartForm.ACTIONS.DiscountCodesUpdate:
+			result = await cart.updateDiscountCodes(inputs.discountCodes);
+			break;
 		default:
 			throw new Error(`Invalid action: ${action}`);
 	}

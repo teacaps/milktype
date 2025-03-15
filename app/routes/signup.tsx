@@ -45,6 +45,7 @@ const CREATE_CUSTOMER_MUTATION = `#graphql
 mutation CreateCustomer($email: String!) {
     customerCreate(input: { email: $email, emailMarketingConsent: { marketingOptInLevel: SINGLE_OPT_IN, marketingState: SUBSCRIBED } }) {
         customer {
+			id
             email
         }
     }
