@@ -9,8 +9,14 @@ import { useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import { CartForm } from "@shopify/hydrogen";
 import { Image } from "~/components/elements/Image";
+import { BSB_DESKPAD_MERCHANDISE_ID } from "~/routes/sprout75._index";
+import { useCartVisibility } from "~/components/global/Cart";
+import { CartActionInput, CartActions } from "~/routes/cart";
 
 export function DeskpadDiscountModal() {
+	const cart = useCart();
+	const { setCartVisible } = useCartVisibility();
+
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 
 	const fetcher = useFetcher({ key: "deskpad-modal" });
@@ -23,14 +29,14 @@ export function DeskpadDiscountModal() {
 
 	return (
 		<>
-			<Image src="web/DeskpadFocus.png" className="w-auto max-w-full mb-4 mt-2 h-auto aspect-[2/1] rounded-md" />
+			<Image src="web/DeskpadFocus.png" className="w-auto max-w-full mb-4 h-auto aspect-[2/1] rounded-lg" />
 			<ModalHeader title="save $10 on a deskpad" />
 			<ModalBody>
 				{!submitted ? (
 					<>
 						<p className="text-cocoa-100 font-medium mb-4">
-							enter your email to get <span className="font-semibold">$10 off</span> on a brown sugar boba
-							deskpad!
+							join our mailing list to get <span className="font-bold">$10 off</span> on a brown sugar
+							boba deskpad!
 						</p>
 
 						<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
@@ -61,12 +67,35 @@ export function DeskpadDiscountModal() {
 										cartFetcher.submit(
 											{
 												cartFormInput: JSON.stringify({
-													action: CartForm.ACTIONS.DiscountCodesUpdate,
+													action: CartActions.DiscountCodesUpdate,
 													inputs: { discountCodes: ["WELCOMEFRIEND"] },
-												}),
+												} satisfies CartActionInput),
 											},
 											{ method: "POST", action: "/cart", preventScrollReset: true },
 										);
+										if (
+											!cart.lines?.some(
+												(line) => line?.merchandise?.id === BSB_DESKPAD_MERCHANDISE_ID,
+											)
+										) {
+											cartFetcher.submit(
+												{
+													cartFormInput: JSON.stringify({
+														action: CartActions.LinesUpsert,
+														inputs: {
+															lines: [
+																{
+																	merchandiseId: BSB_DESKPAD_MERCHANDISE_ID,
+																	quantity: 1,
+																},
+															],
+														},
+													} satisfies CartActionInput),
+												},
+												{ method: "POST", action: "/cart", preventScrollReset: true },
+											);
+										}
+										setCartVisible(true);
 
 										if (hasAnalyticsConsent && email) {
 											sendShopifyAnalytics({

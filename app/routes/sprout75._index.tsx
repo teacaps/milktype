@@ -31,8 +31,8 @@ import { DeskpadDiscountModal } from "~/components/global/modals/DeskpadDiscount
 const title = "sprout 75";
 const description = "available now for $140 usd";
 
-const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45575282786531";
-const BSB_DESKPAD_MERCHANDISE_ID = "gid://shopify/ProductVariant/45729711849699";
+export const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45575282786531";
+export const BSB_DESKPAD_MERCHANDISE_ID = "gid://shopify/ProductVariant/45729711849699";
 
 export const SPROUT75_IMAGE = {
 	src: "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/sprout75/Sprout75Image.png",
