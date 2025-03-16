@@ -8,7 +8,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 	const email = fd.get("email")?.toString();
 
 	if (!email) {
-		return json(null, { status: 400 });
+		return json({ error: "email is required" }, { status: 200 });
 	}
 
 	const hostname = new URL(request.url).hostname;
@@ -35,10 +35,10 @@ export async function action({ request, context }: ActionFunctionArgs) {
 
 	if (errors) {
 		console.error(errors.message, JSON.stringify(errors.graphQLErrors, null, 4));
-		return json(null, { status: 500 });
+		return json({ error: errors.message }, { status: 200 });
 	}
 
-	return json(data, { status: 200 });
+	return json({ response: data }, { status: 200 });
 }
 
 const CREATE_CUSTOMER_MUTATION = `#graphql

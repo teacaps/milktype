@@ -21,7 +21,7 @@ import { MinusIcon } from "~/assets/icons/Minus";
 import { ArrowUpIcon } from "~/assets/icons/ArrowUp";
 import { AnalyticsEvent, CartForm, OptimisticInput, ProductViewPayload, useAnalytics } from "@shopify/hydrogen";
 import { useCartVisibility } from "~/components/global/Cart";
-import { usePrevious } from "~/lib/util";
+import { Result, usePrevious } from "~/lib/util";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 import { CartActions } from "~/routes/cart";
@@ -305,8 +305,8 @@ const Sprout75Mark = () => (
 
 function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: string }) {
 	const fetcher = useFetcher({ key: fetcherKey });
-	const { customerCreate: { customer = null } = {} } =
-		(fetcher.data as { customerCreate: { customer: Pick<Customer, "email"> | null } }) ?? {};
+	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
+		(fetcher.data as Result<{ customerCreate: { customer: Pick<Customer, "email"> | null } }>) ?? {};
 	const submitted = !!customer;
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 

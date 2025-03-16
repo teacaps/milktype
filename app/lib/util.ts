@@ -1,6 +1,8 @@
 import { useCookies } from "react-cookie";
 import { useEffect, useRef } from "react";
 
+export type Result<T> = { response: T; error?: never } | { response?: never; error: any };
+
 export type Color =
 	| "accent"
 	| "yogurt"

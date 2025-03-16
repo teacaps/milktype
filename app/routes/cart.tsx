@@ -73,10 +73,10 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		}
 	} catch (error) {
 		console.error(error);
-		return json(error, { status: 500 });
+		return json({ error }, { status: 200 });
 	}
 
 	const headers = cart.setCartId(result.cart.id);
 
-	return json(result, { status: 200, headers });
+	return json({ response: result }, { status: 200, headers });
 }
