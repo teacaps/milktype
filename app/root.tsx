@@ -23,7 +23,6 @@ import { CookiesProvider } from "react-cookie";
 import type { ReactNode } from "react";
 import { ConsentLevel, useConsentLevel } from "~/lib/util";
 import { ModalProvider, withModalDelay } from "~/lib/ModalContext";
-import { CookieConsentModal } from "~/components/global/modals/CookieConsentModal";
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -141,12 +140,7 @@ const AnalyticsWrapper = ({ children }: { children: ReactNode }) => {
 	const [consentLevel, setConsentLevel] = useConsentLevel();
 	const hasAnalyticsConsent = consentLevel !== ConsentLevel.NECESSARY_ONLY;
 
-	const ConsentModal = withModalDelay(
-		"cookie-consent",
-		<CookieConsentModal setConsentLevel={setConsentLevel} />,
-		2500,
-		[setConsentLevel],
-	);
+	const ConsentModal = withModalDelay("CookieConsent", 2500, { setConsentLevel }, false, [setConsentLevel]);
 
 	useShopifyCookies({ hasUserConsent: hasAnalyticsConsent });
 
