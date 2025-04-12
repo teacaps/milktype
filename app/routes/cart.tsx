@@ -24,7 +24,7 @@ export type CartActionInput = CartFormActionInput | CartLinesUpsertRequire;
 export async function action({ request, context }: ActionFunctionArgs) {
 	const { cart } = context;
 
-	const cartReturn = await cart.get();
+	const cartData = await cart.get();
 
 	const formData = await request.formData();
 	const { action, inputs } = CartForm.getFormInput(formData) as CartActionInput;
@@ -43,27 +43,32 @@ export async function action({ request, context }: ActionFunctionArgs) {
 				result = await cart.removeLines(inputs.lineIds);
 				break;
 			case CartActions.LinesUpsert:
-				if (!cartReturn) throw new Error("Cart not found");
-				const newLines = inputs.lines.filter(
-					(line) =>
-						!cartReturn.lines?.nodes?.some(
-							(existingLine) => existingLine.merchandise.id === line.merchandiseId,
-						),
-				);
-				const existingLines = inputs.lines
-					.map((line) => {
-						const existingLine = cartReturn.lines?.nodes?.find(
-							(existingLine) => existingLine.merchandise.id === line.merchandiseId,
-						);
-						if (!existingLine) return null;
-						return {
-							id: existingLine.id,
-							...line,
-						};
-					})
-					.filter((l): l is NonNullable<typeof l> => !!l);
+				const newLines = cartData
+					? inputs.lines.filter(
+							(line) =>
+								!cartData.lines?.nodes?.some(
+									(existingLine) => existingLine.merchandise.id === line.merchandiseId,
+								),
+					  )
+					: inputs.lines;
+				const existingLines = cartData
+					? inputs.lines
+							.map((line) => {
+								const existingLine = cartData.lines?.nodes?.find(
+									(existingLine) => existingLine.merchandise.id === line.merchandiseId,
+								);
+								if (!existingLine) return null;
+								return {
+									id: existingLine.id,
+									...line,
+								};
+							})
+							.filter((l): l is NonNullable<typeof l> => !!l)
+					: [];
 
-				result = (await Promise.all([cart.addLines(newLines), cart.updateLines(existingLines)]))[0];
+				result = cartData
+					? (await Promise.all([cart.addLines(newLines), cart.updateLines(existingLines)]))[0]
+					: await cart.create({ lines: inputs.lines });
 				break;
 			case CartActions.DiscountCodesUpdate:
 				result = await cart.updateDiscountCodes(inputs.discountCodes);
