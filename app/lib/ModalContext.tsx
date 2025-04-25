@@ -6,10 +6,8 @@ import {
 	useCallback,
 	type ReactNode,
 	type DependencyList,
-	SetStateAction,
 } from "react";
 import { CookieConsentModal } from "~/components/global/modals/CookieConsentModal";
-import { DeskpadDiscountModal } from "~/components/global/modals/DeskpadDiscountModal";
 import { Image } from "~/components/elements/Image";
 import { ChevronUpIcon } from "~/assets/icons/ChevronUp";
 
@@ -30,7 +28,6 @@ interface ModalContextType {
 
 const Modals = {
 	CookieConsent: CookieConsentModal,
-	DeskpadDiscount: DeskpadDiscountModal,
 } as const satisfies Record<string, ModalBody>;
 type ModalName = keyof typeof Modals;
 type ModalProps<T extends ModalName> = Parameters<(typeof Modals)[T]>[0];
@@ -179,7 +176,7 @@ export const useModal = () => {
 export function withModalDelay<T extends ModalName>(
 	modal: T,
 	delayMs = 0,
-	props: ModalProps<T> = {},
+	props: ModalProps<T>,
 	initiallyMinimized = false,
 	deps: DependencyList = [],
 ) {
