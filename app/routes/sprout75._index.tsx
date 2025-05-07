@@ -178,6 +178,17 @@ export default function Sprout75() {
 						<Image {...Images.KnobTransparent} className="aspect-square h-full" />
 					</div>
 				</section>
+				<section className="mt-28 xs:mt-36 px-7 md:px-16 flex items-center justify-center lg:mx-auto lg:max-w-screen-lg">
+					<iframe
+						className="rounded-xl overflow-hidden"
+						width="1120"
+						height="630"
+						src="https://www.youtube-nocookie.com/embed/c2XSvORM5wE?si=x0TfyCYSgmNkwm6D&controls=0"
+						title="the milktype sprout 75 intro video"
+						frameBorder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+						referrerPolicy="strict-origin-when-cross-origin"></iframe>
+				</section>
 				<section className="mt-28 px-8 sm:px-12 md:px-16 flex flex-col lg:flex-row lg:justify-between lg:max-w-screen-lg lg:mx-auto lg:w-full">
 					<div className="w-36 xs:w-52 sm:w-60 md:w-72 lg:w-60 self-end lg:self-auto">
 						<Image

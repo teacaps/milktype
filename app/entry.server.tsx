@@ -12,13 +12,7 @@ export default async function handleRequest(
 	context: AppLoadContext,
 ) {
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
-		imgSrc: [
-			"'self'",
-			"http://localhost:*",
-			"https://img.milktype.co",
-			"https://cdn.shopify.com",
-			"https://alb.reddit.com",
-		],
+		imgSrc: ["*", "data:"],
 		styleSrc: ["https://fonts.googleapis.com"],
 		fontSrc: ["https://fonts.gstatic.com"],
 		scriptSrc: [
@@ -31,6 +25,7 @@ export default async function handleRequest(
 		],
 		connectSrc: ["https://www.redditstatic.com", "https://pixel-config.reddit.com", "https://*.openreplay.com"],
 		workerSrc: ["'self'", "blob:", "https://*.openreplay.com"],
+		frameSrc: ["https://www.youtube-nocookie.com"],
 		shop: {
 			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
 			storeDomain: context.env.PUBLIC_STORE_DOMAIN,
