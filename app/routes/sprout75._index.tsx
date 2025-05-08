@@ -180,7 +180,7 @@ export default function Sprout75() {
 				</section>
 				<section className="mt-28 xs:mt-36 px-7 md:px-16 flex items-center justify-center lg:mx-auto lg:max-w-screen-lg">
 					<iframe
-						className="rounded-xl overflow-hidden"
+						className="rounded-xl overflow-hidden aspect-video max-w-screen-md h-auto"
 						width="1120"
 						height="630"
 						src="https://www.youtube-nocookie.com/embed/c2XSvORM5wE?si=x0TfyCYSgmNkwm6D&controls=0"
