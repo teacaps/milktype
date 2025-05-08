@@ -28,7 +28,7 @@ import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 import { CartActions } from "~/routes/cart";
 
 const title = "sprout 75";
-const description = "available now for $168 usd";
+const description = "available now for $178 usd";
 
 export const SPROUT_75_MERCHANDISE_ID = "gid://shopify/ProductVariant/45575282786531";
 export const BSB_DESKPAD_MERCHANDISE_ID = "gid://shopify/ProductVariant/45729711849699";
@@ -554,7 +554,7 @@ function CheckoutForm() {
 						color="shrub"
 						rainbow={false}
 						disabled={navigation.state !== "idle"}>
-						{fetcher.state === "submitting" ? "loading..." : "add to cart ⋅ $168 usd"}
+						{fetcher.state === "submitting" ? "loading..." : "add to cart ⋅ $178 usd"}
 					</Button>
 				</>
 			)}
