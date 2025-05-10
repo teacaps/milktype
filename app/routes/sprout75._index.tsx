@@ -25,6 +25,7 @@ import { CartIcon } from "~/assets/icons/Cart";
 import { TruckIcon } from "~/assets/icons/Truck";
 import { ShoppingBagIcon } from "~/assets/icons/ShoppingBag";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
+import { withModalDelay } from "~/lib/ModalContext";
 import { CartActions } from "~/routes/cart";
 
 const title = "sprout 75";
@@ -105,6 +106,8 @@ export default function Sprout75() {
 	const { productPayload, url, trackerProjectKey, searchParams } = useLoaderData<typeof loader>();
 	const { publish, shop } = useAnalytics();
 
+	const DeskpadModal = withModalDelay("DeskpadDiscount", 10_000, {}, true);
+
 	const tracker = useMemo(() => new Tracker({ projectKey: trackerProjectKey }), [trackerProjectKey]);
 
 	useEffect(() => {
@@ -122,6 +125,7 @@ export default function Sprout75() {
 
 	return (
 		<Layout footer={false}>
+			<DeskpadModal />
 			<Container
 				as="main"
 				className="w-full sm:w-full px-0 sm:px-0 lg:px-0 lg:max-w-unset overflow-x-visible flex flex-col">
