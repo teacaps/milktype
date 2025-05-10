@@ -98,11 +98,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 					className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
 					aria-hidden={modals.length === 0}>
 					<div className="fixed bottom-0 sm:bottom-4 left-0 right-0 flex justify-center pointer-events-auto">
-						<div className="w-full max-w-screen-sm p-4 bg-yogurt-60 rounded-2xl shadow-lg overflow-hidden">
+						<div className="flex flex-col items-center w-full max-w-screen-sm p-4 bg-yogurt-60 rounded-2xl shadow-lg overflow-hidden">
 							{Modal.image && !currentModal.minimized && (
 								<Image
 									src={Modal.image}
-									className="w-auto max-w-full mb-4 h-auto aspect-[2/1] rounded-lg"
+									className="w-auto max-w-[75%] mb-4 h-auto aspect-[2/1] rounded-lg"
 								/>
 							)}
 							<ModalHeader title={Modal.title} minimized={currentModal.minimized} />

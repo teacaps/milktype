@@ -7,7 +7,7 @@ import { twJoin } from "tailwind-merge";
 import { Result, useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import { CartForm } from "@shopify/hydrogen";
-import { BSB_DESKPAD_MERCHANDISE_ID } from "~/routes/sprout75._index";
+import { SPROUT_75_MERCHANDISE_ID } from "~/routes/sprout75._index";
 import { useCartVisibility } from "~/components/global/Cart";
 import { CartActionInput, CartActions } from "~/routes/cart";
 import { ReactNode } from "react";
@@ -31,11 +31,10 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	) : !submitted ? (
 		children || (
 			<>
-				<p className="text-cocoa-100 font-medium mb-2">
-					join our mailing list to get <span className="font-bold">$10 off</span> on a brown sugar boba
-					deskpad!
-				</p>
-				<p className="text-cocoa-100 font-medium text-sm mb-4">
+				<p className="text-cocoa-100 font-medium mb-2 text-pretty">
+					join our mailing list to get <span className="font-bold">$15 off</span> on sprout 75!
+					<br />
+					<br />
 					we'll send you an email exactly once a month with updates on what we're working on, along with
 					occasional emails a few times a year for special deals and new products.
 				</p>
@@ -74,7 +73,7 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 									},
 									{ method: "POST", action: "/cart", preventScrollReset: true },
 								);
-								if (!cart.lines?.some((line) => line?.merchandise?.id === BSB_DESKPAD_MERCHANDISE_ID)) {
+								if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
 									cartFetcher.submit(
 										{
 											[CartForm.INPUT_NAME]: JSON.stringify({
@@ -82,7 +81,7 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 												inputs: {
 													lines: [
 														{
-															merchandiseId: BSB_DESKPAD_MERCHANDISE_ID,
+															merchandiseId: SPROUT_75_MERCHANDISE_ID,
 															quantity: 1,
 														},
 													],
@@ -112,13 +111,13 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	) : (
 		<p className="text-cocoa-100 text-balance">
 			thanks for signing up! check out with <span className="font-semibold">{email}</span> and code{" "}
-			<span className="font-semibold">welcomefriend</span> to get $10 off on a deskpad!
+			<span className="font-semibold">welcomefriend</span> to get $15 off on sprout 75!
 		</p>
 	);
 }
 
-DeskpadDiscountModal.image = "web/DeskpadFocus.png";
-DeskpadDiscountModal.title = "save $10 on a deskpad!";
+DeskpadDiscountModal.image = "sprout75/BoardFloat.png";
+DeskpadDiscountModal.title = "save $15 on sprout 75!";
 
 export function ErrorBoundary({ error }: { error: Error }) {
 	console.error(error);
