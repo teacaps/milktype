@@ -6,12 +6,12 @@ import {
 	useCallback,
 	type ReactNode,
 	type DependencyList,
-	SetStateAction,
 } from "react";
 import { CookieConsentModal } from "~/components/global/modals/CookieConsentModal";
 import { DeskpadDiscountModal } from "~/components/global/modals/DeskpadDiscountModal";
 import { Image } from "~/components/elements/Image";
 import { ChevronUpIcon } from "~/assets/icons/ChevronUp";
+import { useCookies } from "react-cookie";
 
 interface ModalState<Name extends ModalName> {
 	name: Name;
@@ -44,6 +44,7 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
 	const [modals, setModals] = useState<Array<ModalState<ModalName>>>([]);
 	const [dismissedModals, setDismissedModals] = useState<Set<string>>(new Set());
+	const [, setCookie] = useCookies(modals.map((m) => "modal-dismissed-" + m.name));
 
 	const pushModal = useCallback(
 		<T extends ModalName>({ name, ...state }: ModalState<T>) => {
@@ -63,6 +64,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
 			setDismissedModals((prev) => new Set([...prev, name]));
 			setModals((prev) => prev.filter((modal) => modal.name !== name));
+			setCookie("modal-dismissed-" + name, true, { path: "/" });
 		},
 		[setDismissedModals, setModals],
 	);
@@ -185,6 +187,7 @@ export function withModalDelay<T extends ModalName>(
 ) {
 	return () => {
 		const { pushModal, updateModalState, dismissedModals } = useModal();
+		const [cookies] = useCookies(["modal-dismissed-" + modal]);
 
 		const isModalDismissed = dismissedModals.has(modal);
 
@@ -202,6 +205,8 @@ export function withModalDelay<T extends ModalName>(
 
 		useEffect(() => {
 			if (!initiallyMinimized) return;
+			// don't force a modal open if the user has dismissed it before
+			if (cookies["modal-dismissed-" + modal]) return;
 
 			setTimeout(() => {
 				updateModalState(modal, { minimized: false });
