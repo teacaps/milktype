@@ -131,9 +131,9 @@ export const ModalHeader = ({ title, minimized }: { title: string; minimized?: b
 		<>
 			<h3 className="text-lg font-semibold text-cocoa-120">{title}</h3>
 			{minimized ? (
-				<button className="p-1 hover:bg-cocoa-60 rounded" onClick={expandModal} aria-label="Expand modal">
+				<div className="p-1 hover:bg-cocoa-60 rounded">
 					<ChevronUpIcon className="w-5 h-5 text-cocoa-100" />
-				</button>
+				</div>
 			) : (
 				<button
 					className="p-1 hover:bg-cocoa-60 rounded"

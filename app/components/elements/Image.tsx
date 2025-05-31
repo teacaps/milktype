@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import YARLightbox from "yet-another-react-lightbox";
 import ZoomPlugin from "yet-another-react-lightbox/plugins/zoom";
-import { type ButtonHTMLAttributes, type ImgHTMLAttributes, useState } from "react";
+import { type ButtonHTMLAttributes, forwardRef, type ImgHTMLAttributes, type Ref, useState } from "react";
 
 const IMAGE_URL_PREFIX = "https://img.milktype.co/cdn-cgi/image";
 
@@ -10,7 +10,10 @@ export interface ImageProps extends ImgHTMLAttributes<HTMLImageElement> {
 	big?: boolean;
 }
 
-export function Image({ src, alt, className, big, ...props }: ImageProps) {
+export const Image = forwardRef(function Image(
+	{ src, alt, className, big, ...props }: ImageProps,
+	ref: Ref<HTMLImageElement>,
+) {
 	const { srcset, srcFull } = makeSrcs(src);
 	const sizes = big ? "(max-width: 768px) 1024px, 2000px" : "1024px";
 	return (
@@ -21,11 +24,12 @@ export function Image({ src, alt, className, big, ...props }: ImageProps) {
 				src={srcFull}
 				alt={alt}
 				className={twMerge("object-cover object-center", className)}
+				ref={ref}
 				{...props}
 			/>
 		</>
 	);
-}
+});
 
 export function LightboxImage({
 	button,
@@ -68,7 +72,7 @@ export function LightboxImage({
 	);
 }
 
-function makeSrcs(path: string) {
+export function makeSrcs(path: string) {
 	const srcSmall = IMAGE_URL_PREFIX + "/width=1024,format=auto,quality=85/" + path;
 	const srcFull = IMAGE_URL_PREFIX + "/width=2000,format=auto/" + path;
 	const srcset = `${srcSmall} 768w, ${srcFull} 2000w`;
