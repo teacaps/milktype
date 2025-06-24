@@ -1,7 +1,6 @@
 import { Link } from "@remix-run/react";
 import { twMerge } from "tailwind-merge";
 import type { Color, MakePropertiesOptional } from "~/lib/util";
-import { throttle } from "~/lib/util";
 import {
 	ButtonHTMLAttributes,
 	HTMLAttributes,
@@ -14,13 +13,13 @@ import {
 } from "react";
 import { useState } from "react";
 
-const randomColor = throttle((base?: string, current?: string): Color => {
+const randomColor = (base?: string, current?: string): Color => {
 	const colors = ["accent", "shrub", "blurple", "lilac"];
 	const random = () => colors[Math.floor(Math.random() * colors.length)] as Color;
 	let color = random();
 	while ((base && color === base) || (current && color === current)) color = random();
 	return color;
-}, 150);
+};
 
 const BG_CLASSES: Record<Color, string> = {
 	accent: "bg-accent active:bg-accent",
@@ -49,6 +48,51 @@ const LINK_HOVER_CLASSES: Record<Color, string> = {
 	cocoa: "hover:bg-cocoa group-hover:bg-cocoa",
 };
 
+function useButtonColors({
+	baseColor,
+	rainbow = true,
+	disabled = false,
+	hoverRef,
+	hoverClasses,
+}: {
+	baseColor: Color;
+	rainbow?: boolean;
+	disabled?: boolean;
+	hoverRef?: RefObject<HTMLElement>;
+	hoverClasses: Record<Color, string>;
+}) {
+	const bgClasses = disabled ? "bg-cocoa-80 active:bg-cocoa-80" : BG_CLASSES[baseColor];
+	const [hoverColor, setHoverColor] = useState(rainbow ? randomColor(baseColor) : baseColor);
+	const [nextHoverColor, setNextHoverColor] = useState(() =>
+		rainbow ? randomColor(baseColor, hoverColor) : baseColor,
+	);
+	const hoverBgClasses = useMemo(() => hoverClasses[hoverColor], [hoverColor, hoverClasses]);
+
+	const updateHoverColor = useCallback(() => {
+		setHoverColor(nextHoverColor);
+		setNextHoverColor(randomColor(baseColor, nextHoverColor));
+	}, [baseColor, nextHoverColor]);
+
+	const buttonRef = useRef<HTMLElement>(null);
+	useEffect(() => {
+		const ref = hoverRef?.current ?? buttonRef.current;
+		if (!ref) return;
+
+		ref.addEventListener("mouseenter", updateHoverColor);
+		ref.addEventListener("focus", updateHoverColor);
+		return () => {
+			ref.removeEventListener("mouseenter", updateHoverColor);
+			ref.removeEventListener("focus", updateHoverColor);
+		};
+	}, [hoverRef, updateHoverColor]);
+
+	return {
+		bgClasses,
+		hoverBgClasses,
+		buttonRef,
+	};
+}
+
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	color: Color;
 	rainbow?: boolean;
@@ -68,30 +112,17 @@ export function Button({
 	children,
 	...props
 }: ButtonProps) {
-	const bgClasses = disabled ? "bg-cocoa-80 active:bg-cocoa-80" : BG_CLASSES[baseColor];
-	const [hoverColor, setHoverColor] = useState(rainbow ? randomColor(baseColor) : baseColor);
-	const hoverBgClasses = useMemo(() => HOVER_CLASSES[hoverColor], [hoverColor]);
-
-	const updateHoverColor = useCallback(() => {
-		setHoverColor((hover) => randomColor(baseColor, hover));
-	}, [baseColor, hoverColor]);
-
-	const buttonRef = useRef<HTMLButtonElement>(null);
-	useEffect(() => {
-		const ref = hoverRef?.current ?? buttonRef.current;
-		if (!ref) return;
-
-		ref.addEventListener("mouseenter", updateHoverColor);
-		ref.addEventListener("focus", updateHoverColor);
-		return () => {
-			ref.removeEventListener("mouseenter", updateHoverColor);
-			ref.removeEventListener("focus", updateHoverColor);
-		};
-	}, [hoverRef, buttonRef]);
+	const { bgClasses, hoverBgClasses, buttonRef } = useButtonColors({
+		baseColor,
+		rainbow,
+		disabled,
+		hoverRef,
+		hoverClasses: HOVER_CLASSES,
+	});
 
 	return (
 		<button
-			ref={buttonRef}
+			ref={buttonRef as RefObject<HTMLButtonElement>}
 			className={twMerge(
 				bgClasses,
 				hoverBgClasses,
@@ -120,7 +151,8 @@ export function UnstyledButton({ className, children, ...props }: ButtonHTMLAttr
 	);
 }
 
-export interface ButtonLinkProps<External extends boolean> extends Pick<ButtonProps, "color" | "icon"> {
+export interface ButtonLinkProps<External extends boolean>
+	extends Pick<ButtonProps, "color" | "icon" | "rainbow" | "disabled" | "hoverRef"> {
 	url: string;
 	external?: External;
 }
@@ -132,8 +164,11 @@ export function ButtonLink<
 		? HTMLAttributes<HTMLAnchorElement>
 		: Parameters<typeof Link>[0],
 >({
-	color,
+	color: baseColor,
+	rainbow = true,
+	disabled,
 	icon,
+	hoverRef,
 	url,
 	external,
 	className,
@@ -141,9 +176,15 @@ export function ButtonLink<
 	...props
 }: MakePropertiesOptional<ButtonLinkProps<External> & PassthroughProps, "to">) {
 	const LinkElement = external ? "a" : Link;
-	const bgClasses = BG_CLASSES[color];
-	const [hoverColor, setHoverColor] = useState(randomColor(color));
-	const hoverBgClasses = LINK_HOVER_CLASSES[hoverColor];
+
+	const { bgClasses, hoverBgClasses, buttonRef } = useButtonColors({
+		baseColor,
+		rainbow,
+		disabled,
+		hoverRef,
+		hoverClasses: LINK_HOVER_CLASSES,
+	});
+
 	return (
 		<LinkElement
 			className={twMerge(
@@ -156,15 +197,8 @@ export function ButtonLink<
 			to={url}
 			target={external ? "_blank" : undefined}
 			rel={external ? "noopener noreferrer" : undefined}
-			{...props}
-			onMouseEnter={(ev) => {
-				props.onMouseEnter?.(ev);
-				setHoverColor(randomColor(color, hoverColor));
-			}}
-			onFocus={(ev) => {
-				props.onFocus?.(ev);
-				setHoverColor(randomColor(color, hoverColor));
-			}}>
+			ref={buttonRef as RefObject<HTMLAnchorElement>}
+			{...props}>
 			{children}
 			{icon || null}
 		</LinkElement>

@@ -24,31 +24,6 @@ export const ConsentLevel = {
 } as const;
 export type ConsentLevel = (typeof ConsentLevel)[keyof typeof ConsentLevel];
 
-export function throttle<T extends (...args: any[]) => any>(fn: T, n: number): T {
-	let last: number | undefined;
-	let timeout: ReturnType<typeof setTimeout> | undefined;
-	let result: ReturnType<T>;
-
-	return function (this: any, ...args: Parameters<T>): ReturnType<T> {
-		const now = Date.now();
-
-		if (!last || now >= last + n) {
-			last = now;
-			result = fn.apply(this, args);
-		} else {
-			if (timeout) {
-				clearTimeout(timeout);
-			}
-			timeout = setTimeout(() => {
-				last = Date.now();
-				result = fn.apply(this, args);
-			}, n - (now - last));
-		}
-
-		return result;
-	} as T;
-}
-
 export const useConsentLevel = (): [consentLevel: ConsentLevel, setConsentLevel: (newLevel: ConsentLevel) => void] => {
 	const [{ cookieConsent }, setCookie] = useCookies(["cookieConsent"]);
 	const consentLevel = cookieConsent || ConsentLevel.NOT_SET;
