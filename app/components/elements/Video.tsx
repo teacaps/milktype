@@ -1,4 +1,4 @@
-import { type VideoHTMLAttributes, useState } from "react";
+import { type VideoHTMLAttributes, forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 
 export interface VideoProps extends VideoHTMLAttributes<HTMLVideoElement> {
@@ -6,15 +6,16 @@ export interface VideoProps extends VideoHTMLAttributes<HTMLVideoElement> {
 	alt: string;
 }
 
-export function Video({ src, alt, className, ...props }: VideoProps) {
+export const Video = forwardRef<HTMLVideoElement, VideoProps>(({ src, alt, className, ...props }, ref) => {
 	return (
 		<>
 			<video
 				src={`https://img.milktype.co/${src}`}
 				aria-label={alt}
 				className={twMerge("object-cover object-center", className)}
+				ref={ref}
 				{...props}
 			/>
 		</>
 	);
-}
+});
