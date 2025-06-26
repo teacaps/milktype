@@ -4,8 +4,8 @@ import type { Color, MakePropertiesOptional } from "~/lib/util";
 import {
 	ButtonHTMLAttributes,
 	HTMLAttributes,
+	MutableRefObject,
 	ReactNode,
-	RefObject,
 	useCallback,
 	useEffect,
 	useMemo,
@@ -58,7 +58,7 @@ function useButtonColors({
 	baseColor: Color;
 	rainbow?: boolean;
 	disabled?: boolean;
-	hoverRef?: RefObject<HTMLElement>;
+	hoverRef?: MutableRefObject<HTMLElement | null>;
 	hoverClasses: Record<Color, string>;
 }) {
 	const bgClasses = disabled ? "bg-cocoa-80 active:bg-cocoa-80" : BG_CLASSES[baseColor];
@@ -99,7 +99,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 	disabled?: boolean;
 	icon?: ReactNode | undefined | null;
 	type?: "button" | "submit" | "reset";
-	hoverRef?: RefObject<HTMLElement>;
+	hoverRef?: MutableRefObject<HTMLElement | null>;
 }
 export function Button({
 	color: baseColor,
@@ -122,7 +122,7 @@ export function Button({
 
 	return (
 		<button
-			ref={buttonRef as RefObject<HTMLButtonElement>}
+			ref={buttonRef as MutableRefObject<HTMLButtonElement>}
 			className={twMerge(
 				bgClasses,
 				hoverBgClasses,
@@ -197,7 +197,7 @@ export function ButtonLink<
 			to={url}
 			target={external ? "_blank" : undefined}
 			rel={external ? "noopener noreferrer" : undefined}
-			ref={buttonRef as RefObject<HTMLAnchorElement>}
+			ref={buttonRef as MutableRefObject<HTMLAnchorElement>}
 			{...props}>
 			{children}
 			{icon || null}

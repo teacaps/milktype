@@ -13,16 +13,16 @@ importers:
         version: 16.4.1
       '@shopify/hydrogen':
         specifier: ^2025.5.0
-        version: 2025.5.0(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
+        version: 2025.5.0(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
       '@shopify/hydrogen-react':
         specifier: ^2025.5.0
-        version: 2025.5.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
+        version: 2025.5.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
       '@shopify/mini-oxygen':
         specifier: ^3.2.1
         version: 3.2.1(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
       '@shopify/remix-oxygen':
         specifier: ^3.0.0
-        version: 3.0.0(@shopify/oxygen-workers-types@4.1.10)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
+        version: 3.0.0(@shopify/oxygen-workers-types@4.1.10)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
       '@shopify/shopify-api':
         specifier: ^11.13.0
         version: 11.13.0
@@ -40,19 +40,19 @@ importers:
         version: 5.1.28
       motion:
         specifier: ^12.15.0
-        version: 12.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 12.19.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react:
-        specifier: ^18.2.0
-        version: 18.3.1
+        specifier: ^19.1.0
+        version: 19.1.0
       react-cookie:
         specifier: ^7.1.4
-        version: 7.2.2(react@18.3.1)
+        version: 7.2.2(react@19.1.0)
       react-dom:
-        specifier: ^18.2.0
-        version: 18.3.1(react@18.3.1)
+        specifier: ^19.1.0
+        version: 19.1.0(react@19.1.0)
       react-router:
         specifier: ^7.6.0
-        version: 7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       scrolly-video:
         specifier: ^0.0.24
         version: 0.0.24
@@ -61,23 +61,23 @@ importers:
         version: 2.6.0
       yet-another-react-lightbox:
         specifier: ^3.21.6
-        version: 3.23.3(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 3.23.3(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@graphql-codegen/cli':
         specifier: ^5.0.2
         version: 5.0.7(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3)
       '@react-router/dev':
         specifier: ^7.6.2
-        version: 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
+        version: 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
       '@react-router/fs-routes':
         specifier: ^7.6.2
-        version: 7.6.2(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(typescript@5.8.3)
+        version: 7.6.2(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(typescript@5.8.3)
       '@shopify/cli':
         specifier: ^3.81.2
         version: 3.81.2
       '@shopify/cli-hydrogen':
         specifier: ^11.1.0
-        version: 11.1.0(@graphql-codegen/cli@5.0.7(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@shopify/hydrogen-codegen@0.3.3(graphql@16.11.0))(@shopify/mini-oxygen@3.2.1(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0)))(@types/react@18.3.23)(graphql-config@5.1.5(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
+        version: 11.1.0(@graphql-codegen/cli@5.0.7(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@shopify/hydrogen-codegen@0.3.3(graphql@16.11.0))(@shopify/mini-oxygen@3.2.1(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0)))(@types/react@19.1.8)(graphql-config@5.1.5(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(graphql@16.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
       '@shopify/hydrogen-codegen':
         specifier: ^0.3.1
         version: 0.3.3(graphql@16.11.0)
@@ -94,11 +94,11 @@ importers:
         specifier: ^9.6.1
         version: 9.6.1
       '@types/react':
-        specifier: ^18.2.79
-        version: 18.3.23
+        specifier: ^19.1.8
+        version: 19.1.8
       '@types/react-dom':
-        specifier: ^18.2.25
-        version: 18.3.7(@types/react@18.3.23)
+        specifier: ^19.1.6
+        version: 19.1.6(@types/react@19.1.8)
       eslint:
         specifier: ^9.12.0
         version: 9.29.0(jiti@2.4.2)
@@ -1673,16 +1673,13 @@ packages:
   '@types/node@24.0.4':
     resolution: {integrity: sha512-ulyqAkrhnuNq9pB76DRBTkcS6YsmDALy6Ua63V8OhrOBgbcYt6IOdzpw5P1+dyRIyMerzLkeYWBeOXPpA9GMAA==}
 
-  '@types/prop-types@15.7.15':
-    resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
-
-  '@types/react-dom@18.3.7':
-    resolution: {integrity: sha512-MEe3UeoENYVFXzoXEWsvcpg6ZvlrFNlOQ7EOsvhI3CfAXwzPfO8Qwuxd40nepsYKqyyVQnTdEfv68q91yLcKrQ==}
+  '@types/react-dom@19.1.6':
+    resolution: {integrity: sha512-4hOiT/dwO8Ko0gV1m/TJZYk3y0KBnY9vzDh7W+DH17b2HFSOGgdj33dhihPeuy3l0q23+4e+hoXHV6hCC4dCXw==}
     peerDependencies:
-      '@types/react': ^18.0.0
+      '@types/react': ^19.0.0
 
-  '@types/react@18.3.23':
-    resolution: {integrity: sha512-/LDXMQh55EzZQ0uVAZmKKhfENivEvWz6E+EYzh+/MCjMhNsotd+ZHhBGIjFDTi6+fz0OhQQQLbTgdQIxxCsC0w==}
+  '@types/react@19.1.8':
+    resolution: {integrity: sha512-AwAfQ2Wa5bCx9WP8nZL2uMZWod7J7/JSplxbTmBQ5ms6QpqNYm672H0Vu9ZVKVngQ+ii4R/byguVEUZQyeg44g==}
 
   '@types/readdir-glob@1.1.5':
     resolution: {integrity: sha512-raiuEPUYqXu+nvtY2Pe8s8FEmZ3x5yAH4VkLdihcPdalvsHltomrRC9BzuStrJ9yk06470hS0Crw0f1pXqD+Hg==}
@@ -4451,10 +4448,10 @@ packages:
     peerDependencies:
       react: '>= 16.3.0'
 
-  react-dom@18.3.1:
-    resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
+  react-dom@19.1.0:
+    resolution: {integrity: sha512-Xs1hdnE+DyKgeHJeJznQmYMIBG3TKIHJJT95Q58nHLSrElKlGQqDTR2HQ9fx5CN/Gk6Vh/kupBTDLU11/nDk/g==}
     peerDependencies:
-      react: ^18.3.1
+      react: ^19.1.0
 
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -4481,6 +4478,10 @@ packages:
 
   react@18.3.1:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
+    engines: {node: '>=0.10.0'}
+
+  react@19.1.0:
+    resolution: {integrity: sha512-FS+XFBNvn3GTAWq26joslQgWNoFu08F4kl0J4CgdNKADkdSGXQyTCnKteIAJy96Br6YbpEU1LSzV5dYtjMkMDg==}
     engines: {node: '>=0.10.0'}
 
   read-cache@1.0.0:
@@ -4637,6 +4638,9 @@ packages:
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
+
+  scheduler@0.26.0:
+    resolution: {integrity: sha512-NlHwttCI/l5gCPR3D1nNXtWABUmBwvZpEQiD4IXSbIDq8BzLIK/7Ir5gTFSGZDUu37K5cMNp0hFtzO38sC7gWA==}
 
   scrolly-video@0.0.24:
     resolution: {integrity: sha512-d7gMLTMG1XUnqofLw6K8wY0XDhbXMUwtNvo0oxYdUsHRiuKSC7fr9e6UUoqJe6H4oTc6+msP9+k2IOtEPxW6iw==}
@@ -6924,7 +6928,7 @@ snapshots:
 
   '@protobufjs/utf8@1.1.0': {}
 
-  '@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)':
+  '@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)':
     dependencies:
       '@babel/core': 7.27.7
       '@babel/generator': 7.27.5
@@ -6935,7 +6939,7 @@ snapshots:
       '@babel/traverse': 7.27.7
       '@babel/types': 7.27.7
       '@npmcli/package-json': 4.0.1
-      '@react-router/node': 7.6.2(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)
+      '@react-router/node': 7.6.2(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)
       arg: 5.0.2
       babel-dead-code-elimination: 1.0.10
       chokidar: 4.0.3
@@ -6949,7 +6953,7 @@ snapshots:
       picocolors: 1.1.1
       prettier: 2.8.8
       react-refresh: 0.14.2
-      react-router: 7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-router: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       semver: 7.7.2
       set-cookie-parser: 2.7.1
       valibot: 0.41.0(typescript@5.8.3)
@@ -6973,17 +6977,17 @@ snapshots:
       - tsx
       - yaml
 
-  '@react-router/fs-routes@7.6.2(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(typescript@5.8.3)':
+  '@react-router/fs-routes@7.6.2(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(typescript@5.8.3)':
     dependencies:
-      '@react-router/dev': 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
+      '@react-router/dev': 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
       minimatch: 9.0.5
     optionalDependencies:
       typescript: 5.8.3
 
-  '@react-router/node@7.6.2(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)':
+  '@react-router/node@7.6.2(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)':
     dependencies:
       '@mjackson/node-fetch-server': 0.2.0
-      react-router: 7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-router: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       source-map-support: 0.5.21
       stream-slice: 0.1.2
       undici: 6.21.3
@@ -7056,13 +7060,13 @@ snapshots:
     dependencies:
       '@shopify/graphql-client': 1.4.0
 
-  '@shopify/cli-hydrogen@11.1.0(@graphql-codegen/cli@5.0.7(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@shopify/hydrogen-codegen@0.3.3(graphql@16.11.0))(@shopify/mini-oxygen@3.2.1(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0)))(@types/react@18.3.23)(graphql-config@5.1.5(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(graphql@16.11.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))':
+  '@shopify/cli-hydrogen@11.1.0(@graphql-codegen/cli@5.0.7(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@shopify/hydrogen-codegen@0.3.3(graphql@16.11.0))(@shopify/mini-oxygen@3.2.1(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0)))(@types/react@19.1.8)(graphql-config@5.1.5(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3))(graphql@16.11.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))':
     dependencies:
       '@ast-grep/napi': 0.11.0
       '@oclif/core': 3.26.5
-      '@shopify/cli-kit': 3.81.2(@types/react@18.3.23)
-      '@shopify/oxygen-cli': 4.6.18(@oclif/core@3.26.5)(@shopify/cli-kit@3.81.2(@types/react@18.3.23))(graphql@16.11.0)
-      '@shopify/plugin-cloudflare': 3.81.2(@types/react@18.3.23)
+      '@shopify/cli-kit': 3.81.2(@types/react@19.1.8)
+      '@shopify/oxygen-cli': 4.6.18(@oclif/core@3.26.5)(@shopify/cli-kit@3.81.2(@types/react@19.1.8))(graphql@16.11.0)
+      '@shopify/plugin-cloudflare': 3.81.2(@types/react@19.1.8)
       ansi-escapes: 6.2.1
       chokidar: 3.5.3
       cli-truncate: 4.0.0
@@ -7077,10 +7081,10 @@ snapshots:
       tar-fs: 2.1.3
       tempy: 3.0.0
       ts-morph: 20.0.0
-      use-resize-observer: 9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      use-resize-observer: 9.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     optionalDependencies:
       '@graphql-codegen/cli': 5.0.7(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3)
-      '@react-router/dev': 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
+      '@react-router/dev': 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
       '@shopify/hydrogen-codegen': 0.3.3(graphql@16.11.0)
       '@shopify/mini-oxygen': 3.2.1(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
       graphql-config: 5.1.5(@types/node@24.0.4)(graphql@16.11.0)(typescript@5.8.3)
@@ -7096,7 +7100,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@shopify/cli-kit@3.81.2(@types/react@18.3.23)':
+  '@shopify/cli-kit@3.81.2(@types/react@19.1.8)':
     dependencies:
       '@apidevtools/json-schema-ref-parser': 11.7.3
       '@bugsnag/js': 7.25.0
@@ -7135,7 +7139,7 @@ snapshots:
       graphql: 16.10.0
       graphql-request: 6.1.0(graphql@16.10.0)
       ignore: 6.0.2
-      ink: 4.4.1(@types/react@18.3.23)(react@18.3.1)
+      ink: 4.4.1(@types/react@19.1.8)(react@18.3.1)
       is-executable: 2.0.1
       is-interactive: 2.0.0
       is-wsl: 3.1.0
@@ -7197,14 +7201,14 @@ snapshots:
       - graphql
       - graphql-sock
 
-  '@shopify/hydrogen-react@2025.5.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))':
+  '@shopify/hydrogen-react@2025.5.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))':
     dependencies:
       '@google/model-viewer': 4.1.0(three@0.172.0)
       '@xstate/fsm': 2.0.0
-      '@xstate/react': 3.2.1(@types/react@18.3.23)(@xstate/fsm@2.0.0)(react@18.3.1)
+      '@xstate/react': 3.2.1(@types/react@19.1.8)(@xstate/fsm@2.0.0)(react@19.1.0)
       graphql: 16.11.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
       type-fest: 4.41.0
       vite: 6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0)
       worktop: 0.7.3
@@ -7213,17 +7217,17 @@ snapshots:
       - three
       - xstate
 
-  '@shopify/hydrogen@2025.5.0(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))':
+  '@shopify/hydrogen@2025.5.0(@react-router/dev@7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))':
     dependencies:
-      '@react-router/dev': 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
-      '@shopify/hydrogen-react': 2025.5.0(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
+      '@react-router/dev': 7.6.2(@types/node@24.0.4)(jiti@2.4.2)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))(yaml@2.8.0)
+      '@shopify/hydrogen-react': 2025.5.0(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(three@0.172.0)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0))
       content-security-policy-builder: 2.3.0
       isbot: 5.1.28
-      react: 18.3.1
-      react-router: 7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 19.1.0
+      react-router: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       source-map-support: 0.5.21
       type-fest: 4.41.0
-      use-resize-observer: 9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      use-resize-observer: 9.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       worktop: 0.7.3
     optionalDependencies:
       vite: 6.3.5(@types/node@24.0.4)(jiti@2.4.2)(yaml@2.8.0)
@@ -7261,13 +7265,13 @@ snapshots:
 
   '@shopify/network@3.3.0': {}
 
-  '@shopify/oxygen-cli@4.6.18(@oclif/core@3.26.5)(@shopify/cli-kit@3.81.2(@types/react@18.3.23))(graphql@16.11.0)':
+  '@shopify/oxygen-cli@4.6.18(@oclif/core@3.26.5)(@shopify/cli-kit@3.81.2(@types/react@19.1.8))(graphql@16.11.0)':
     dependencies:
       '@bugsnag/core': 8.4.0
       '@bugsnag/js': 8.4.0
       '@bugsnag/node': 8.4.0
       '@oclif/core': 3.26.5
-      '@shopify/cli-kit': 3.81.2(@types/react@18.3.23)
+      '@shopify/cli-kit': 3.81.2(@types/react@19.1.8)
       async: 3.2.6
       graphql-request: 7.2.0(graphql@16.11.0)
     transitivePeerDependencies:
@@ -7275,10 +7279,10 @@ snapshots:
 
   '@shopify/oxygen-workers-types@4.1.10': {}
 
-  '@shopify/plugin-cloudflare@3.81.2(@types/react@18.3.23)':
+  '@shopify/plugin-cloudflare@3.81.2(@types/react@19.1.8)':
     dependencies:
       '@oclif/core': 3.26.5
-      '@shopify/cli-kit': 3.81.2(@types/react@18.3.23)
+      '@shopify/cli-kit': 3.81.2(@types/react@19.1.8)
     transitivePeerDependencies:
       - '@types/react'
       - bufferutil
@@ -7287,10 +7291,10 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@shopify/remix-oxygen@3.0.0(@shopify/oxygen-workers-types@4.1.10)(react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))':
+  '@shopify/remix-oxygen@3.0.0(@shopify/oxygen-workers-types@4.1.10)(react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0))':
     dependencies:
       '@shopify/oxygen-workers-types': 4.1.10
-      react-router: 7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-router: 7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
 
   '@shopify/shopify-api@11.13.0':
     dependencies:
@@ -7365,7 +7369,7 @@ snapshots:
 
   '@types/hoist-non-react-statics@3.3.6':
     dependencies:
-      '@types/react': 18.3.23
+      '@types/react': 19.1.8
       hoist-non-react-statics: 3.3.2
 
   '@types/http-cache-semantics@4.0.4': {}
@@ -7378,15 +7382,12 @@ snapshots:
     dependencies:
       undici-types: 7.8.0
 
-  '@types/prop-types@15.7.15': {}
-
-  '@types/react-dom@18.3.7(@types/react@18.3.23)':
+  '@types/react-dom@19.1.6(@types/react@19.1.8)':
     dependencies:
-      '@types/react': 18.3.23
+      '@types/react': 19.1.8
 
-  '@types/react@18.3.23':
+  '@types/react@19.1.8':
     dependencies:
-      '@types/prop-types': 15.7.15
       csstype: 3.1.3
 
   '@types/readdir-glob@1.1.5':
@@ -7518,11 +7519,11 @@ snapshots:
 
   '@xstate/fsm@2.0.0': {}
 
-  '@xstate/react@3.2.1(@types/react@18.3.23)(@xstate/fsm@2.0.0)(react@18.3.1)':
+  '@xstate/react@3.2.1(@types/react@19.1.8)(@xstate/fsm@2.0.0)(react@19.1.0)':
     dependencies:
-      react: 18.3.1
-      use-isomorphic-layout-effect: 1.2.1(@types/react@18.3.23)(react@18.3.1)
-      use-sync-external-store: 1.5.0(react@18.3.1)
+      react: 19.1.0
+      use-isomorphic-layout-effect: 1.2.1(@types/react@19.1.8)(react@19.1.0)
+      use-sync-external-store: 1.5.0(react@19.1.0)
     optionalDependencies:
       '@xstate/fsm': 2.0.0
     transitivePeerDependencies:
@@ -8811,14 +8812,14 @@ snapshots:
 
   fraction.js@4.3.7: {}
 
-  framer-motion@12.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  framer-motion@12.19.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       motion-dom: 12.19.0
       motion-utils: 12.19.0
       tslib: 2.8.1
     optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   fs-constants@1.0.0: {}
 
@@ -9153,7 +9154,7 @@ snapshots:
 
   ini@1.3.8: {}
 
-  ink@4.4.1(@types/react@18.3.23)(react@18.3.1):
+  ink@4.4.1(@types/react@19.1.8)(react@18.3.1):
     dependencies:
       '@alcalzone/ansi-tokenize': 0.1.3
       ansi-escapes: 6.2.1
@@ -9182,7 +9183,7 @@ snapshots:
       ws: 8.18.2
       yoga-wasm-web: 0.3.3
     optionalDependencies:
-      '@types/react': 18.3.23
+      '@types/react': 19.1.8
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -9746,13 +9747,13 @@ snapshots:
 
   motion-utils@12.19.0: {}
 
-  motion@12.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  motion@12.19.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      framer-motion: 12.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      framer-motion: 12.19.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       tslib: 2.8.1
     optionalDependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   mp4box@0.4.9: {}
 
@@ -10413,18 +10414,17 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
-  react-cookie@7.2.2(react@18.3.1):
+  react-cookie@7.2.2(react@19.1.0):
     dependencies:
       '@types/hoist-non-react-statics': 3.3.6
       hoist-non-react-statics: 3.3.2
-      react: 18.3.1
+      react: 19.1.0
       universal-cookie: 7.2.2
 
-  react-dom@18.3.1(react@18.3.1):
+  react-dom@19.1.0(react@19.1.0):
     dependencies:
-      loose-envify: 1.4.0
-      react: 18.3.1
-      scheduler: 0.23.2
+      react: 19.1.0
+      scheduler: 0.26.0
 
   react-is@16.13.1: {}
 
@@ -10436,17 +10436,19 @@ snapshots:
 
   react-refresh@0.14.2: {}
 
-  react-router@7.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  react-router@7.6.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       cookie: 1.0.2
-      react: 18.3.1
+      react: 19.1.0
       set-cookie-parser: 2.7.1
     optionalDependencies:
-      react-dom: 18.3.1(react@18.3.1)
+      react-dom: 19.1.0(react@19.1.0)
 
   react@18.3.1:
     dependencies:
       loose-envify: 1.4.0
+
+  react@19.1.0: {}
 
   read-cache@1.0.0:
     dependencies:
@@ -10645,6 +10647,8 @@ snapshots:
   scheduler@0.23.2:
     dependencies:
       loose-envify: 1.4.0
+
+  scheduler@0.26.0: {}
 
   scrolly-video@0.0.24:
     dependencies:
@@ -11243,21 +11247,21 @@ snapshots:
 
   urlpattern-polyfill@4.0.3: {}
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@18.3.23)(react@18.3.1):
+  use-isomorphic-layout-effect@1.2.1(@types/react@19.1.8)(react@19.1.0):
     dependencies:
-      react: 18.3.1
+      react: 19.1.0
     optionalDependencies:
-      '@types/react': 18.3.23
+      '@types/react': 19.1.8
 
-  use-resize-observer@9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  use-resize-observer@9.1.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
       '@juggle/resize-observer': 3.4.0
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
-  use-sync-external-store@1.5.0(react@18.3.1):
+  use-sync-external-store@1.5.0(react@19.1.0):
     dependencies:
-      react: 18.3.1
+      react: 19.1.0
 
   util-deprecate@1.0.2: {}
 
@@ -11468,13 +11472,13 @@ snapshots:
       y18n: 5.0.8
       yargs-parser: 21.1.1
 
-  yet-another-react-lightbox@3.23.3(@types/react-dom@18.3.7(@types/react@18.3.23))(@types/react@18.3.23)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  yet-another-react-lightbox@3.23.3(@types/react-dom@19.1.6(@types/react@19.1.8))(@types/react@19.1.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
     dependencies:
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
     optionalDependencies:
-      '@types/react': 18.3.23
-      '@types/react-dom': 18.3.7(@types/react@18.3.23)
+      '@types/react': 19.1.8
+      '@types/react-dom': 19.1.6(@types/react@19.1.8)
 
   yocto-queue@0.1.0: {}
 

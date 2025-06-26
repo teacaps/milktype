@@ -36,7 +36,7 @@ export const useHasAnalyticsConsent = (): boolean => {
 };
 
 export const usePrevious = <T>(value: T) => {
-	const ref = useRef<T>();
+	const ref = useRef<T>(undefined);
 	useEffect(() => {
 		ref.current = value;
 	}, [value]);
