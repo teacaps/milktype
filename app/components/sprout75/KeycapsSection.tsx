@@ -1,11 +1,11 @@
-import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm";
+import { ScrollLinkedVideo } from "../anim/ScrollLinkedVideo";
 import { Videos } from "./constants";
 
 export function KeycapsSection() {
 	return (
 		<section className="w-full mt-16 xs:mt-36 flex flex-col md:flex-row md:px-12 items-center justify-center">
 			<div className="w-full aspect-square max-w-lg relative md:-ml-32">
-				<ScrollyVideo
+				<ScrollLinkedVideo
 					transitionSpeed={20}
 					frameThreshold={0.02}
 					src={`https://img.milktype.co/${Videos.KeycapSpinVid.src}`}

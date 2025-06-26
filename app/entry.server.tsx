@@ -13,11 +13,18 @@ export default async function handleRequest(
 ) {
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
 		defaultSrc: ["*"],
+		prefetchSrc: ["*"],
 		imgSrc: ["*", "data:"],
 		mediaSrc: ["*", "data:"],
 		styleSrc: ["*"],
 		fontSrc: ["*"],
-		scriptSrc: ["*"],
+		scriptSrc: [
+			"*",
+			"'sha256-RBZNiG3Ztb26Xi/69+VRecU4BPhrfxcvspLXMRrrCNE='",
+			"'sha256-mYq0xgH/camcN9OCLrrkCSWqPvbioa13JIRAP5hZ6JY='",
+			"'sha256-5kYkVkl7dJMZfZ0HJv3RHSX0sCOb7QcXRQH35v7TUOI='",
+			"'sha256-2DvQuBt7I9QrAGQr++hfy3SdPDJuCjCb+g8tVDGP2Ls='",
+		],
 		connectSrc: ["*"],
 		workerSrc: ["*"],
 		frameSrc: ["*"],
