@@ -13,18 +13,11 @@ export default async function handleRequest(
 ) {
 	const { nonce, header, NonceProvider } = createContentSecurityPolicy({
 		defaultSrc: ["*"],
-		prefetchSrc: ["*"],
 		imgSrc: ["*", "data:"],
 		mediaSrc: ["*", "data:"],
 		styleSrc: ["*"],
 		fontSrc: ["*"],
-		scriptSrc: [
-			"*",
-			"'sha256-RBZNiG3Ztb26Xi/69+VRecU4BPhrfxcvspLXMRrrCNE='",
-			"'sha256-mYq0xgH/camcN9OCLrrkCSWqPvbioa13JIRAP5hZ6JY='",
-			"'sha256-5kYkVkl7dJMZfZ0HJv3RHSX0sCOb7QcXRQH35v7TUOI='",
-			"'sha256-2DvQuBt7I9QrAGQr++hfy3SdPDJuCjCb+g8tVDGP2Ls='",
-		],
+		scriptSrc: ["*", "'unsafe-inline'"],
 		connectSrc: ["*"],
 		workerSrc: ["*"],
 		frameSrc: ["*"],
@@ -33,6 +26,8 @@ export default async function handleRequest(
 			storeDomain: context.env.PUBLIC_STORE_DOMAIN,
 		},
 	});
+
+	const headerWithoutNonce = header.replaceAll(/'?nonce-[a-zA-Z0-9]+'?\s?/g, "");
 
 	const body = await renderToReadableStream(
 		<NonceProvider>
@@ -53,7 +48,7 @@ export default async function handleRequest(
 	}
 
 	responseHeaders.set("Content-Type", "text/html");
-	responseHeaders.set("Content-Security-Policy", header);
+	responseHeaders.set("Content-Security-Policy", headerWithoutNonce);
 
 	return new Response(body, {
 		headers: responseHeaders,
