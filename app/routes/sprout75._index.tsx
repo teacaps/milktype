@@ -488,15 +488,15 @@ export default function Sprout75() {
 							}}
 							className="h-full w-full rounded-3xl"
 						/>
-						<div className="bg-cherry min-h-32 flex flex-row md:flex-row-reverse px-4 md:px-8 lg:px-12 gap-x-2 items-center justify-center col-span-1 row-span-2 xs:row-span-1 rounded-3xl">
+						<div className="bg-cherry min-h-32 flex flex-col xs:flex-row md:flex-row-reverse px-4 md:px-8 lg:px-12 gap-x-2 items-center justify-center col-span-1 row-span-2 xs:row-span-1 rounded-3xl">
 							<Image {...Renders.KnobTransparent} className="h-auto w-1/3" />
-							<span className="w-full md:w-auto mr-1 sm:mr-2 text-yogurt-100 text-base sm:text-lg md:text-base lg:text-xl text-balance text-right font-medium !leading-snug">
+							<span className="w-full md:w-auto mx-2 xs:mr-1 sm:mr-2 text-yogurt-100 text-base sm:text-lg md:text-base lg:text-xl text-balance text-center xs:text-right font-medium !leading-snug">
 								built for creative cloud, CAD, and more
 							</span>
 						</div>
 						<div className="bg-blurple flex flex-col items-center justify-center gap-1.5 col-span-1 row-span-2 xs:row-span-1 rounded-3xl">
 							<BatteryIcon className="h-7 text-yogurt-100" />
-							<span className="text-yogurt-100 text-base sm:text-lg md:text-base lg:text-xl text-balance text-center font-medium !leading-snug">
+							<span className="mx-2 text-yogurt-100 text-base sm:text-lg md:text-base lg:text-xl text-balance text-center font-medium !leading-snug">
 								a month of battery on a single charge
 							</span>
 						</div>
@@ -524,19 +524,19 @@ export default function Sprout75() {
 								on-the-go ready
 							</span>
 						</div>
-						<div className="bg-cherry flex flex-col items-center justify-center gap-y-1 sm:gap-y-2 col-span-1 row-span-2 xs:row-span-1 rounded-3xl">
-							<div className="h-9 sm:h-11 flex flex-row gap-x-1.5 sm:gap-x-3 items-center">
-								<div className="flex items-center justify-center h-full px-2 sm:px-3 border-2 border-yogurt-100 rounded-xl text-yogurt-100">
+						<div className="p-4 bg-cherry flex flex-col items-center justify-center gap-y-1 sm:gap-y-2 col-span-1 row-span-2 xs:row-span-1 rounded-3xl">
+							<div className="h-9 sm:h-11 flex flex-row gap-1 xs:gap-1.5 sm:gap-3 items-center">
+								<div className="flex items-center justify-center h-full px-1.5 xs:px-2 sm:px-3 border-2 border-yogurt-100 rounded-xl text-yogurt-100">
 									<span className="text-yogurt-100 font-medium text-lg sm:text-xl">ctrl</span>
 								</div>
-								<div className="flex items-center justify-center h-full px-2 sm:px-3 border-2 border-yogurt-100 rounded-xl text-yogurt-100">
-									<span className="text-yogurt-100 font-medium text-lg sm:text-xl">shift</span>
+								<div className="flex items-center justify-center h-full px-1.5 xs:px-2 sm:px-3 border-2 border-yogurt-100 rounded-xl text-yogurt-100">
+									<span className="text-yogurt-100 font-medium text-lg sm:text-xl">alt</span>
 								</div>
-								<div className="flex items-center justify-center h-full px-2 sm:px-3 border-2 border-yogurt-100 rounded-xl text-yogurt-100">
+								<div className="flex items-center justify-center h-full px-1.5 xs:px-2 sm:px-3 border-2 border-yogurt-100 rounded-xl text-yogurt-100">
 									<span className="text-yogurt-100 font-medium text-lg sm:text-xl">v</span>
 								</div>
 							</div>
-							<span className="w-4/5 px-1 sm:px-0 text-balance text-center text-yogurt-100 text-base sm:text-lg font-medium !leading-snug">
+							<span className="mx-2 w-4/5 text-balance text-center text-yogurt-100 text-base sm:text-lg font-medium !leading-snug">
 								custom keybinds for every key
 							</span>
 						</div>
