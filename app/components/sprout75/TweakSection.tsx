@@ -88,7 +88,7 @@ export function TweakSection() {
 			<div className="mt-10 grid grid-cols-2 grid-rows-3 gap-4 w-full max-w-lg md:max-w-screen-lg">
 				<div className="col-span-1 row-span-1 flex items-center justify-center aspect-[4/5] sm:aspect-square md:aspect-[2/1] bg-blurple rounded-xl">
 					<span className="text-yogurt-100 xs:text-lg lg:text-xl font-medium text-center w-4/5 max-w-[30ch] text-balance">
-						make sprout 75 yours with our simple to use keyboard customization tool. intuitive and browser-based for quick adjustments.
+						make sprout yours with our intuitive keyboard customization tool. browser-based for quick adjustments.
 						<br className="hidden xs:block" />
 						<br />
 						powered by via
@@ -99,8 +99,7 @@ export function TweakSection() {
 				</div>
 				<div className="col-span-2 row-span-1 flex flex-col gap-3 xs:gap-6 lg:gap-12 items-center justify-center bg-yogurt-60 rounded-xl">
 					<span className="text-cocoa-100 xs:text-lg lg:text-xl font-medium text-center w-full sm:w-4/5 max-w-[30ch] text-balance">
-						advanced users — customize it all with <span className="text-blurple">tweak</span>. from lighting to macros, we've
-						got you covered.
+						advanced users can go further with <span className="text-blurple">tweak</span>. from lighting adjustments to custom macros, tweak has it all.
 					</span>
 					<div className="w-4/5 py-4 grid grid-cols-3 grid-rows-2 md:grid-cols-6 md:grid-rows-1 gap-2 xs:gap-3 text-base lg:text-lg">
 						<div className="flex items-center justify-center px-5 py-1 text-cocoa-100 bg-yogurt-60 rounded-xl font-semibold border border-cocoa-100">
