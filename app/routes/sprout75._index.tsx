@@ -349,7 +349,7 @@ export default function Sprout75() {
 					<span className="mt-8 text-xl text-cocoa-80 italic font-medium">configure with</span>
 					<TweakWordmark className="w-full max-w-64" />
 					<div className="mt-10 grid grid-cols-2 grid-rows-3 gap-4 w-full max-w-lg md:max-w-screen-lg">
-						<div className="col-span-1 row-span-1 flex items-center justify-center aspect-square md:aspect-[2/1] bg-blurple rounded-xl">
+						<div className="col-span-1 row-span-1 flex items-center justify-center aspect-[4/5] sm:aspect-square md:aspect-[2/1] bg-blurple rounded-xl">
 							<span className="text-yogurt-100 xs:text-lg lg:text-xl font-medium text-center w-4/5 max-w-[30ch] text-balance">
 								our simple to use, lightweight keyboard customization tool.
 								<br className="hidden xs:block" />
@@ -357,7 +357,7 @@ export default function Sprout75() {
 								powered by via
 							</span>
 						</div>
-						<div className="col-span-1 row-span-1 flex items-center justify-center aspect-square md:aspect-[2/1] bg-[#F4B499] rounded-xl relative overflow-clip">
+						<div className="col-span-1 row-span-1 flex items-center justify-center aspect-[4/5] sm:aspect-square md:aspect-[2/1] bg-[#F4B499] rounded-xl relative overflow-clip">
 							<Keymap className="absolute top-0 md:top-unset md:bottom-0 left-0 h-full md:w-[120%] md:h-unset" />
 						</div>
 						<div className="col-span-2 row-span-1 flex flex-col gap-3 xs:gap-6 lg:gap-12 items-center justify-center bg-yogurt-60 rounded-xl">
@@ -365,7 +365,7 @@ export default function Sprout75() {
 								customize it with <span className="text-blurple">tweak</span>. from lighting to macros,
 								we've got you covered.
 							</span>
-							<div className="w-4/5 grid grid-cols-3 grid-rows-2 md:grid-cols-6 md:grid-rows-1 gap-2 xs:gap-3 text-base lg:text-lg">
+							<div className="w-4/5 py-4 grid grid-cols-3 grid-rows-2 md:grid-cols-6 md:grid-rows-1 gap-2 xs:gap-3 text-base lg:text-lg">
 								<div className="flex items-center justify-center px-5 py-1 text-cocoa-100 bg-yogurt-60 rounded-xl font-semibold border border-cocoa-100">
 									basic
 								</div>
@@ -387,7 +387,7 @@ export default function Sprout75() {
 								</div>
 							</div>
 						</div>
-						<div className="col-span-1 row-span-1 flex flex-col pt-5 items-center bg-yogurt-60 rounded-xl relative overflow-clip">
+						<div className="col-span-1 row-span-1 flex flex-col pt-5 items-center bg-yogurt-60 aspect-[4/5] sm:aspect-square md:aspect-[2/1] rounded-xl relative overflow-clip">
 							<span className="text-cocoa-100 text-xl lg:text-2xl font-medium text-center w-full sm:w-4/5 text-balance">
 								no <span className="text-blurple italic">installation</span>.<br />
 								no <span className="text-shrub">hassle</span>.
@@ -397,7 +397,7 @@ export default function Sprout75() {
 						<ButtonLink
 							url="https://tweak.milktype.co"
 							color="shrub"
-							className="col-span-1 row-span-1 flex items-center justify-center aspect-square md:aspect-[2/1] rounded-xl">
+							className="col-span-1 row-span-1 flex items-center justify-center aspect-[4/5] sm:aspect-square md:aspect-[2/1] rounded-xl">
 							<span className="text-yogurt-100 text-xl lg:text-2xl font-medium text-center w-full sm:w-4/5 text-balance">
 								open tweak in your browser ↗
 							</span>
