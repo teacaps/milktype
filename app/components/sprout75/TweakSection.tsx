@@ -12,49 +12,44 @@ export function TweakSection() {
 	const knobUseCasesRef = useRef<HTMLVideoElement>(null);
 
 	useEffect(() => {
-		const syncVideos = () => {
+		let spinVideoReady = false;
+		let useCasesVideoReady = false;
+
+		const startVideos = () => {
 			if (knobSpinRef.current && knobUseCasesRef.current) {
 				const useCasesVideo = knobUseCasesRef.current;
 				const spinVideo = knobSpinRef.current;
 
-				const useCasesDuration = useCasesVideo.duration;
-				const spinDuration = spinVideo.duration;
+				useCasesVideo.currentTime = 0;
+				spinVideo.currentTime = 0;
 
-				if (useCasesDuration && spinDuration) {
-					const ratio = spinDuration / useCasesDuration;
-
-					const handleTimeUpdate = () => {
-						const useCasesTime = useCasesVideo.currentTime;
-						const expectedSpinTime = (useCasesTime * (1 / ratio)) % spinDuration;
-
-						if (Math.abs(spinVideo.currentTime - expectedSpinTime) > 0.1) {
-							spinVideo.currentTime = expectedSpinTime;
-						}
-					};
-
-					useCasesVideo.addEventListener("timeupdate", handleTimeUpdate);
-
-					Promise.all([spinVideo.play(), useCasesVideo.play()]).catch(console.error);
-
-					return () => {
-						useCasesVideo.removeEventListener("timeupdate", handleTimeUpdate);
-					};
-				}
+				// Start both videos simultaneously
+				Promise.all([spinVideo.play(), useCasesVideo.play()]).catch(console.error);
 			}
 		};
 
-		const onLoadedMetadata = () => {
-			syncVideos();
+		const checkAndStart = () => {
+			if (spinVideoReady && useCasesVideoReady) {
+				startVideos();
+			}
 		};
 
-		if (knobUseCasesRef.current) {
-			knobUseCasesRef.current.addEventListener("loadedmetadata", onLoadedMetadata);
-		}
+		const onSpinVideoMetadata = () => {
+			spinVideoReady = true;
+			checkAndStart();
+		};
+
+		const onUseCasesVideoMetadata = () => {
+			useCasesVideoReady = true;
+			checkAndStart();
+		};
+
+		knobSpinRef.current?.addEventListener("loadedmetadata", onSpinVideoMetadata);
+		knobUseCasesRef.current?.addEventListener("loadedmetadata", onUseCasesVideoMetadata);
 
 		return () => {
-			if (knobUseCasesRef.current) {
-				knobUseCasesRef.current.removeEventListener("loadedmetadata", onLoadedMetadata);
-			}
+			knobSpinRef.current?.removeEventListener("loadedmetadata", onSpinVideoMetadata);
+			knobUseCasesRef.current?.removeEventListener("loadedmetadata", onUseCasesVideoMetadata);
 		};
 	}, []);
 
@@ -88,7 +83,8 @@ export function TweakSection() {
 			<div className="mt-10 grid grid-cols-2 grid-rows-3 gap-4 w-full max-w-lg md:max-w-screen-lg">
 				<div className="col-span-1 row-span-1 flex items-center justify-center aspect-[4/5] sm:aspect-square md:aspect-[2/1] bg-blurple rounded-xl">
 					<span className="text-yogurt-100 xs:text-lg lg:text-xl font-medium text-center w-4/5 max-w-[30ch] text-balance">
-						make sprout yours with our intuitive keyboard customization tool. browser-based for quick adjustments.
+						make sprout yours with our intuitive keyboard customization tool. browser-based for quick
+						adjustments.
 						<br className="hidden xs:block" />
 						<br />
 						powered by via
@@ -99,7 +95,8 @@ export function TweakSection() {
 				</div>
 				<div className="col-span-2 row-span-1 flex flex-col gap-3 xs:gap-6 lg:gap-12 items-center justify-center bg-yogurt-60 rounded-xl">
 					<span className="text-cocoa-100 xs:text-lg lg:text-xl font-medium text-center w-full sm:w-4/5 max-w-[30ch] text-balance">
-						advanced users can go further with <span className="text-blurple">tweak</span>. from lighting adjustments to custom macros, tweak has it all.
+						advanced users can go further with <span className="text-blurple">tweak</span>. from lighting
+						adjustments to custom macros, tweak has it all.
 					</span>
 					<div className="w-4/5 py-4 grid grid-cols-3 grid-rows-2 md:grid-cols-6 md:grid-rows-1 gap-2 xs:gap-3 text-base lg:text-lg">
 						<div className="flex items-center justify-center px-5 py-1 text-cocoa-100 bg-yogurt-60 rounded-xl font-semibold border border-cocoa-100">
