@@ -7,7 +7,7 @@ import { twJoin } from "tailwind-merge";
 import { Result, useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics, useCart } from "@shopify/hydrogen-react";
 import { CartForm } from "@shopify/hydrogen";
-import { SPROUT_75_MERCHANDISE_ID } from "~/routes/sprout75._index";
+import { SPROUT_75_MERCHANDISE_ID } from "~/components/sprout75/constants";
 import { useCartVisibility } from "~/components/global/Cart";
 import { CartActionInput, CartActions } from "~/routes/cart";
 import { ReactNode } from "react";
