@@ -20,7 +20,7 @@ export function FeatureGrid() {
 						polished mirror backpiece
 					</h2>
 					<p className="xs:text-lg xl:text-xl xs:font-medium">
-						designed with high quality materials that sound and feel just as good as they look.
+						polished stainless steel, pvd coated for a flawless mirror shine. reflects your workspace, adds satisfying heft, and sounds great with every keystroke.
 					</p>
 				</div>
 			</div>
@@ -38,7 +38,7 @@ export function FeatureGrid() {
 				<div className="mt-12 space-y-4 md:max-w-[30ch] xl:max-w-[40ch] text-balance">
 					<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">fully customizable</h2>
 					<p className="xs:text-lg xl:text-xl xs:font-medium">
-						with standard cherry style keycaps and switches, every part is waiting to be made yours.
+						with standard cherry style keycaps and switches, every part is waiting to be made yours. try your own keycaps or switches with sprout's hotswap pcb.
 					</p>
 				</div>
 			</div>
@@ -78,7 +78,7 @@ export function FeatureGrid() {
 					<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">sweeten your setup</h2>
 					<p className="xs:text-lg xl:text-xl xs:font-medium">
 						with the matching <span className="text-[#A8593F]">brown sugar boba deskpad</span>, perfectly
-						sized to fit all workspaces.
+						sized to fit all workspaces. available as a bundle for a discount.
 					</p>
 				</div>
 			</div>
