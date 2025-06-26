@@ -12,7 +12,7 @@ import {
 	useLoaderData,
 	useSearchParams,
 } from "react-router";
-import favicon from "../public/favicon.svg";
+import favicon from "/favicon.svg?url";
 import styles from "./styles/tailwind.css?url";
 import { CartProvider } from "@shopify/hydrogen-react";
 import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
