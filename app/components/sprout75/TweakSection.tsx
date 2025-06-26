@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import { Video } from "~/components/elements/Video";
 import { ButtonLink } from "~/components/elements/Button";
 import { TweakWordmark } from "~/assets/sprout75/TweakWordmark";
@@ -7,16 +8,66 @@ import { BrowseToTweak } from "~/assets/sprout75/BrowseToTweak";
 import { Videos } from "./constants";
 
 export function TweakSection() {
+	const knobSpinRef = useRef<HTMLVideoElement>(null);
+	const knobUseCasesRef = useRef<HTMLVideoElement>(null);
+
+	useEffect(() => {
+		const syncVideos = () => {
+			if (knobSpinRef.current && knobUseCasesRef.current) {
+				const useCasesVideo = knobUseCasesRef.current;
+				const spinVideo = knobSpinRef.current;
+
+				const useCasesDuration = useCasesVideo.duration;
+				const spinDuration = spinVideo.duration;
+
+				if (useCasesDuration && spinDuration) {
+					const ratio = spinDuration / useCasesDuration;
+
+					const handleTimeUpdate = () => {
+						const useCasesTime = useCasesVideo.currentTime;
+						const expectedSpinTime = (useCasesTime * (1 / ratio)) % spinDuration;
+
+						if (Math.abs(spinVideo.currentTime - expectedSpinTime) > 0.1) {
+							spinVideo.currentTime = expectedSpinTime;
+						}
+					};
+
+					useCasesVideo.addEventListener("timeupdate", handleTimeUpdate);
+
+					Promise.all([spinVideo.play(), useCasesVideo.play()]).catch(console.error);
+
+					return () => {
+						useCasesVideo.removeEventListener("timeupdate", handleTimeUpdate);
+					};
+				}
+			}
+		};
+
+		const onLoadedMetadata = () => {
+			syncVideos();
+		};
+
+		if (knobUseCasesRef.current) {
+			knobUseCasesRef.current.addEventListener("loadedmetadata", onLoadedMetadata);
+		}
+
+		return () => {
+			if (knobUseCasesRef.current) {
+				knobUseCasesRef.current.removeEventListener("loadedmetadata", onLoadedMetadata);
+			}
+		};
+	}, []);
+
 	return (
 		<section className="w-full mt-32 lg:mt-20 flex flex-col items-center px-8 sm:px-0 md:px-16">
 			<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120 text-center text-balance max-w-[20ch]">
-				customize the <span className="text-nowrap italic text-[#A9593F]">boba knob</span> for any
-				workflow
+				customize the <span className="text-nowrap italic text-[#A9593F]">boba knob</span> for any workflow
 			</h2>
 			<Video
 				{...Videos.KnobSpinVid}
+				ref={knobSpinRef}
 				className="w-full mt-8 aspect-square max-w-lg rounded-2xl"
-				autoPlay={true}
+				autoPlay={false}
 				loop={true}
 				controls={false}
 				muted={true}
@@ -24,8 +75,9 @@ export function TweakSection() {
 			/>
 			<Video
 				{...Videos.KnobUseCasesVid}
+				ref={knobUseCasesRef}
 				className="w-full mt-8 aspect-video max-w-lg rounded-2xl"
-				autoPlay={true}
+				autoPlay={false}
 				loop={true}
 				controls={false}
 				muted={true}
@@ -47,8 +99,8 @@ export function TweakSection() {
 				</div>
 				<div className="col-span-2 row-span-1 flex flex-col gap-3 xs:gap-6 lg:gap-12 items-center justify-center bg-yogurt-60 rounded-xl">
 					<span className="text-cocoa-100 xs:text-lg lg:text-xl font-medium text-center w-full sm:w-4/5 max-w-[30ch] text-balance">
-						customize it with <span className="text-blurple">tweak</span>. from lighting to macros,
-						we've got you covered.
+						customize it with <span className="text-blurple">tweak</span>. from lighting to macros, we've
+						got you covered.
 					</span>
 					<div className="w-4/5 py-4 grid grid-cols-3 grid-rows-2 md:grid-cols-6 md:grid-rows-1 gap-2 xs:gap-3 text-base lg:text-lg">
 						<div className="flex items-center justify-center px-5 py-1 text-cocoa-100 bg-yogurt-60 rounded-xl font-semibold border border-cocoa-100">
