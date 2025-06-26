@@ -28,13 +28,13 @@ import type { Customer } from "@shopify/hydrogen/storefront-api-types";
 import { withModalDelay } from "~/lib/ModalContext";
 import { CartActions } from "~/routes/cart";
 import { Video } from "~/components/elements/Video";
-import { ScrollLinkedVideo } from "~/components/anim/ScrollLinkedVideo";
 import { TweakWordmark } from "~/assets/sprout75/TweakWordmark";
 import { Keymap } from "~/assets/sprout75/Keymap";
 import { Pointer } from "~/assets/sprout75/Pointer";
 import { BrowseToTweak } from "~/assets/sprout75/BrowseToTweak";
 import { BluetoothIcon } from "~/assets/icons/Bluetooth";
 import { BatteryIcon } from "~/assets/icons/Battery";
+import ScrollyVideo from "scrolly-video/dist/ScrollyVideo.esm";
 
 const title = "sprout 75";
 const description = "available now for $168 usd";
@@ -196,15 +196,21 @@ export default function Sprout75() {
 					</div>
 				</section>
 				<section className="w-full mt-16 xs:mt-36 flex flex-col md:flex-row md:px-12 items-center justify-center">
-					<div className="relative md:-ml-32">
-						<ScrollLinkedVideo {...Videos.KeycapSpinVid} className="w-full aspect-square max-w-lg" />
+					<div className="w-full aspect-square max-w-lg relative md:-ml-32">
+						<ScrollyVideo
+							transitionSpeed={20}
+							frameThreshold={0.02}
+							src={`https://img.milktype.co/${Videos.KeycapSpinVid.src}`}
+							sticky={false}
+							full={false}
+						/>
 					</div>
 					<div className="z-10 flex flex-col items-center md:-ml-8 gap-y-4 max-w-lg md:max-w-[30ch] xl:max-w-[40ch] text-balance text-center lg:text-left">
 						<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120 -mt-16 lg:mt-0">
 							built with premium
 							<wbr /> <span className="text-shrub">pbt keycaps</span>
 						</h2>
-						<p className="mx-4 xs:text-lg xl:text-xl xs:font-medium">
+						<p className="mr-4 xs:text-lg xl:text-xl xs:font-medium">
 							deliciously soft kca profile keycaps, dye-sublimated for text that never fades, and 1.6mm
 							thick pbt plastic that never shines.
 						</p>
