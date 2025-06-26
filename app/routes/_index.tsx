@@ -5,7 +5,7 @@ import { Intro } from "~/components/landing/Intro";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
 import { json } from "@shopify/remix-oxygen";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
-import { SPROUT75_IMAGE } from "~/routes/sprout75._index";
+import { SPROUT75_IMAGE } from "~/components/sprout75/constants";
 
 export const meta: MetaFunction = () => [
 	{
