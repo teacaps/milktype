@@ -11,6 +11,8 @@ export function NoveltiesSection() {
 				<p className="xs:text-lg xl:text-xl xs:font-medium">
 					every board comes with a 6-pack of novelty keycaps, inspired by furry friends and cozy
 					vibes.
+					<br>
+					warm brown and cream tones bring brown sugar boba to life in sprout.
 				</p>
 			</div>
 			<div className="relative lg:self-end w-4/5 max-w-lg lg:w-full lg:max-w-xl 2xl:max-w-2xl lg:h-unset">
