@@ -1,5 +1,4 @@
 import type { ActionFunctionArgs } from "@shopify/remix-oxygen";
-import { json } from "@shopify/remix-oxygen";
 import { shopifyApi, LATEST_API_VERSION } from "@shopify/shopify-api";
 import "@shopify/shopify-api/adapters/web-api";
 
@@ -9,7 +8,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		const email = fd.get("email")?.toString();
 
 		if (!email) {
-			return json({ error: "email is required" }, { status: 200 });
+			return { error: "email is required" };
 		}
 
 		const hostname = new URL(request.url).hostname;
@@ -36,13 +35,13 @@ export async function action({ request, context }: ActionFunctionArgs) {
 
 		if (errors) {
 			console.error(errors.message, JSON.stringify(errors.graphQLErrors, null, 4));
-			return json({ error: errors.message }, { status: 200 });
+			return { error: errors.message };
 		}
 
-		return json({ response: data }, { status: 200 });
+		return { response: data };
 	} catch (error) {
 		console.error("Unhandled error at signup:", error);
-		return json({ error: "an unknown error occurred" }, { status: 200 });
+		return { error: "an unknown error occurred" };
 	}
 }
 

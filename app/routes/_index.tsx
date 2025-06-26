@@ -3,7 +3,6 @@ import { Hero } from "~/components/landing/Hero";
 import { ProductSection } from "~/components/landing/ProductSection";
 import { Intro } from "~/components/landing/Intro";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
-import { json } from "@shopify/remix-oxygen";
 import { AnalyticsPageType } from "@shopify/hydrogen-react";
 import { SPROUT75_IMAGE } from "~/components/sprout75/constants";
 
@@ -38,9 +37,9 @@ export const meta: MetaFunction = () => [
 ];
 
 export function loader({ context }: LoaderFunctionArgs) {
-	return json({
+	return {
 		analytics: { pageType: AnalyticsPageType.home },
-	});
+	};
 }
 
 export default function Landing() {

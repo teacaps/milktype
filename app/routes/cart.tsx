@@ -5,7 +5,7 @@ import {
 	OptimisticCartLineInput,
 } from "@shopify/hydrogen";
 import type { ActionFunctionArgs } from "@shopify/remix-oxygen";
-import { json } from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 
 export const CartActions = {
 	...CartForm.ACTIONS,
@@ -78,10 +78,10 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		}
 	} catch (error) {
 		console.error(error);
-		return json({ error }, { status: 200 });
+		return { error };
 	}
 
 	const headers = cart.setCartId(result.cart.id);
 
-	return json({ response: result }, { status: 200, headers });
+	return data({ response: result }, { status: 200, headers });
 }

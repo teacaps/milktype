@@ -14,8 +14,8 @@ export function TaroSwitchesSection() {
 					<h2 className="text-2xl xs:text-3xl xl:text-4xl font-medium text-cocoa-120">taro switches</h2>
 					<p className="xs:text-lg xl:text-xl xs:font-medium">
 						our custom designed <span className="text-blurple">taro switches</span> are fabulously
-						lightweight and smooth for easy typing. they'll arrive pre-lubricated and perfectly tuned
-						for your fingers.
+						lightweight and smooth for easy typing. they'll arrive pre-lubricated and perfectly tuned for
+						your fingers.
 					</p>
 				</div>
 			</section>

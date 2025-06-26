@@ -1,6 +1,6 @@
 import { AnalyticsEvent, CartLineUpdatePayload, flattenConnection, ProductViewPayload } from "@shopify/hydrogen";
 import type { ActionFunctionArgs } from "@shopify/remix-oxygen";
-import { json } from "@shopify/remix-oxygen";
+import { data } from "@shopify/remix-oxygen";
 
 export type ConversionsEvent =
 	| {
@@ -145,19 +145,19 @@ export async function action({ request, context }: ActionFunctionArgs) {
 			break;
 		}
 		default: {
-			return json(null, { status: 400 });
+			return data(null, { status: 400 });
 		}
 	}
 
 	if (res) {
-		const data = (await res.json()) as { error?: object };
-		if (data.error) {
-			console.error(type, JSON.stringify(data.error));
-			return json(null, { status: 500 });
+		const resData = (await res.json()) as { error?: object };
+		if (resData.error) {
+			console.error(type, JSON.stringify(resData.error));
+			return data(null, { status: 500 });
 		}
 	}
 
-	return json(null, { status: 200 });
+	return data(null, { status: 200 });
 }
 
 export function publishConversionsEvent(event: ConversionsEvent) {
@@ -170,8 +170,8 @@ export function publishConversionsEvent(event: ConversionsEvent) {
 	});
 }
 
-function sha256(str: string | undefined | null) {
-	if (!str) return Promise.resolve(undefined);
+async function sha256(str: string | undefined | null) {
+	if (!str) return undefined;
 	const utf8 = new TextEncoder().encode(str);
 	return crypto.subtle.digest("SHA-256", utf8).then((hashBuffer) =>
 		Array.from(new Uint8Array(hashBuffer))

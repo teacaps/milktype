@@ -1,4 +1,4 @@
-import { useFetcher } from "@remix-run/react";
+import { useFetcher } from "react-router";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import { twJoin } from "tailwind-merge";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";

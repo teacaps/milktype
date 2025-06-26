@@ -7,21 +7,21 @@ Hydrogen is Shopify’s stack for headless commerce. Hydrogen is designed to dov
 
 ## What's included
 
-- Remix
-- Hydrogen
-- Oxygen
-- Shopify CLI
-- ESLint
-- Prettier
-- GraphQL generator
-- TypeScript and JavaScript flavors
-- Minimal setup of components and routes
+-   Remix
+-   Hydrogen
+-   Oxygen
+-   Shopify CLI
+-   ESLint
+-   Prettier
+-   GraphQL generator
+-   TypeScript and JavaScript flavors
+-   Minimal setup of components and routes
 
 ## Getting started
 
 **Requirements:**
 
-- Node.js version 16.14.0 or higher
+-   Node.js version 16.14.0 or higher
 
 ```bash
 npm create @shopify/hydrogen@latest
@@ -53,6 +53,7 @@ npm run dev
 
 > [!IMPORTANT]
 > To successfully interact with the Customer Account API routes you will need to use the ngrok domain during development instead of localhost
+
 ### Include public domain in Customer Account API settings
 
 1. Go to your Shopify admin => `Hydrogen` or `Headless` app/channel => Customer Account API => Application setup

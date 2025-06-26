@@ -10,7 +10,7 @@ import { TikTokIcon } from "~/assets/icons/socials/TikTok";
 import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
-import { NavLink, useFetcher } from "@remix-run/react";
+import { NavLink, useFetcher } from "react-router";
 import { Result, useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
@@ -191,7 +191,7 @@ export function Footer() {
 										"rounded-sm hover:text-accent focus-visible:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
 									)
 								}
-								unstable_viewTransition>
+								viewTransition>
 								{link.text}
 							</NavLink>
 						))}

@@ -4,25 +4,25 @@ import {
 	Meta,
 	Outlet,
 	Scripts,
-	LiveReload,
 	useRouteError,
 	ScrollRestoration,
 	isRouteErrorResponse,
 	type ShouldRevalidateFunction,
-	defer,
 	useMatches,
 	useLoaderData,
 	useSearchParams,
-} from "@remix-run/react";
+} from "react-router";
 import favicon from "../public/favicon.svg";
-import styles from "./styles/tailwind.css";
+import styles from "./styles/tailwind.css?url";
 import { CartProvider } from "@shopify/hydrogen-react";
-import type { LoaderFunctionArgs, SerializeFrom } from "@shopify/remix-oxygen";
+import type { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import { AnalyticsListener } from "~/lib/AnalyticsListener";
 import { CookiesProvider } from "react-cookie";
 import type { ReactNode } from "react";
 import { ConsentLevel, useConsentLevel } from "~/lib/util";
 import { ModalProvider, withModalDelay } from "~/lib/ModalContext";
+
+export type RootLoader = (args: LoaderFunctionArgs) => Awaited<ReturnType<typeof loader>>;
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -37,13 +37,14 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({ formMethod, current
 	return currentUrl.toString() === nextUrl.toString();
 };
 
-export async function loader({ context }: LoaderFunctionArgs) {
-	const { cart, storefront } = context;
-	const { shop } = await context.storefront.query(`#graphql
-	query Shop { shop { id } }`);
+export async function loader(args: LoaderFunctionArgs) {
+	const { context } = args;
+	const { storefront } = context;
 
-	return defer({
-		cart: cart.get(),
+	const deferredData = loadDeferredData(args);
+
+	return {
+		...deferredData,
 		shop: getShopAnalytics({
 			storefront,
 			publicStorefrontId: context.env.PUBLIC_STOREFRONT_ID,
@@ -53,13 +54,15 @@ export async function loader({ context }: LoaderFunctionArgs) {
 			storefrontAccessToken: context.env.PUBLIC_STOREFRONT_API_TOKEN,
 		},
 		redditAdId: context.env.REDDIT_AD_ID,
-	});
+	};
 }
 
-export const useRootLoaderData = () => {
-	const [root] = useMatches();
-	return root?.data as SerializeFrom<typeof loader>;
-};
+function loadDeferredData({ context }: LoaderFunctionArgs) {
+	const { cart } = context;
+	return {
+		cart: cart.get(),
+	};
+}
 
 export function links() {
 	return [
@@ -116,14 +119,17 @@ export default function App() {
 			</head>
 			<body className="antialiased scroll-smooth font-figtree selection:bg-accent selection:text-yogurt-100">
 				<CookiesProvider
-					defaultSetOptions={{ path: "/", expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365) }}>
+					defaultSetOptions={{
+						path: "/",
+						expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365),
+					}}>
 					<CartProvider>
 						<ModalProvider>
 							<AnalyticsWrapper>
 								<Outlet />
 								<ScrollRestoration nonce={nonce} />
 								<Scripts nonce={nonce} />
-								<LiveReload nonce={nonce} />
+
 								<AnalyticsListener redditAdId={data.redditAdId} />
 							</AnalyticsWrapper>
 						</ModalProvider>
@@ -192,7 +198,6 @@ export function ErrorBoundary() {
 				</div>
 				<ScrollRestoration nonce={nonce} />
 				<Scripts nonce={nonce} />
-				<LiveReload nonce={nonce} />
 			</body>
 		</html>
 	);

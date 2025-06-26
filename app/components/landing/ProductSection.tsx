@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { Container } from "~/components/global/Container";
 import { Splat } from "~/assets/Splat";
-import { NavLink, unstable_useViewTransitionState } from "@remix-run/react";
+import { NavLink, useViewTransitionState } from "react-router";
 import { HeroDivider } from "~/assets/Divider";
 import { twJoin } from "tailwind-merge";
 
@@ -16,7 +16,7 @@ interface ProductSectionProps {
 }
 
 export function ProductSection(props: ProductSectionProps) {
-	const isTransitioning = unstable_useViewTransitionState(props.url);
+	const isTransitioning = useViewTransitionState(props.url);
 
 	const splat = (
 		<Splat
@@ -45,14 +45,14 @@ export function ProductSection(props: ProductSectionProps) {
 					className="group focus-visible:outline-none relative hidden md:block my-unset ml-auto -mr-24"
 					to={props.url}
 					prefetch="render"
-					unstable_viewTransition>
+					viewTransition>
 					{splat}
 				</NavLink>
 			</div>
 			<NavLink
 				to={props.url}
 				prefetch="render"
-				unstable_viewTransition
+				viewTransition
 				className={twJoin(
 					"group focus-visible:outline-none relative flex items-center justify-center w-full h-auto rounded-3xl",
 					isTransitioning && "bg-opacity-0",

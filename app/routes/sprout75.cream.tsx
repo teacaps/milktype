@@ -2,13 +2,13 @@ import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
 import { Image, ImageProps, LightboxImage } from "~/components/elements/Image";
 import { twJoin } from "tailwind-merge";
-import { json, useFetcher, useLoaderData, useNavigation } from "@remix-run/react";
+import { useFetcher, useLoaderData, useNavigation } from "react-router";
 import { Input } from "~/components/elements/Input";
 import { Button, ButtonLink } from "~/components/elements/Button";
 import { ArrowRightIcon } from "~/assets/icons/ArrowRight";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import { Splat } from "~/assets/Splat";
-import lightboxStyles from "yet-another-react-lightbox/styles.css";
+import lightboxStyles from "yet-another-react-lightbox/styles.css?url";
 import { Asteroid } from "~/assets/Asteroid";
 import { InfoBubble } from "~/components/elements/InfoBubble";
 import { socials } from "~/components/global/Footer";
@@ -89,10 +89,10 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 		quantity: 1,
 	};
 
-	return json({
+	return {
 		productPayload,
 		url: request.url,
-	});
+	};
 }
 
 export default function Sprout75() {

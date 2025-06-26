@@ -3,7 +3,7 @@ import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
-import { useLoaderData, json } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import { Money, Analytics } from "@shopify/hydrogen";
 
 const META_SRC = "https://img.milktype.co/cdn-cgi/image/width=2000,format=auto/posters-keycaps/meta.png";
@@ -58,9 +58,9 @@ export async function loader({ context }: LoaderFunctionArgs) {
 		throw new Response(null, { status: 404 });
 	}
 
-	return json({
+	return {
 		product,
-	});
+	};
 }
 
 export default function PostersKeycaps() {

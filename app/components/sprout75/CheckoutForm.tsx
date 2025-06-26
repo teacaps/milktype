@@ -1,5 +1,5 @@
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { useFetcher, useNavigation } from "@remix-run/react";
+import { useFetcher, useNavigation } from "react-router";
 import { useCart } from "@shopify/hydrogen-react";
 import { CartForm, OptimisticInput } from "@shopify/hydrogen";
 import { twJoin } from "tailwind-merge";

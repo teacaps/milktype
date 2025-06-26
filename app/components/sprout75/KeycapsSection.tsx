@@ -19,8 +19,8 @@ export function KeycapsSection() {
 					<wbr /> <span className="text-shrub">pbt keycaps</span>
 				</h2>
 				<p className="mr-4 xs:text-lg xl:text-xl xs:font-medium">
-					deliciously soft kca profile keycaps, dye-sublimated for text that never fades, and 1.6mm
-					thick pbt plastic that never shines.
+					deliciously soft kca profile keycaps, dye-sublimated for text that never fades, and 1.6mm thick pbt
+					plastic that never shines.
 				</p>
 			</div>
 		</section>

@@ -1,11 +1,11 @@
-import { Await, Link, NavLink } from "@remix-run/react";
+import { Await, Link, NavLink, useRouteLoaderData } from "react-router";
 import { Wordmark } from "~/assets/Wordmark";
 import { CartIcon } from "~/assets/icons/Cart";
-import { useRootLoaderData } from "~/root";
 import { Container } from "~/components/global/Container";
 import { twJoin } from "tailwind-merge";
 import { Suspense } from "react";
 import { Cart, useCartVisibility } from "~/components/global/Cart";
+import type { RootLoader } from "~/root";
 
 export function Navigation() {
 	const { cartVisible, setCartVisible } = useCartVisibility();
@@ -18,7 +18,7 @@ export function Navigation() {
 				to="/"
 				className="mr-auto text-cocoa-120 hover:text-accent focus-visible:text-accent focus-visible:outline-none"
 				aria-label="Home"
-				unstable_viewTransition>
+				viewTransition>
 				<Wordmark className="h-8 xs:h-10" />
 			</Link>
 			<nav className="flex flex-row flex-grow sm:flex-grow-0 items-center justify-between sm:justify-start sm:gap-x-24 pl-8 sm:pl-0 font-medium text-cocoa-120 text-base leading-6 xs:text-lg">
@@ -31,7 +31,7 @@ export function Navigation() {
 							"hover:text-accent focus-visible:text-accent rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-4 focus-visible:ring-accent active:font-medium",
 						)
 					}
-					unstable_viewTransition>
+					viewTransition>
 					sprout 75
 				</NavLink>
 				<button
@@ -54,7 +54,7 @@ export function Navigation() {
 }
 
 function CartBadge() {
-	const { cart } = useRootLoaderData();
+	const { cart } = useRouteLoaderData<RootLoader>("root")!;
 	return (
 		<Suspense fallback={null}>
 			<Await resolve={cart}>

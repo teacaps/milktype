@@ -1,8 +1,8 @@
 import { Container } from "~/components/global/Container";
 import { Layout } from "~/components/global/Layout";
-import { json, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import { AnalyticsEvent, ProductViewPayload, useAnalytics } from "@shopify/hydrogen";
-import lightboxStyles from "yet-another-react-lightbox/styles.css";
+import lightboxStyles from "yet-another-react-lightbox/styles.css?url";
 import { useEffect, useMemo } from "react";
 import { LoaderFunctionArgs } from "@shopify/remix-oxygen";
 import Tracker from "@openreplay/tracker";
@@ -76,12 +76,12 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 		quantity: 1,
 	};
 
-	return json({
+	return {
 		productPayload,
 		url: request.url,
 		trackerProjectKey: context.env.OPENREPLAY_PROJECT_KEY,
 		searchParams: Object.fromEntries(searchParams.entries()),
-	});
+	};
 }
 
 export default function Sprout75() {

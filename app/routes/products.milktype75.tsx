@@ -3,7 +3,7 @@ import { Layout } from "~/components/global/Layout";
 import { ProductImageGrid } from "~/components/product/ProductImageGrid";
 import { AddToCartButton } from "~/components/product/AddToCartButton";
 import type { LoaderFunctionArgs, MetaFunction } from "@shopify/remix-oxygen";
-import { json, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "react-router";
 import { Analytics, Money } from "@shopify/hydrogen";
 import { InfoBubble } from "~/components/elements/InfoBubble";
 
@@ -62,9 +62,9 @@ export async function loader({ context }: LoaderFunctionArgs) {
 		throw new Response(null, { status: 404 });
 	}
 
-	return json({
+	return {
 		product,
-	});
+	};
 }
 
 // export default function Milktype75() {

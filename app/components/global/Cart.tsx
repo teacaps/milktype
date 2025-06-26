@@ -1,25 +1,17 @@
-import { Await } from "@remix-run/react";
+import { Await, useRouteLoaderData } from "react-router";
 import type {
 	ComponentizableCartLine,
 	CartLineUpdateInput,
 	CartLine,
 } from "@shopify/hydrogen-react/storefront-api-types";
 import { Suspense, type ReactNode, createContext, useContext } from "react";
-import {
-	CartForm,
-	Money,
-	OptimisticInput,
-	useOptimisticData,
-	flattenConnection,
-	Analytics,
-	useOptimisticCart,
-} from "@shopify/hydrogen";
+import { CartForm, Money, OptimisticInput, useOptimisticData, flattenConnection, Analytics } from "@shopify/hydrogen";
 import { MinusIcon } from "~/assets/icons/Minus";
 import { PlusIcon } from "~/assets/icons/Plus";
-import { useRootLoaderData } from "~/root";
 import { ButtonLink } from "~/components/elements/Button";
 import { twJoin } from "tailwind-merge";
 import { CartActions } from "~/routes/cart";
+import { RootLoader } from "~/root";
 
 type OptimisticData = {
 	action?: string;
@@ -132,7 +124,7 @@ function CartLineItem({ line }: { line: CartLine | ComponentizableCartLine }) {
 }
 
 export function Cart() {
-	const { cart } = useRootLoaderData();
+	const { cart } = useRouteLoaderData<RootLoader>("root")!;
 	const { cartVisible, setCartVisible } = useCartVisibility();
 
 	return (
