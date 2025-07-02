@@ -62,7 +62,7 @@ export function ProductSection(props: ProductSectionProps) {
 					<img
 						src={props.image.src}
 						alt={props.image.alt}
-						className="object-cover object-center aspect-video w-full h-auto min-h-[20rem] rounded-3xl motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-in-out hover:motion-safe:lg:-translate-y-6 ranslate-x-12 hover:motion-safe:md:scale-110 hover:motion-safe:md:-rotate-6"
+						className="object-cover object-center aspect-video w-full h-auto xs:min-h-[20rem] rounded-3xl motion-safe:transition-transform motion-safe:duration-500 motion-safe:ease-in-out hover:motion-safe:lg:-translate-y-6 ranslate-x-12 hover:motion-safe:md:scale-110 hover:motion-safe:md:-rotate-6"
 						style={isTransitioning ? { viewTransitionName: "product-image" } : {}}
 					/>
 				)}
