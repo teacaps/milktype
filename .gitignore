@@ -8,4 +8,5 @@ node_modules
 .shopify
 .DS_Store
 .idea
+.zed
 .react-router
