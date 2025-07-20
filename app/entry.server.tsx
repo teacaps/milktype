@@ -19,7 +19,7 @@ export default async function handleRequest(
 		fontSrc: ["*"],
 		scriptSrc: ["*", "'unsafe-inline'"],
 		connectSrc: ["*"],
-		workerSrc: ["*"],
+		workerSrc: ["*", "blob:", "data:"],
 		frameSrc: ["*"],
 		shop: {
 			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
