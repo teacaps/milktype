@@ -127,7 +127,7 @@ export function CheckoutForm() {
 						color="shrub"
 						rainbow={false}
 						disabled={navigation.state !== "idle"}>
-						{fetcher.state === "submitting" ? "loading..." : "add to cart ⋅ $168 usd"}
+						{fetcher.state === "submitting" ? "loading..." : "add to cart ⋅ $149 usd"}
 					</Button>
 				</>
 			)}
