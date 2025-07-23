@@ -127,7 +127,14 @@ export function CheckoutForm() {
 						color="shrub"
 						rainbow={false}
 						disabled={navigation.state !== "idle"}>
-						{fetcher.state === "submitting" ? "loading..." : "add to cart ⋅ $149 usd"}
+						{fetcher.state === "submitting" ? (
+							"loading..."
+						) : (
+							<span>
+								add to cart ⋅ $143 <span className="text-yogurt-60 opacity-75 line-through">$169</span>{" "}
+								usd
+							</span>
+						)}
 					</Button>
 				</>
 			)}

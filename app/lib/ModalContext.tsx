@@ -99,8 +99,8 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 				<div
 					className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none"
 					aria-hidden={modals.length === 0}>
-					<div className="fixed bottom-0 sm:bottom-4 left-0 right-0 flex justify-center pointer-events-auto">
-						<div className="flex flex-col items-center w-full max-w-screen-sm p-4 bg-yogurt-60 rounded-2xl shadow-lg overflow-hidden">
+					<div className="fixed bottom-4 left-0 right-0 mx-4 flex justify-center pointer-events-auto">
+						<div className="flex flex-col items-center w-full max-w-screen-sm p-4 bg-yogurt-60 rounded-2xl drop-shadow-xl overflow-hidden">
 							{Modal.image && !currentModal.minimized && (
 								<Image
 									src={Modal.image}
