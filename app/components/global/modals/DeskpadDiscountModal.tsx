@@ -32,7 +32,7 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 		children || (
 			<>
 				<p className="text-cocoa-100 font-medium mb-2 text-pretty">
-					join our mailing list to get <span className="font-bold">15% off</span> on sprout 75!
+					join our mailing list to get <span className="font-bold">$10 off</span> on sprout 75!
 					<br />
 					<br />
 					we'll send you an email exactly once a month with updates on what we're working on, along with
@@ -111,13 +111,13 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	) : (
 		<p className="text-cocoa-100 text-balance">
 			thanks for signing up! check out with <span className="font-semibold">{email}</span> and code{" "}
-			<span className="font-semibold">welcomefriend</span> to get 15% off on sprout 75!
+			<span className="font-semibold">welcomefriend</span> to get $10 off on sprout 75!
 		</p>
 	);
 }
 
 DeskpadDiscountModal.image = "sprout75/BoardFloat.png";
-DeskpadDiscountModal.title = "save 15% on sprout 75!";
+DeskpadDiscountModal.title = "save $10 on sprout 75!";
 
 export function ErrorBoundary({ error }: { error: Error }) {
 	console.error(error);
