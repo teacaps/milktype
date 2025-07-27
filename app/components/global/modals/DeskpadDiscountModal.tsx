@@ -22,11 +22,11 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 
 	const fetcher = useFetcher({ key: "deskpad-modal" });
-        const cartFetcher = useFetcher({ key: "discount-code" });
-        const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
-        const turnstileRef = useRef<TurnstileInstance | null>(null);
-        const pendingForm = useRef<HTMLFormElement | null>(null);
-        const [captchaError, setCaptchaError] = useState(false);
+	const cartFetcher = useFetcher({ key: "discount-code" });
+	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
+	const turnstileRef = useRef<TurnstileInstance | null>(null);
+	const pendingForm = useRef<HTMLFormElement | null>(null);
+	const [captchaError, setCaptchaError] = useState(false);
 
 	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
 		(fetcher.data as Result<{ customerCreate: { customer: Pick<Customer, "email"> | null } }>) ?? {};
@@ -46,98 +46,97 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 					occasional emails a few times a year for special deals and new products.
 				</p>
 
-                                <fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
-                                        <label htmlFor="email" className="sr-only">
-                                                Email
-                                        </label>
-                                        {captchaError ? (
-                                                <p className="text-cocoa-100">
-                                                        there was an error. email hi@milktype.co for a discount code
-                                                        (don't worry, we reply fast!)
-                                                </p>
-                                        ) : (
-                                                <div className="flex flex-row w-full items-center">
-                                                        <Input
-                                                                type="email"
-                                                                name="email"
-                                                                placeholder="example@gmail.com"
-                                                                className="w-full h-auto text-cocoa-100 border-b border-b-cocoa-80 text-lg focus-visible:ring-0"
-                                                        />
-                                                        <Button
-                                                                color={submitted ? "shrub" : "accent"}
-                                                                icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-                                                                className={twJoin(
-                                                                        "ml-3 h-8 w-8 p-2 rounded-lg mt-px",
-                                                                        submitted && "bg-shrub cursor-default pointer-events-none",
-                                                                )}
-                                                                disabled={fetcher.state !== "idle" || submitted}
-                                                                type="submit"
-                                                                onClick={(ev) => {
-                                                                        ev.preventDefault();
-                                                                        pendingForm.current = ev.currentTarget.form;
-                                                                        setCaptchaError(false);
-                                                                        turnstileRef.current?.execute();
-                                                                }}
-                                                        />
-                                                </div>
-                                        )}
-                                        <Turnstile
-                                                ref={turnstileRef}
-                                                siteKey={turnstileSiteKey}
-                                                className="hidden"
-                                                options={{ size: "invisible", execution: "execute" }}
-                                                onSuccess={() => {
-                                                        const form = pendingForm.current;
-                                                        if (!form) return;
-                                                        const email = form.email.value;
+				<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
+					<label htmlFor="email" className="sr-only">
+						Email
+					</label>
+					{captchaError ? (
+						<p className="text-cocoa-100">
+							there was an error. email hi@milktype.co for a discount code (don't worry, we reply fast!)
+						</p>
+					) : (
+						<div className="flex flex-row w-full items-center">
+							<Input
+								type="email"
+								name="email"
+								placeholder="example@gmail.com"
+								className="w-full h-auto text-cocoa-100 border-b border-b-cocoa-80 text-lg focus-visible:ring-0"
+							/>
+							<Button
+								color={submitted ? "shrub" : "accent"}
+								icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
+								className={twJoin(
+									"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
+									submitted && "bg-shrub cursor-default pointer-events-none",
+								)}
+								disabled={fetcher.state !== "idle" || submitted}
+								type="submit"
+								onClick={(ev) => {
+									ev.preventDefault();
+									pendingForm.current = ev.currentTarget.form;
+									setCaptchaError(false);
+									turnstileRef.current?.execute();
+								}}
+							/>
+						</div>
+					)}
+					<Turnstile
+						ref={turnstileRef}
+						siteKey={turnstileSiteKey}
+						className="hidden"
+						options={{ size: "invisible", execution: "execute" }}
+						onSuccess={() => {
+							const form = pendingForm.current;
+							if (!form) return;
+							const email = form.email.value;
 
-                                                        fetcher.submit(form);
+							fetcher.submit(form);
 
-                                                        cartFetcher.submit(
-                                                                {
-                                                                        [CartForm.INPUT_NAME]: JSON.stringify({
-                                                                                action: CartActions.DiscountCodesUpdate,
-                                                                                inputs: { discountCodes: ["WELCOMEFRIEND"] },
-                                                                        } satisfies CartActionInput),
-                                                                },
-                                                                { method: "POST", action: "/cart", preventScrollReset: true },
-                                                        );
-                                                        if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
-                                                                cartFetcher.submit(
-                                                                        {
-                                                                                [CartForm.INPUT_NAME]: JSON.stringify({
-                                                                                        action: CartActions.LinesUpsert,
-                                                                                        inputs: {
-                                                                                                lines: [
-                                                                                                        {
-                                                                                                                merchandiseId: SPROUT_75_MERCHANDISE_ID,
-                                                                                                                quantity: 1,
-                                                                                                        },
-                                                                                                ],
-                                                                                        },
-                                                                                } satisfies CartActionInput),
-                                                                        },
-                                                                        { method: "POST", action: "/cart", preventScrollReset: true },
-                                                                );
-                                                        }
-                                                        setCartVisible(true);
+							cartFetcher.submit(
+								{
+									[CartForm.INPUT_NAME]: JSON.stringify({
+										action: CartActions.DiscountCodesUpdate,
+										inputs: { discountCodes: ["WELCOMEFRIEND"] },
+									} satisfies CartActionInput),
+								},
+								{ method: "POST", action: "/cart", preventScrollReset: true },
+							);
+							if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
+								cartFetcher.submit(
+									{
+										[CartForm.INPUT_NAME]: JSON.stringify({
+											action: CartActions.LinesUpsert,
+											inputs: {
+												lines: [
+													{
+														merchandiseId: SPROUT_75_MERCHANDISE_ID,
+														quantity: 1,
+													},
+												],
+											},
+										} satisfies CartActionInput),
+									},
+									{ method: "POST", action: "/cart", preventScrollReset: true },
+								);
+							}
+							setCartVisible(true);
 
-                                                        if (hasAnalyticsConsent && email) {
-                                                                sendShopifyAnalytics({
-                                                                        eventName: "custom_newsletter_signup",
-                                                                        payload: {
-                                                                                // @ts-expect-error — custom payload
-                                                                                email,
-                                                                        },
-                                                                });
-                                                        }
-                                                }}
-                                                onError={() => setCaptchaError(true)}
-                                        />
-                                </fetcher.Form>
-                        </>
-                )
-        ) : (
+							if (hasAnalyticsConsent && email) {
+								sendShopifyAnalytics({
+									eventName: "custom_newsletter_signup",
+									payload: {
+										// @ts-expect-error — custom payload
+										email,
+									},
+								});
+							}
+						}}
+						onError={() => setCaptchaError(true)}
+					/>
+				</fetcher.Form>
+			</>
+		)
+	) : (
 		<p className="text-cocoa-100 text-balance">
 			thanks for signing up! check out with <span className="font-semibold">{email}</span> and code{" "}
 			<span className="font-semibold">welcomefriend</span> to get $10 off on sprout 75!

@@ -32,11 +32,11 @@ declare global {
 		PRIVATE_META_PIXEL_ACCESS_TOKEN: string;
 
 		META_PIXEL_ID: string;
-                REDDIT_AD_ID: string;
+		REDDIT_AD_ID: string;
 
-                OPENREPLAY_PROJECT_KEY: string;
-                TURNSTILE_SITE_KEY: string;
-        }
+		OPENREPLAY_PROJECT_KEY: string;
+		TURNSTILE_SITE_KEY: string;
+	}
 }
 
 declare module "react-router" {
