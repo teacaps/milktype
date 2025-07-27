@@ -28,7 +28,7 @@ function NewsletterSignup() {
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
 	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const [captchaError, setCaptchaError] = useState(false);
+	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
 
 	return (
 		<fetcher.Form
@@ -38,7 +38,7 @@ function NewsletterSignup() {
 			className="flex w-fit text-xl mt-8 mb-12 lg:mb-8 py-4 px-8 gap-y-4 flex-col lg:flex-row items-center justify-center rounded-2xl transition-colors delay-300 duration-700"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
-				{captchaError ? (
+				{turnstileStatus === "error" ? (
 					<>
 						uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't
 						worry, we reply fast!)
@@ -60,7 +60,7 @@ function NewsletterSignup() {
 					</>
 				)}
 			</span>
-			{captchaError || submitted ? null : (
+			{turnstileStatus === "error" || submitted ? null : (
 				<>
 					<label htmlFor="email" className="sr-only">
 						Email
@@ -79,11 +79,10 @@ function NewsletterSignup() {
 								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
 								submitted && "bg-shrub cursor-default pointer-events-none",
 							)}
-							disabled={fetcher.state !== "idle" || submitted}
+							disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
 							type="submit"
 							onClick={(ev) => {
 								ev.preventDefault();
-								setCaptchaError(false);
 
 								const form = ev.currentTarget.form;
 								if (!form) return;
@@ -107,7 +106,12 @@ function NewsletterSignup() {
 						siteKey={turnstileSiteKey}
 						className="hidden"
 						options={{ size: "flexible" }}
-						onError={() => setCaptchaError(true)}
+						onSuccess={() => setTurnstileStatus("success")}
+						onError={() => setTurnstileStatus("error")}
+						onExpire={() => {
+							setTurnstileStatus("loading");
+							turnstileRef.current?.reset();
+						}}
 					/>
 				</>
 			)}

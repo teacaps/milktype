@@ -23,7 +23,7 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
 	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const [captchaError, setCaptchaError] = useState(false);
+	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
 
 	return (
 		<fetcher.Form
@@ -54,7 +54,7 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 					</>
 				)}
 			</span>
-			{captchaError || submitted ? null : (
+			{turnstileStatus === "error" || submitted ? null : (
 				<>
 					<label htmlFor="email" className="sr-only">
 						Email
@@ -73,11 +73,10 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
 								submitted && "bg-shrub cursor-default pointer-events-none",
 							)}
-							disabled={fetcher.state !== "idle" || submitted}
+							disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
 							type="submit"
 							onClick={(ev) => {
 								ev.preventDefault();
-								setCaptchaError(false);
 
 								const form = ev.currentTarget.form;
 								if (!form) return;
@@ -96,11 +95,17 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 						/>
 					</div>
 					<Turnstile
+						id="newsletter-signup-turnstile"
 						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
 						className="hidden"
 						options={{ size: "flexible" }}
-						onError={() => setCaptchaError(true)}
+						onSuccess={() => setTurnstileStatus("success")}
+						onError={() => setTurnstileStatus("error")}
+						onExpire={() => {
+							setTurnstileStatus("loading");
+							turnstileRef.current?.reset();
+						}}
 					/>
 				</>
 			)}

@@ -25,7 +25,7 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	const cartFetcher = useFetcher({ key: "discount-code" });
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
 	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const [captchaError, setCaptchaError] = useState(false);
+	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
 
 	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
 		(fetcher.data as Result<{ customerCreate: { customer: Pick<Customer, "email"> | null } }>) ?? {};
@@ -33,7 +33,7 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
 	if (children || error) return ErrorMessage;
-	if (captchaError)
+	if (turnstileStatus === "error")
 		return (
 			<p className="text-cocoa-100 text-balance">
 				uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't worry, we
@@ -70,11 +70,10 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 									"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
 									submitted && "bg-shrub cursor-default pointer-events-none",
 								)}
-								disabled={fetcher.state !== "idle" || submitted}
+								disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
 								type="submit"
 								onClick={(ev) => {
 									ev.preventDefault();
-									setCaptchaError(false);
 
 									const form = ev.currentTarget.form;
 									if (!form) return;
@@ -123,15 +122,20 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 										});
 									}
 								}}
-								onError={() => setCaptchaError(true)}
 							/>
 						</div>
 						<Turnstile
+							id="deskpad-modal-turnstile"
 							ref={turnstileRef}
 							siteKey={turnstileSiteKey}
 							className="hidden"
 							options={{ size: "flexible" }}
-							onError={() => setCaptchaError(true)}
+							onSuccess={() => setTurnstileStatus("success")}
+							onError={() => setTurnstileStatus("error")}
+							onExpire={() => {
+								setTurnstileStatus("loading");
+								turnstileRef.current?.reset();
+							}}
 						/>
 					</fetcher.Form>
 				</>
