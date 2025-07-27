@@ -35,6 +35,8 @@ declare global {
 		REDDIT_AD_ID: string;
 
 		OPENREPLAY_PROJECT_KEY: string;
+
+		PRIVATE_TURNSTILE_SECRET_KEY: string;
 		TURNSTILE_SITE_KEY: string;
 	}
 }
