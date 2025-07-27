@@ -49,12 +49,13 @@ export async function loader(args: LoaderFunctionArgs) {
 			storefront,
 			publicStorefrontId: context.env.PUBLIC_STOREFRONT_ID,
 		}),
-		consent: {
-			checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
-			storefrontAccessToken: context.env.PUBLIC_STOREFRONT_API_TOKEN,
-		},
-		redditAdId: context.env.REDDIT_AD_ID,
-	};
+                consent: {
+                        checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
+                        storefrontAccessToken: context.env.PUBLIC_STOREFRONT_API_TOKEN,
+                },
+                redditAdId: context.env.REDDIT_AD_ID,
+                turnstileSiteKey: context.env.TURNSTILE_SITE_KEY,
+        };
 }
 
 function loadDeferredData({ context }: LoaderFunctionArgs) {

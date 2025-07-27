@@ -10,19 +10,26 @@ import { TikTokIcon } from "~/assets/icons/socials/TikTok";
 import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
-import { NavLink, useFetcher } from "react-router";
+import { NavLink, useFetcher, useRouteLoaderData } from "react-router";
 import { Result, useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
+import { useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import type { RootLoader } from "~/root";
 
 function NewsletterSignup() {
-	const fetcher = useFetcher({ key: "newsletter" });
+        const fetcher = useFetcher({ key: "newsletter" });
 	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
 		(fetcher.data as Result<{ customerCreate: { customer: Pick<Customer, "email"> | null } }>) ?? {};
 	const submitted = !!customer;
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
-	const hasAnalyticsConsent = useHasAnalyticsConsent();
+        const hasAnalyticsConsent = useHasAnalyticsConsent();
+        const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
+        const turnstileRef = useRef<TurnstileInstance | null>(null);
+        const pendingForm = useRef<HTMLFormElement | null>(null);
+        const [captchaError, setCaptchaError] = useState(false);
 
 	return (
 		<fetcher.Form
@@ -49,47 +56,67 @@ function NewsletterSignup() {
 					</>
 				)}
 			</span>
-			{submitted ? null : (
-				<>
-					<label htmlFor="email" className="sr-only">
-						Email
-					</label>
-					<div className="flex flex-row">
-						<Input
-							type="email"
-							name="email"
-							placeholder="example@gmail.com"
-							className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
-						/>
-						<Button
-							color={submitted ? "shrub" : "accent"}
-							icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-							className={twJoin(
-								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
-								submitted && "bg-shrub cursor-default pointer-events-none",
-							)}
-							disabled={fetcher.state !== "idle" || submitted}
-							type="submit"
-							onClick={(ev) => {
-								const email = ev.currentTarget.form?.email.value;
-
-								fetcher.submit(ev.currentTarget.form);
-
-								if (hasAnalyticsConsent && email) {
-									sendShopifyAnalytics({
-										eventName: "custom_newsletter_signup",
-										payload: {
-											// @ts-expect-error — custom payload
-											email,
-										},
-									});
-								}
-							}}
-						/>
-					</div>
-				</>
-			)}
-		</fetcher.Form>
+                        {submitted ? null : (
+                                <>
+                                        <label htmlFor="email" className="sr-only">
+                                                Email
+                                        </label>
+                                        {captchaError ? (
+                                                <p className="text-cocoa-100">
+                                                        there was an error. email hi@milktype.co for a discount code
+                                                        (don't worry, we reply fast!)
+                                                </p>
+                                        ) : (
+                                                <div className="flex flex-row">
+                                                        <Input
+                                                                type="email"
+                                                                name="email"
+                                                                placeholder="example@gmail.com"
+                                                                className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
+                                                        />
+                                                        <Button
+                                                                color={submitted ? "shrub" : "accent"}
+                                                                icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
+                                                                className={twJoin(
+                                                                        "ml-3 h-8 w-8 p-2 rounded-lg mt-px",
+                                                                        submitted && "bg-shrub cursor-default pointer-events-none",
+                                                                )}
+                                                                disabled={fetcher.state !== "idle" || submitted}
+                                                                type="submit"
+                                                                onClick={(ev) => {
+                                                                        ev.preventDefault();
+                                                                        pendingForm.current = ev.currentTarget.form;
+                                                                        setCaptchaError(false);
+                                                                        turnstileRef.current?.execute();
+                                                                }}
+                                                        />
+                                                </div>
+                                        )}
+                                        <Turnstile
+                                                ref={turnstileRef}
+                                                siteKey={turnstileSiteKey}
+                                                className="hidden"
+                                                options={{ size: "invisible", execution: "execute" }}
+                                                onSuccess={() => {
+                                                        const form = pendingForm.current;
+                                                        if (!form) return;
+                                                        const email = form.email.value;
+                                                        fetcher.submit(form);
+                                                        if (hasAnalyticsConsent && email) {
+                                                                sendShopifyAnalytics({
+                                                                        eventName: "custom_newsletter_signup",
+                                                                        payload: {
+                                                                                // @ts-expect-error — custom payload
+                                                                                email,
+                                                                        },
+                                                                });
+                                                        }
+                                                }}
+                                                onError={() => setCaptchaError(true)}
+                                        />
+                                </>
+                        )}
+                </fetcher.Form>
 	);
 }
 
