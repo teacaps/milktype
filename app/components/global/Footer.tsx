@@ -10,10 +10,13 @@ import { TikTokIcon } from "~/assets/icons/socials/TikTok";
 import { InstagramIcon } from "~/assets/icons/socials/Instagram";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { twJoin } from "tailwind-merge";
-import { NavLink, useFetcher } from "react-router";
+import { NavLink, useFetcher, useRouteLoaderData } from "react-router";
 import { Result, useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
+import { useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import type { RootLoader } from "~/root";
 
 function NewsletterSignup() {
 	const fetcher = useFetcher({ key: "newsletter" });
@@ -23,6 +26,9 @@ function NewsletterSignup() {
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
+	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
+	const turnstileRef = useRef<TurnstileInstance | null>(null);
+	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
 
 	return (
 		<fetcher.Form
@@ -32,7 +38,12 @@ function NewsletterSignup() {
 			className="flex w-fit text-xl mt-8 mb-12 lg:mb-8 py-4 px-8 gap-y-4 flex-col lg:flex-row items-center justify-center rounded-2xl transition-colors delay-300 duration-700"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
-				{!submitted ? (
+				{turnstileStatus === "error" ? (
+					<>
+						uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't
+						worry, we reply fast!)
+					</>
+				) : !submitted ? (
 					<>
 						let’s keep in touch — we’ll send a monthly newsletter to<span className="lg:hidden">:</span>
 					</>
@@ -49,7 +60,7 @@ function NewsletterSignup() {
 					</>
 				)}
 			</span>
-			{submitted ? null : (
+			{turnstileStatus === "error" || submitted ? null : (
 				<>
 					<label htmlFor="email" className="sr-only">
 						Email
@@ -68,13 +79,15 @@ function NewsletterSignup() {
 								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
 								submitted && "bg-shrub cursor-default pointer-events-none",
 							)}
-							disabled={fetcher.state !== "idle" || submitted}
+							disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
 							type="submit"
 							onClick={(ev) => {
-								const email = ev.currentTarget.form?.email.value;
+								ev.preventDefault();
 
-								fetcher.submit(ev.currentTarget.form);
-
+								const form = ev.currentTarget.form;
+								if (!form) return;
+								const email = form.email.value;
+								fetcher.submit(form);
 								if (hasAnalyticsConsent && email) {
 									sendShopifyAnalytics({
 										eventName: "custom_newsletter_signup",
@@ -87,6 +100,19 @@ function NewsletterSignup() {
 							}}
 						/>
 					</div>
+					<Turnstile
+						id="footer-turnstile"
+						ref={turnstileRef}
+						siteKey={turnstileSiteKey}
+						className="hidden"
+						options={{ size: "flexible" }}
+						onSuccess={() => setTurnstileStatus("success")}
+						onError={() => setTurnstileStatus("error")}
+						onExpire={() => {
+							setTurnstileStatus("loading");
+							turnstileRef.current?.reset();
+						}}
+					/>
 				</>
 			)}
 		</fetcher.Form>

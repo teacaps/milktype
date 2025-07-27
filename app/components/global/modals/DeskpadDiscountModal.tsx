@@ -10,7 +10,10 @@ import { CartForm } from "@shopify/hydrogen";
 import { SPROUT_75_MERCHANDISE_ID } from "~/components/sprout75/constants";
 import { useCartVisibility } from "~/components/global/Cart";
 import { CartActionInput, CartActions } from "~/routes/cart";
-import { ReactNode } from "react";
+import { ReactNode, useRef, useState } from "react";
+import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { useRouteLoaderData } from "react-router";
+import type { RootLoader } from "~/root";
 
 export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	const cart = useCart();
@@ -20,95 +23,126 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 
 	const fetcher = useFetcher({ key: "deskpad-modal" });
 	const cartFetcher = useFetcher({ key: "discount-code" });
+	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
+	const turnstileRef = useRef<TurnstileInstance | null>(null);
+	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
 
 	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
 		(fetcher.data as Result<{ customerCreate: { customer: Pick<Customer, "email"> | null } }>) ?? {};
 	const submitted = !!customer;
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
-	return children || error ? (
-		ErrorMessage
-	) : !submitted ? (
-		children || (
-			<>
-				<p className="text-cocoa-100 font-medium mb-2 text-pretty">
-					join our mailing list to get <span className="font-bold">$10 off</span> on sprout 75!
-					<br />
-					<br />
-					we'll send you an email exactly once a month with updates on what we're working on, along with
-					occasional emails a few times a year for special deals and new products.
-				</p>
+	if (children || error) return ErrorMessage;
+	if (turnstileStatus === "error")
+		return (
+			<p className="text-cocoa-100 text-balance">
+				uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't worry, we
+				reply fast!)
+			</p>
+		);
+	if (!submitted)
+		return (
+			children || (
+				<>
+					<p className="text-cocoa-100 font-medium mb-2 text-pretty">
+						join our mailing list to get <span className="font-bold">$10 off</span> on sprout 75!
+						<br />
+						<br />
+						we'll send you an email exactly once a month with updates on what we're working on, along with
+						occasional emails a few times a year for special deals and new products.
+					</p>
 
-				<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
-					<label htmlFor="email" className="sr-only">
-						Email
-					</label>
-					<div className="flex flex-row w-full items-center">
-						<Input
-							type="email"
-							name="email"
-							placeholder="example@gmail.com"
-							className="w-full h-auto text-cocoa-100 border-b border-b-cocoa-80 text-lg focus-visible:ring-0"
-						/>
-						<Button
-							color={submitted ? "shrub" : "accent"}
-							icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-							className={twJoin(
-								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
-								submitted && "bg-shrub cursor-default pointer-events-none",
-							)}
-							disabled={fetcher.state !== "idle" || submitted}
-							type="submit"
-							onClick={(ev) => {
-								const email = ev.currentTarget.form?.email.value;
+					<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
+						<label htmlFor="email" className="sr-only">
+							Email
+						</label>
+						<div className="flex flex-row w-full items-center">
+							<Input
+								type="email"
+								name="email"
+								placeholder="example@gmail.com"
+								className="w-full h-auto text-cocoa-100 border-b border-b-cocoa-80 text-lg focus-visible:ring-0"
+							/>
+							<Button
+								color={submitted ? "shrub" : "accent"}
+								icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
+								className={twJoin(
+									"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
+									submitted && "bg-shrub cursor-default pointer-events-none",
+								)}
+								disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
+								type="submit"
+								onClick={(ev) => {
+									ev.preventDefault();
 
-								fetcher.submit(ev.currentTarget.form);
+									const form = ev.currentTarget.form;
+									if (!form) return;
+									const email = form.email.value;
 
-								cartFetcher.submit(
-									{
-										[CartForm.INPUT_NAME]: JSON.stringify({
-											action: CartActions.DiscountCodesUpdate,
-											inputs: { discountCodes: ["WELCOMEFRIEND"] },
-										} satisfies CartActionInput),
-									},
-									{ method: "POST", action: "/cart", preventScrollReset: true },
-								);
-								if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
+									fetcher.submit(form);
+
 									cartFetcher.submit(
 										{
 											[CartForm.INPUT_NAME]: JSON.stringify({
-												action: CartActions.LinesUpsert,
-												inputs: {
-													lines: [
-														{
-															merchandiseId: SPROUT_75_MERCHANDISE_ID,
-															quantity: 1,
-														},
-													],
-												},
+												action: CartActions.DiscountCodesUpdate,
+												inputs: { discountCodes: ["WELCOMEFRIEND"] },
 											} satisfies CartActionInput),
 										},
 										{ method: "POST", action: "/cart", preventScrollReset: true },
 									);
-								}
-								setCartVisible(true);
+									if (
+										!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)
+									) {
+										cartFetcher.submit(
+											{
+												[CartForm.INPUT_NAME]: JSON.stringify({
+													action: CartActions.LinesUpsert,
+													inputs: {
+														lines: [
+															{
+																merchandiseId: SPROUT_75_MERCHANDISE_ID,
+																quantity: 1,
+															},
+														],
+													},
+												} satisfies CartActionInput),
+											},
+											{ method: "POST", action: "/cart", preventScrollReset: true },
+										);
+									}
+									setCartVisible(true);
 
-								if (hasAnalyticsConsent && email) {
-									sendShopifyAnalytics({
-										eventName: "custom_newsletter_signup",
-										payload: {
-											// @ts-expect-error — custom payload
-											email,
-										},
-									});
-								}
+									if (hasAnalyticsConsent && email) {
+										sendShopifyAnalytics({
+											eventName: "custom_newsletter_signup",
+											payload: {
+												// @ts-expect-error — custom payload
+												email,
+											},
+										});
+									}
+								}}
+							/>
+						</div>
+						<Turnstile
+							id="deskpad-modal-turnstile"
+							ref={turnstileRef}
+							siteKey={turnstileSiteKey}
+							className="hidden"
+							options={{ size: "flexible" }}
+							onSuccess={() => setTurnstileStatus("success")}
+							onError={() => setTurnstileStatus("error")}
+							onExpire={() => {
+								setTurnstileStatus("loading");
+								turnstileRef.current?.reset();
 							}}
 						/>
-					</div>
-				</fetcher.Form>
-			</>
-		)
-	) : (
+					</fetcher.Form>
+				</>
+			)
+		);
+
+	return (
 		<p className="text-cocoa-100 text-balance">
 			thanks for signing up! check out with <span className="font-semibold">{email}</span> and code{" "}
 			<span className="font-semibold">welcomefriend</span> to get $10 off on sprout 75!
