@@ -52,7 +52,8 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 					</label>
 					{captchaError ? (
 						<p className="text-cocoa-100">
-							there was an error. email hi@milktype.co for a discount code (don't worry, we reply fast!)
+							there was an error — feel free to email hi@milktype.co for your discount code (don't worry,
+							we reply fast!)
 						</p>
 					) : (
 						<div className="flex flex-row w-full items-center">
