@@ -33,29 +33,30 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	const submitted = !!customer;
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
-	return children || error ? (
-		ErrorMessage
-	) : !submitted ? (
-		children || (
-			<>
-				<p className="text-cocoa-100 font-medium mb-2 text-pretty">
-					join our mailing list to get <span className="font-bold">$10 off</span> on sprout 75!
-					<br />
-					<br />
-					we'll send you an email exactly once a month with updates on what we're working on, along with
-					occasional emails a few times a year for special deals and new products.
-				</p>
+	if (children || error) return ErrorMessage;
+	if (captchaError)
+		return (
+			<p className="text-cocoa-100 text-balance">
+				uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't worry, we
+				reply fast!)
+			</p>
+		);
+	if (!submitted)
+		return (
+			children || (
+				<>
+					<p className="text-cocoa-100 font-medium mb-2 text-pretty">
+						join our mailing list to get <span className="font-bold">$10 off</span> on sprout 75!
+						<br />
+						<br />
+						we'll send you an email exactly once a month with updates on what we're working on, along with
+						occasional emails a few times a year for special deals and new products.
+					</p>
 
-				<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
-					<label htmlFor="email" className="sr-only">
-						Email
-					</label>
-					{captchaError ? (
-						<p className="text-cocoa-100">
-							there was an error — feel free to email hi@milktype.co for your discount code (don't worry,
-							we reply fast!)
-						</p>
-					) : (
+					<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
+						<label htmlFor="email" className="sr-only">
+							Email
+						</label>
 						<div className="flex flex-row w-full items-center">
 							<Input
 								type="email"
@@ -80,64 +81,65 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 								}}
 							/>
 						</div>
-					)}
-					<Turnstile
-						ref={turnstileRef}
-						siteKey={turnstileSiteKey}
-						className="hidden"
-						options={{ size: "invisible", execution: "execute" }}
-						onSuccess={() => {
-							const form = pendingForm.current;
-							if (!form) return;
-							const email = form.email.value;
+						<Turnstile
+							ref={turnstileRef}
+							siteKey={turnstileSiteKey}
+							className="hidden"
+							options={{ size: "invisible", execution: "execute" }}
+							onSuccess={() => {
+								const form = pendingForm.current;
+								if (!form) return;
+								const email = form.email.value;
 
-							fetcher.submit(form);
+								fetcher.submit(form);
 
-							cartFetcher.submit(
-								{
-									[CartForm.INPUT_NAME]: JSON.stringify({
-										action: CartActions.DiscountCodesUpdate,
-										inputs: { discountCodes: ["WELCOMEFRIEND"] },
-									} satisfies CartActionInput),
-								},
-								{ method: "POST", action: "/cart", preventScrollReset: true },
-							);
-							if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
 								cartFetcher.submit(
 									{
 										[CartForm.INPUT_NAME]: JSON.stringify({
-											action: CartActions.LinesUpsert,
-											inputs: {
-												lines: [
-													{
-														merchandiseId: SPROUT_75_MERCHANDISE_ID,
-														quantity: 1,
-													},
-												],
-											},
+											action: CartActions.DiscountCodesUpdate,
+											inputs: { discountCodes: ["WELCOMEFRIEND"] },
 										} satisfies CartActionInput),
 									},
 									{ method: "POST", action: "/cart", preventScrollReset: true },
 								);
-							}
-							setCartVisible(true);
+								if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
+									cartFetcher.submit(
+										{
+											[CartForm.INPUT_NAME]: JSON.stringify({
+												action: CartActions.LinesUpsert,
+												inputs: {
+													lines: [
+														{
+															merchandiseId: SPROUT_75_MERCHANDISE_ID,
+															quantity: 1,
+														},
+													],
+												},
+											} satisfies CartActionInput),
+										},
+										{ method: "POST", action: "/cart", preventScrollReset: true },
+									);
+								}
+								setCartVisible(true);
 
-							if (hasAnalyticsConsent && email) {
-								sendShopifyAnalytics({
-									eventName: "custom_newsletter_signup",
-									payload: {
-										// @ts-expect-error — custom payload
-										email,
-									},
-								});
-							}
-						}}
-						onError={() => setCaptchaError(true)}
-					/>
-				</fetcher.Form>
-			</>
-		)
-	) : (
+								if (hasAnalyticsConsent && email) {
+									sendShopifyAnalytics({
+										eventName: "custom_newsletter_signup",
+										payload: {
+											// @ts-expect-error — custom payload
+											email,
+										},
+									});
+								}
+							}}
+							onError={() => setCaptchaError(true)}
+						/>
+					</fetcher.Form>
+				</>
+			)
+		);
+
+	return (
 		<p className="text-cocoa-100 text-balance">
 			thanks for signing up! check out with <span className="font-semibold">{email}</span> and code{" "}
 			<span className="font-semibold">welcomefriend</span> to get $10 off on sprout 75!

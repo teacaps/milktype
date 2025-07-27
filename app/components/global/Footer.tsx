@@ -39,7 +39,12 @@ function NewsletterSignup() {
 			className="flex w-fit text-xl mt-8 mb-12 lg:mb-8 py-4 px-8 gap-y-4 flex-col lg:flex-row items-center justify-center rounded-2xl transition-colors delay-300 duration-700"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
-				{!submitted ? (
+				{captchaError ? (
+					<>
+						uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't
+						worry, we reply fast!)
+					</>
+				) : !submitted ? (
 					<>
 						let’s keep in touch — we’ll send a monthly newsletter to<span className="lg:hidden">:</span>
 					</>
@@ -56,42 +61,35 @@ function NewsletterSignup() {
 					</>
 				)}
 			</span>
-			{submitted ? null : (
+			{captchaError || submitted ? null : (
 				<>
 					<label htmlFor="email" className="sr-only">
 						Email
 					</label>
-					{captchaError ? (
-						<p className="text-cocoa-100">
-							there was an error — feel free to email hi@milktype.co for your discount code (don't worry,
-							we reply fast!)
-						</p>
-					) : (
-						<div className="flex flex-row">
-							<Input
-								type="email"
-								name="email"
-								placeholder="example@gmail.com"
-								className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
-							/>
-							<Button
-								color={submitted ? "shrub" : "accent"}
-								icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
-								className={twJoin(
-									"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
-									submitted && "bg-shrub cursor-default pointer-events-none",
-								)}
-								disabled={fetcher.state !== "idle" || submitted}
-								type="submit"
-								onClick={(ev) => {
-									ev.preventDefault();
-									pendingForm.current = ev.currentTarget.form;
-									setCaptchaError(false);
-									turnstileRef.current?.execute();
-								}}
-							/>
-						</div>
-					)}
+					<div className="flex flex-row">
+						<Input
+							type="email"
+							name="email"
+							placeholder="example@gmail.com"
+							className="w-52 h-auto -mb-[3px] ml-1 px-1 py-0 text-cocoa-100 text-xl placeholder:text-center focus-visible:ring-0"
+						/>
+						<Button
+							color={submitted ? "shrub" : "accent"}
+							icon={<ArrowRightIcon className="w-4 fill-yogurt-100" />}
+							className={twJoin(
+								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
+								submitted && "bg-shrub cursor-default pointer-events-none",
+							)}
+							disabled={fetcher.state !== "idle" || submitted}
+							type="submit"
+							onClick={(ev) => {
+								ev.preventDefault();
+								pendingForm.current = ev.currentTarget.form;
+								setCaptchaError(false);
+								turnstileRef.current?.execute();
+							}}
+						/>
+					</div>
 					<Turnstile
 						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
