@@ -25,7 +25,6 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 	const cartFetcher = useFetcher({ key: "discount-code" });
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
 	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const pendingForm = useRef<HTMLFormElement | null>(null);
 	const [captchaError, setCaptchaError] = useState(false);
 
 	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
@@ -75,63 +74,63 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 								type="submit"
 								onClick={(ev) => {
 									ev.preventDefault();
-									pendingForm.current = ev.currentTarget.form;
 									setCaptchaError(false);
-									turnstileRef.current?.execute();
+
+									const form = ev.currentTarget.form;
+									if (!form) return;
+									const email = form.email.value;
+
+									fetcher.submit(form);
+
+									cartFetcher.submit(
+										{
+											[CartForm.INPUT_NAME]: JSON.stringify({
+												action: CartActions.DiscountCodesUpdate,
+												inputs: { discountCodes: ["WELCOMEFRIEND"] },
+											} satisfies CartActionInput),
+										},
+										{ method: "POST", action: "/cart", preventScrollReset: true },
+									);
+									if (
+										!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)
+									) {
+										cartFetcher.submit(
+											{
+												[CartForm.INPUT_NAME]: JSON.stringify({
+													action: CartActions.LinesUpsert,
+													inputs: {
+														lines: [
+															{
+																merchandiseId: SPROUT_75_MERCHANDISE_ID,
+																quantity: 1,
+															},
+														],
+													},
+												} satisfies CartActionInput),
+											},
+											{ method: "POST", action: "/cart", preventScrollReset: true },
+										);
+									}
+									setCartVisible(true);
+
+									if (hasAnalyticsConsent && email) {
+										sendShopifyAnalytics({
+											eventName: "custom_newsletter_signup",
+											payload: {
+												// @ts-expect-error — custom payload
+												email,
+											},
+										});
+									}
 								}}
+								onError={() => setCaptchaError(true)}
 							/>
 						</div>
 						<Turnstile
 							ref={turnstileRef}
 							siteKey={turnstileSiteKey}
 							className="hidden"
-							options={{ size: "invisible", execution: "execute" }}
-							onSuccess={() => {
-								const form = pendingForm.current;
-								if (!form) return;
-								const email = form.email.value;
-
-								fetcher.submit(form);
-
-								cartFetcher.submit(
-									{
-										[CartForm.INPUT_NAME]: JSON.stringify({
-											action: CartActions.DiscountCodesUpdate,
-											inputs: { discountCodes: ["WELCOMEFRIEND"] },
-										} satisfies CartActionInput),
-									},
-									{ method: "POST", action: "/cart", preventScrollReset: true },
-								);
-								if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
-									cartFetcher.submit(
-										{
-											[CartForm.INPUT_NAME]: JSON.stringify({
-												action: CartActions.LinesUpsert,
-												inputs: {
-													lines: [
-														{
-															merchandiseId: SPROUT_75_MERCHANDISE_ID,
-															quantity: 1,
-														},
-													],
-												},
-											} satisfies CartActionInput),
-										},
-										{ method: "POST", action: "/cart", preventScrollReset: true },
-									);
-								}
-								setCartVisible(true);
-
-								if (hasAnalyticsConsent && email) {
-									sendShopifyAnalytics({
-										eventName: "custom_newsletter_signup",
-										payload: {
-											// @ts-expect-error — custom payload
-											email,
-										},
-									});
-								}
-							}}
+							options={{ size: "flexible" }}
 							onError={() => setCaptchaError(true)}
 						/>
 					</fetcher.Form>

@@ -23,7 +23,6 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
 	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const pendingForm = useRef<HTMLFormElement | null>(null);
 	const [captchaError, setCaptchaError] = useState(false);
 
 	return (
@@ -78,9 +77,21 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 							type="submit"
 							onClick={(ev) => {
 								ev.preventDefault();
-								pendingForm.current = ev.currentTarget.form;
 								setCaptchaError(false);
-								turnstileRef.current?.execute();
+
+								const form = ev.currentTarget.form;
+								if (!form) return;
+								const email = form.email.value;
+								fetcher.submit(form);
+								if (email) {
+									sendShopifyAnalytics({
+										eventName: "custom_newsletter_signup",
+										payload: {
+											// @ts-expect-error — custom payload
+											email,
+										},
+									});
+								}
 							}}
 						/>
 					</div>
@@ -88,22 +99,7 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
 						className="hidden"
-						options={{ size: "invisible", execution: "execute" }}
-						onSuccess={() => {
-							const form = pendingForm.current;
-							if (!form) return;
-							const email = form.email.value;
-							fetcher.submit(form);
-							if (email) {
-								sendShopifyAnalytics({
-									eventName: "custom_newsletter_signup",
-									payload: {
-										// @ts-expect-error — custom payload
-										email,
-									},
-								});
-							}
-						}}
+						options={{ size: "flexible" }}
 						onError={() => setCaptchaError(true)}
 					/>
 				</>

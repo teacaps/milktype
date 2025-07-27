@@ -379,7 +379,7 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
 						className="hidden"
-						options={{ size: "invisible", execution: "execute" }}
+						options={{ size: "flexible" }}
 						onSuccess={() => {
 							const form = pendingForm.current;
 							if (!form) return;

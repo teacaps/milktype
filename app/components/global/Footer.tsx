@@ -28,7 +28,6 @@ function NewsletterSignup() {
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
 	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const pendingForm = useRef<HTMLFormElement | null>(null);
 	const [captchaError, setCaptchaError] = useState(false);
 
 	return (
@@ -84,32 +83,30 @@ function NewsletterSignup() {
 							type="submit"
 							onClick={(ev) => {
 								ev.preventDefault();
-								pendingForm.current = ev.currentTarget.form;
 								setCaptchaError(false);
-								turnstileRef.current?.execute();
+
+								const form = ev.currentTarget.form;
+								if (!form) return;
+								const email = form.email.value;
+								fetcher.submit(form);
+								if (hasAnalyticsConsent && email) {
+									sendShopifyAnalytics({
+										eventName: "custom_newsletter_signup",
+										payload: {
+											// @ts-expect-error — custom payload
+											email,
+										},
+									});
+								}
 							}}
 						/>
 					</div>
 					<Turnstile
+						id="footer-turnstile"
 						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
 						className="hidden"
-						options={{ size: "invisible", execution: "execute" }}
-						onSuccess={() => {
-							const form = pendingForm.current;
-							if (!form) return;
-							const email = form.email.value;
-							fetcher.submit(form);
-							if (hasAnalyticsConsent && email) {
-								sendShopifyAnalytics({
-									eventName: "custom_newsletter_signup",
-									payload: {
-										// @ts-expect-error — custom payload
-										email,
-									},
-								});
-							}
-						}}
+						options={{ size: "flexible" }}
 						onError={() => setCaptchaError(true)}
 					/>
 				</>
