@@ -32,7 +32,7 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 			id="newsletter-signup"
 			className="flex flex-col @xs:flex-row gap-2 xs:gap-3 items-start @xs:items-center justify-start rounded-2xl transition-colors delay-300 duration-700">
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
-				{captchaError ? (
+				{turnstileStatus === "error" ? (
 					<>
 						uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't
 						worry, we reply fast!)
