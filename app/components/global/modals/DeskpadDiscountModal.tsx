@@ -10,8 +10,8 @@ import { CartForm } from "@shopify/hydrogen";
 import { SPROUT_75_MERCHANDISE_ID } from "~/components/sprout75/constants";
 import { useCartVisibility } from "~/components/global/Cart";
 import { CartActionInput, CartActions } from "~/routes/cart";
-import { ReactNode, useRef, useState } from "react";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { type ReactNode, useState } from "react";
+import { Turnstile } from "~/lib/Turnstile";
 import { useRouteLoaderData } from "react-router";
 import type { RootLoader } from "~/root";
 
@@ -23,17 +23,20 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 
 	const fetcher = useFetcher({ key: "deskpad-modal" });
 	const cartFetcher = useFetcher({ key: "discount-code" });
-	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
-	const turnstileRef = useRef<TurnstileInstance | null>(null);
-	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
 
 	const { response: { customerCreate: { customer = null } = {} } = {}, error = null } =
 		(fetcher.data as Result<{ customerCreate: { customer: Pick<Customer, "email"> | null } }>) ?? {};
 	const submitted = !!customer;
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 
+	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
+	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
+	const [errored, setErrored] = useState(false);
+
+	const disabled = fetcher.state !== "idle" || turnstileStatus === "loading" || submitted;
+
 	if (children || error) return ErrorMessage;
-	if (turnstileStatus === "error")
+	if (errored)
 		return (
 			<p className="text-cocoa-100 text-balance">
 				uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't worry, we
@@ -52,7 +55,7 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 						occasional emails a few times a year for special deals and new products.
 					</p>
 
-					<fetcher.Form method="post" action="/signup" className="flex flex-col sm:flex-row gap-2 w-full">
+					<fetcher.Form method="post" action="/signup" className="flex flex-col gap-2 w-full">
 						<label htmlFor="email" className="sr-only">
 							Email
 						</label>
@@ -70,10 +73,13 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 									"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
 									submitted && "bg-shrub cursor-default pointer-events-none",
 								)}
-								disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
+								disabled={disabled}
 								type="submit"
+								title={disabled ? "making sure you're human..." : undefined}
 								onClick={(ev) => {
 									ev.preventDefault();
+
+									if (turnstileStatus === "error") return setErrored(true);
 
 									const form = ev.currentTarget.form;
 									if (!form) return;
@@ -126,16 +132,9 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 						</div>
 						<Turnstile
 							id="deskpad-modal-turnstile"
-							ref={turnstileRef}
 							siteKey={turnstileSiteKey}
-							className="hidden"
-							options={{ size: "flexible" }}
 							onSuccess={() => setTurnstileStatus("success")}
 							onError={() => setTurnstileStatus("error")}
-							onExpire={() => {
-								setTurnstileStatus("loading");
-								turnstileRef.current?.reset();
-							}}
 						/>
 					</fetcher.Form>
 				</>

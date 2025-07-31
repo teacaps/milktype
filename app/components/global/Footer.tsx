@@ -14,8 +14,8 @@ import { NavLink, useFetcher, useRouteLoaderData } from "react-router";
 import { Result, useHasAnalyticsConsent } from "~/lib/util";
 import { sendShopifyAnalytics } from "@shopify/hydrogen-react";
 import type { Customer } from "@shopify/hydrogen/storefront-api-types";
-import { useRef, useState } from "react";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { useState } from "react";
+import { Turnstile } from "~/lib/Turnstile";
 import type { RootLoader } from "~/root";
 
 function NewsletterSignup() {
@@ -27,8 +27,10 @@ function NewsletterSignup() {
 
 	const hasAnalyticsConsent = useHasAnalyticsConsent();
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
-	const turnstileRef = useRef<TurnstileInstance | null>(null);
 	const [turnstileStatus, setTurnstileStatus] = useState<"loading" | "success" | "error" | null>("loading");
+	const [errored, setErrored] = useState(false);
+
+	const disabled = fetcher.state !== "idle" || turnstileStatus === "loading" || submitted;
 
 	return (
 		<fetcher.Form
@@ -38,7 +40,7 @@ function NewsletterSignup() {
 			className="flex w-fit text-xl mt-8 mb-12 lg:mb-8 py-4 px-8 gap-y-4 flex-col lg:flex-row items-center justify-center rounded-2xl transition-colors delay-300 duration-700"
 			style={{ viewTransitionName: "newsletter" }}>
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
-				{turnstileStatus === "error" ? (
+				{errored ? (
 					<>
 						uh oh, there was an error — feel free to email hi@milktype.co for your discount code (don't
 						worry, we reply fast!)
@@ -60,7 +62,7 @@ function NewsletterSignup() {
 					</>
 				)}
 			</span>
-			{turnstileStatus === "error" || submitted ? null : (
+			{errored || submitted ? null : (
 				<>
 					<label htmlFor="email" className="sr-only">
 						Email
@@ -79,15 +81,20 @@ function NewsletterSignup() {
 								"ml-3 h-8 w-8 p-2 rounded-lg mt-px",
 								submitted && "bg-shrub cursor-default pointer-events-none",
 							)}
-							disabled={fetcher.state !== "idle" || turnstileStatus === "loading" || submitted}
+							disabled={disabled}
 							type="submit"
+							title={disabled ? "making sure you're human..." : undefined}
 							onClick={(ev) => {
 								ev.preventDefault();
 
+								if (turnstileStatus === "error") return setErrored(true);
+
 								const form = ev.currentTarget.form;
 								if (!form) return;
+
 								const email = form.email.value;
 								fetcher.submit(form);
+
 								if (hasAnalyticsConsent && email) {
 									sendShopifyAnalytics({
 										eventName: "custom_newsletter_signup",
@@ -102,16 +109,9 @@ function NewsletterSignup() {
 					</div>
 					<Turnstile
 						id="footer-turnstile"
-						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
-						className="hidden"
-						options={{ size: "flexible" }}
 						onSuccess={() => setTurnstileStatus("success")}
 						onError={() => setTurnstileStatus("error")}
-						onExpire={() => {
-							setTurnstileStatus("loading");
-							turnstileRef.current?.reset();
-						}}
 					/>
 				</>
 			)}

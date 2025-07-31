@@ -10,7 +10,6 @@
 		"codegen": "shopify hydrogen codegen"
 	},
 	"dependencies": {
-		"@marsidev/react-turnstile": "1.1.0",
 		"@openreplay/tracker": "^16.0.1",
 		"@shopify/hydrogen": "^2025.5.0",
 		"@shopify/hydrogen-react": "^2025.5.0",

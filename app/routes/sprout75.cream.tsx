@@ -14,7 +14,7 @@ import { InfoBubble } from "~/components/elements/InfoBubble";
 import { socials } from "~/components/global/Footer";
 import { SocialBlob } from "~/assets/SocialBlob";
 import { MouseEventHandler, useEffect, useRef, useState } from "react";
-import { Turnstile, type TurnstileInstance } from "@marsidev/react-turnstile";
+import { Turnstile } from "~/lib/Turnstile";
 import { useRouteLoaderData } from "react-router";
 import type { RootLoader } from "~/root";
 import { TruckIcon } from "~/assets/icons/Truck";
@@ -313,7 +313,6 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 	const submitted = !!customer;
 	const email = customer?.email || fetcher.formData?.get("email")?.toString() || "";
 	const { turnstileSiteKey } = useRouteLoaderData<RootLoader>("root")!;
-	const turnstileRef = useRef<TurnstileInstance | null>(null);
 	const pendingForm = useRef<HTMLFormElement | null>(null);
 	const [captchaError, setCaptchaError] = useState(false);
 
@@ -371,15 +370,11 @@ function NotificationsSignup({ fetcherKey, cta }: { fetcherKey: string; cta: str
 								ev.preventDefault();
 								pendingForm.current = ev.currentTarget.form;
 								setCaptchaError(false);
-								turnstileRef.current?.execute();
 							}}
 						/>
 					</div>
 					<Turnstile
-						ref={turnstileRef}
 						siteKey={turnstileSiteKey}
-						className="hidden"
-						options={{ size: "flexible" }}
 						onSuccess={() => {
 							const form = pendingForm.current;
 							if (!form) return;
