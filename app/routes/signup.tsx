@@ -12,13 +12,12 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		}
 
 		const turnstileToken = fd.get("cf-turnstile-response")?.toString();
-		const ip = request.headers.get("CF-Connecting-IP");
 
-		if (!ip || !turnstileToken) {
+		if (!turnstileToken) {
 			return { error: "invalid request" };
 		}
 
-		const isValid = await verifyToken(turnstileToken, ip, {
+		const isValid = await verifyToken(turnstileToken, {
 			secret: context.env.PRIVATE_TURNSTILE_SECRET_KEY,
 		});
 
@@ -71,11 +70,10 @@ mutation CreateCustomer($email: String!) {
 }
 `;
 
-async function verifyToken(token: string, ip: string, { secret }: { secret: string }) {
+async function verifyToken(token: string, { secret }: { secret: string }) {
 	const fd = new FormData();
 	fd.append("secret", secret);
 	fd.append("response", token);
-	fd.append("remoteip", ip);
 
 	const url = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
 
@@ -86,7 +84,12 @@ async function verifyToken(token: string, ip: string, { secret }: { secret: stri
 		});
 
 		const outcome = (await result.json()) as { success: boolean; hostname: string };
-		if (outcome?.success && (outcome.hostname === "milktype.co" || outcome.hostname === "localhost")) {
+		if (
+			outcome?.success &&
+			(outcome.hostname === "milktype.co" ||
+				outcome.hostname === "localhost" ||
+				outcome.hostname.endsWith("myshopify.dev"))
+		) {
 			return true;
 		}
 	} catch (e) {
