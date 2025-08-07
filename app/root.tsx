@@ -91,12 +91,12 @@ export function links() {
 		{
 			rel: "preconnect",
 			href: "https://api.config-security.com",
-			crossOrigin: true,
+			crossOrigin: "anonymous",
 		},
 		{
 			rel: "preconnect",
 			href: "https://conf.config-security.com",
-			crossOrigin: true,
+			crossOrigin: "anonymous",
 		},
 		{
 			rel: "stylesheet",

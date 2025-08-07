@@ -17,7 +17,7 @@ export default async function handleRequest(
 		mediaSrc: ["*", "data:"],
 		styleSrc: ["*"],
 		fontSrc: ["*"],
-		scriptSrc: ["*", "'unsafe-inline'"],
+		scriptSrc: ["*", "'unsafe-inline'", "'unsafe-eval'"],
 		connectSrc: ["*"],
 		workerSrc: ["*", "blob:", "data:"],
 		frameSrc: ["*"],
