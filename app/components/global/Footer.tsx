@@ -38,7 +38,28 @@ function NewsletterSignup() {
 			method="POST"
 			id="newsletter-signup"
 			className="flex w-fit text-xl mt-8 mb-12 lg:mb-8 py-4 px-8 gap-y-4 flex-col lg:flex-row items-center justify-center rounded-2xl transition-colors delay-300 duration-700"
-			style={{ viewTransitionName: "newsletter" }}>
+			style={{ viewTransitionName: "newsletter" }}
+			onSubmit={(ev) => {
+				ev.preventDefault();
+
+				if (turnstileStatus === "error") return setErrored(true);
+
+				const form = ev.currentTarget;
+				if (!form) return;
+
+				const email = form.email.value;
+				fetcher.submit(form);
+
+				if (hasAnalyticsConsent && email) {
+					sendShopifyAnalytics({
+						eventName: "custom_newsletter_signup",
+						payload: {
+							// @ts-expect-error — custom payload
+							email,
+						},
+					});
+				}
+			}}>
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
 				{errored ? (
 					<>
@@ -84,27 +105,6 @@ function NewsletterSignup() {
 							disabled={disabled}
 							type="submit"
 							title={disabled ? "making sure you're human..." : undefined}
-							onClick={(ev) => {
-								ev.preventDefault();
-
-								if (turnstileStatus === "error") return setErrored(true);
-
-								const form = ev.currentTarget.form;
-								if (!form) return;
-
-								const email = form.email.value;
-								fetcher.submit(form);
-
-								if (hasAnalyticsConsent && email) {
-									sendShopifyAnalytics({
-										eventName: "custom_newsletter_signup",
-										payload: {
-											// @ts-expect-error — custom payload
-											email,
-										},
-									});
-								}
-							}}
 						/>
 					</div>
 					<Turnstile

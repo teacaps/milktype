@@ -34,7 +34,26 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 			action="/signup"
 			method="POST"
 			id="newsletter-signup"
-			className="flex flex-col @xs:flex-row gap-2 xs:gap-3 items-start @xs:items-center justify-start rounded-2xl transition-colors delay-300 duration-700">
+			className="flex flex-col @xs:flex-row gap-2 xs:gap-3 items-start @xs:items-center justify-start rounded-2xl transition-colors delay-300 duration-700"
+			onSubmit={(ev) => {
+				ev.preventDefault();
+
+				if (turnstileStatus === "error") return setErrored(true);
+
+				const form = ev.currentTarget;
+				if (!form) return;
+				const email = form.email.value;
+				fetcher.submit(form);
+				if (email) {
+					sendShopifyAnalytics({
+						eventName: "custom_newsletter_signup",
+						payload: {
+							// @ts-expect-error — custom payload
+							email,
+						},
+					});
+				}
+			}}>
 			<span className="font-medium text-center lg:text-start text-cocoa-120">
 				{errored ? (
 					<>
@@ -80,25 +99,6 @@ export function NotificationsSignup({ fetcherKey, cta }: NotificationsSignupProp
 							disabled={disabled}
 							type="submit"
 							title={disabled ? "making sure you're human..." : undefined}
-							onClick={(ev) => {
-								ev.preventDefault();
-
-								if (turnstileStatus === "error") return setErrored(true);
-
-								const form = ev.currentTarget.form;
-								if (!form) return;
-								const email = form.email.value;
-								fetcher.submit(form);
-								if (email) {
-									sendShopifyAnalytics({
-										eventName: "custom_newsletter_signup",
-										payload: {
-											// @ts-expect-error — custom payload
-											email,
-										},
-									});
-								}
-							}}
 						/>
 					</div>
 					<Turnstile

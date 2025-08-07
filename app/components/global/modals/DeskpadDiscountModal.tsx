@@ -55,7 +55,60 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 						occasional emails a few times a year for special deals and new products.
 					</p>
 
-					<fetcher.Form method="post" action="/signup" className="flex flex-col gap-2 w-full">
+					<fetcher.Form
+						method="post"
+						action="/signup"
+						className="flex flex-col gap-2 w-full"
+						onSubmit={(ev) => {
+							ev.preventDefault();
+
+							if (turnstileStatus === "error") return setErrored(true);
+
+							const form = ev.currentTarget;
+							if (!form) return;
+							const email = form.email.value;
+
+							fetcher.submit(form);
+
+							cartFetcher.submit(
+								{
+									[CartForm.INPUT_NAME]: JSON.stringify({
+										action: CartActions.DiscountCodesUpdate,
+										inputs: { discountCodes: ["WELCOMEFRIEND"] },
+									} satisfies CartActionInput),
+								},
+								{ method: "POST", action: "/cart", preventScrollReset: true },
+							);
+							if (!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)) {
+								cartFetcher.submit(
+									{
+										[CartForm.INPUT_NAME]: JSON.stringify({
+											action: CartActions.LinesUpsert,
+											inputs: {
+												lines: [
+													{
+														merchandiseId: SPROUT_75_MERCHANDISE_ID,
+														quantity: 1,
+													},
+												],
+											},
+										} satisfies CartActionInput),
+									},
+									{ method: "POST", action: "/cart", preventScrollReset: true },
+								);
+							}
+							setCartVisible(true);
+
+							if (hasAnalyticsConsent && email) {
+								sendShopifyAnalytics({
+									eventName: "custom_newsletter_signup",
+									payload: {
+										// @ts-expect-error — custom payload
+										email,
+									},
+								});
+							}
+						}}>
 						<label htmlFor="email" className="sr-only">
 							Email
 						</label>
@@ -76,58 +129,6 @@ export function DeskpadDiscountModal({ children }: { children?: ReactNode }) {
 								disabled={disabled}
 								type="submit"
 								title={disabled ? "making sure you're human..." : undefined}
-								onClick={(ev) => {
-									ev.preventDefault();
-
-									if (turnstileStatus === "error") return setErrored(true);
-
-									const form = ev.currentTarget.form;
-									if (!form) return;
-									const email = form.email.value;
-
-									fetcher.submit(form);
-
-									cartFetcher.submit(
-										{
-											[CartForm.INPUT_NAME]: JSON.stringify({
-												action: CartActions.DiscountCodesUpdate,
-												inputs: { discountCodes: ["WELCOMEFRIEND"] },
-											} satisfies CartActionInput),
-										},
-										{ method: "POST", action: "/cart", preventScrollReset: true },
-									);
-									if (
-										!cart.lines?.some((line) => line?.merchandise?.id === SPROUT_75_MERCHANDISE_ID)
-									) {
-										cartFetcher.submit(
-											{
-												[CartForm.INPUT_NAME]: JSON.stringify({
-													action: CartActions.LinesUpsert,
-													inputs: {
-														lines: [
-															{
-																merchandiseId: SPROUT_75_MERCHANDISE_ID,
-																quantity: 1,
-															},
-														],
-													},
-												} satisfies CartActionInput),
-											},
-											{ method: "POST", action: "/cart", preventScrollReset: true },
-										);
-									}
-									setCartVisible(true);
-
-									if (hasAnalyticsConsent && email) {
-										sendShopifyAnalytics({
-											eventName: "custom_newsletter_signup",
-											payload: {
-												// @ts-expect-error — custom payload
-												email,
-											},
-										});
-									}
-								}}
 							/>
 						</div>
 						<Turnstile
