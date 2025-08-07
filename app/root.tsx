@@ -89,6 +89,16 @@ export function links() {
 			crossOrigin: "anonymous",
 		},
 		{
+			rel: "preconnect",
+			href: "https://api.config-security.com",
+			crossOrigin: true,
+		},
+		{
+			rel: "preconnect",
+			href: "https://conf.config-security.com",
+			crossOrigin: true,
+		},
+		{
 			rel: "stylesheet",
 			href: "https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap",
 		},
