@@ -10,15 +10,20 @@ import type { RootLoader } from "~/root";
 export function Navigation() {
 	const { cartVisible, setCartVisible } = useCartVisibility();
 	const { pathname } = useLocation();
+	const isSproutPage = pathname === "/sprout75";
+	const BannerEl = isSproutPage ? "div" : "a";
 	return (
 		<Container as="header" className="flex flex-col w-full z-10">
-			{pathname !== "/sprout75" ? (
-				<a
-					href="/sprout75"
-					className="w-full py-2 px-4 mt-4 text-xs md:text-sm text-center text-balance font-medium text-yogurt-100 bg-accent rounded-full hover:bg-lilac">
-					studio cleaning sale — save 15% now! →
-				</a>
-			) : null}
+			<BannerEl
+				href="/sprout75"
+				className={twJoin(
+					"w-full py-2 px-4 mt-4 text-xs md:text-sm text-center text-balance font-medium text-yogurt-100 bg-accent rounded-full",
+					!isSproutPage && "hover:bg-lilac",
+				)}>
+				{isSproutPage
+					? "studio sale ⋅ save 15% on sprout 75! ⋅ ends in 7 days"
+					: "studio cleaning sale ⋅ save 15% now! →"}
+			</BannerEl>
 			<div
 				className="flex flex-row w-full relative items-center py-8"
 				style={{ viewTransitionName: "navigation" }}>
