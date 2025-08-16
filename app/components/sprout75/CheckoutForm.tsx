@@ -16,13 +16,11 @@ import { ShoppingBagIcon } from "~/assets/icons/ShoppingBag";
 import { SPROUT_75_MERCHANDISE_ID, BSB_DESKPAD_MERCHANDISE_ID, Renders } from "./constants";
 
 export function CheckoutForm() {
-	const { lines } = useCart();
 	const { setCartVisible } = useCartVisibility();
 	const navigation = useNavigation();
 	const [justAddedDeskpad, setJustAddedDeskpad] = useState(false);
+	const [includeDeskpad, setIncludeDeskpad] = useState(false);
 	const deskpadRef = useRef<HTMLDivElement>(null);
-
-	const deskpadInCart = lines?.some((line) => line?.merchandise?.id === BSB_DESKPAD_MERCHANDISE_ID) || false;
 
 	const fetcher = useFetcher({ key: "checkout" });
 	const previousFetcherState = usePrevious(fetcher.state);
@@ -40,62 +38,59 @@ export function CheckoutForm() {
 		setJustAddedDeskpad(true);
 		setTimeout(() => setJustAddedDeskpad(false), 2000);
 
-		fetcher.submit(
-			{
-				[CartForm.INPUT_NAME]: JSON.stringify({
-					action: CartActions.LinesAdd,
-					inputs: {
-						lines: [{ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 }],
-					},
-				}),
-			},
-			{ method: "POST", action: "/cart", preventScrollReset: true },
-		);
+		setIncludeDeskpad((prev) => !prev);
 	};
 
 	return (
 		<CartForm
 			route="/cart"
 			action={CartActions.LinesAdd}
-			inputs={{ lines: [{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 }] }}
+			inputs={{
+				lines: [
+					{ merchandiseId: SPROUT_75_MERCHANDISE_ID, quantity: 1 },
+					...(includeDeskpad ? [{ merchandiseId: BSB_DESKPAD_MERCHANDISE_ID, quantity: 1 }] : []),
+				],
+			}}
 			fetcherKey="checkout">
 			{(fetcher) => (
 				<>
 					<OptimisticInput id={SPROUT_75_MERCHANDISE_ID} data={{}} />
+					{includeDeskpad && <OptimisticInput id={BSB_DESKPAD_MERCHANDISE_ID} data={{}} />}
+					<input type="hidden" name="checkout" value="true" />
 					<div
 						ref={deskpadRef}
 						className="relative group w-full xs:w-3/4 sm:w-full rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-offset-2 focus-visible:ring-accent"
 						tabIndex={0}
-						aria-label={deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+						aria-label={includeDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
 						<LightboxImage
 							{...Renders.DeskpadFull}
 							className="w-full object-contain"
 							button={{
 								"onClick": handleDeskpadAdd,
-								"aria-label": deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart",
+								"aria-label": includeDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart",
 								"tabIndex": -1,
 							}}
 						/>
 						<Button
-							color={deskpadInCart ? "lilac" : "blurple"}
+							color={includeDeskpad ? "lilac" : "blurple"}
 							onClick={handleDeskpadAdd}
 							hoverRef={deskpadRef}
 							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
 							disabled={navigation.state !== "idle"}
-							aria-label={deskpadInCart ? "Remove desk pad from cart" : "Add desk pad to cart"}>
-							{!deskpadInCart ? (
+							aria-label={includeDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
+							{!includeDeskpad ? (
 								<CartIcon className="w-4 xs:w-5 h-auto mr-3" />
 							) : (
 								<>
 									<CheckIcon
 										className={twJoin(
-											"w-[1.375rem] xs:w-6 lg:w-7 h-auto",
+											"w-[1.375rem] xs:w-6 lg:w-8 h-auto -my-1 -ml-1 mr-1",
 											!justAddedDeskpad && "group-hover:hidden",
 										)}
 									/>
 									<MinusIcon
 										className={twJoin(
-											"w-[1.375rem] xs:w-6 lg:w-7 h-auto hidden",
+											"w-[1.375rem] xs:w-6 lg:w-8 h-auto -my-1 -ml-1 mr-1 hidden",
 											!justAddedDeskpad && "group-hover:block",
 										)}
 									/>
@@ -131,8 +126,7 @@ export function CheckoutForm() {
 							"loading..."
 						) : (
 							<span>
-								add to cart ⋅ $143 <span className="text-yogurt-60 opacity-75 line-through">$169</span>{" "}
-								usd
+								buy now ⋅ $143 <span className="text-yogurt-60 opacity-75 line-through">$169</span> usd
 							</span>
 						)}
 					</Button>

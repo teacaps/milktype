@@ -5,7 +5,7 @@ import {
 	OptimisticCartLineInput,
 } from "@shopify/hydrogen";
 import type { ActionFunctionArgs } from "@shopify/remix-oxygen";
-import { data } from "@shopify/remix-oxygen";
+import { data, redirect } from "@shopify/remix-oxygen";
 
 export const CartActions = {
 	...CartForm.ACTIONS,
@@ -83,5 +83,8 @@ export async function action({ request, context }: ActionFunctionArgs) {
 
 	const headers = cart.setCartId(result.cart.id);
 
+	if (formData.get("checkout") === "true" && cartData?.checkoutUrl) {
+		return redirect(cartData.checkoutUrl, { status: 302, headers });
+	}
 	return data({ response: result }, { status: 200, headers });
 }
