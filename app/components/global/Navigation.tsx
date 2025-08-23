@@ -22,7 +22,7 @@ export function Navigation() {
 				)}>
 				{isSproutPage
 					? "limited edition brown sugar boba ⋅ free shipping!"
-					: "studio cleaning sale ⋅ save 15% now! →"}
+					: "limited edition brown sugar boba ⋅ free shipping! →"}
 			</BannerEl>
 			<div
 				className="flex flex-row w-full relative items-center py-8"
