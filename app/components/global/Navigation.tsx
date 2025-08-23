@@ -21,7 +21,7 @@ export function Navigation() {
 					!isSproutPage && "hover:bg-lilac",
 				)}>
 				{isSproutPage
-					? "studio sale ⋅ save 15% on sprout 75! ⋅ ends in 13 hours"
+					? "limited edition brown sugar boba ⋅ free shipping!"
 					: "studio cleaning sale ⋅ save 15% now! →"}
 			</BannerEl>
 			<div
