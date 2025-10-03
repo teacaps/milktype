@@ -21,8 +21,8 @@ export function Navigation() {
 					!isSproutPage && "hover:bg-lilac",
 				)}>
 				{isSproutPage
-					? "limited edition brown sugar boba ⋅ free shipping!"
-					: "limited edition brown sugar boba ⋅ free shipping! →"}
+					? "use code cozyautumn to save $17 on sprout 75!"
+					: "use code cozyautumn to save $17 on sprout 75! →"}
 			</BannerEl>
 			<div
 				className="flex flex-row w-full relative items-center py-8"
