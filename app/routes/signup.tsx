@@ -11,6 +11,8 @@ export async function action({ request, context }: ActionFunctionArgs) {
 			return { error: "email is required" };
 		}
 
+		const firstName = fd.get("first_name")?.toString();
+
 		const turnstileToken = fd.get("cf-turnstile-response")?.toString();
 
 		if (!turnstileToken) {
@@ -44,7 +46,7 @@ export async function action({ request, context }: ActionFunctionArgs) {
 		});
 
 		const { data, errors } = await gqlClient.request(CREATE_CUSTOMER_MUTATION, {
-			variables: { email },
+			variables: { firstName, email },
 		});
 
 		if (errors) {
@@ -60,10 +62,11 @@ export async function action({ request, context }: ActionFunctionArgs) {
 }
 
 const CREATE_CUSTOMER_MUTATION = `#graphql
-mutation CreateCustomer($email: String!) {
-    customerCreate(input: { email: $email, emailMarketingConsent: { marketingOptInLevel: SINGLE_OPT_IN, marketingState: SUBSCRIBED } }) {
+mutation CreateCustomer($firstName: String, $email: String!) {
+    customerCreate(input: { firstName: $firstName, email: $email, emailMarketingConsent: { marketingOptInLevel: SINGLE_OPT_IN, marketingState: SUBSCRIBED } }) {
         customer {
 			id
+			firstName
             email
         }
     }

@@ -19,19 +19,19 @@ export function TaroSwitchesSection() {
 					</p>
 				</div>
 			</section>
-			<section className="mt-16 mx-auto px-6 md:px-8 lg:px-12 py-5 flex flex-col md:flex-row-reverse gap-y-9 md:gap-x-3 items-center w-4/5 max-w-screen-lg bg-yogurt-60 rounded-2xl">
+			<section className="mt-16 mx-auto px-6 md:px-8 lg:px-12 py-5 flex flex-col md:flex-row-reverse gap-y-9 md:gap-x-3 items-center w-4/5 max-w-screen-lg bg-yogurt-70 rounded-2xl">
 				<div className="flex flex-row items-center gap-x-3 xl:gap-x-6">
 					<Image {...Renders.SwitchTransparent2} className="aspect-square w-16 xs:w-20 xl:w-28" />
 					<h3 className="text-xl xs:text-2xl xl:text-3xl font-semibold text-cocoa-100">spec sheet</h3>
 				</div>
 				<div className="w-full flex flex-row flex-wrap gap-3 md:gap-4 text-sm xs:text-base md:text-lg">
-					<InfoBubble className="bg-yogurt-80">linear</InfoBubble>
-					<InfoBubble className="bg-yogurt-80">55g | bottom-out</InfoBubble>
-					<InfoBubble className="bg-yogurt-80">pre-lubed</InfoBubble>
-					<InfoBubble className="bg-yogurt-80">3.5mm | travel</InfoBubble>
-					<InfoBubble className="bg-yogurt-80">pom | body</InfoBubble>
-					<InfoBubble className="bg-yogurt-80">13.6mm | stem</InfoBubble>
-					<InfoBubble className="bg-yogurt-80">15mm | spring</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">linear</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">55g | bottom-out</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">pre-lubed</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">3.5mm | travel</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">pom | body</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">13.6mm | stem</InfoBubble>
+					<InfoBubble className="bg-yogurt-60">15mm | spring</InfoBubble>
 				</div>
 			</section>
 		</>

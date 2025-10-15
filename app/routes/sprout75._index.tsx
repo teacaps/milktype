@@ -20,6 +20,7 @@ import { UseCaseSections } from "~/components/sprout75/UseCaseSections";
 import { SpecsSection } from "~/components/sprout75/SpecsSection";
 import { FooterSection } from "~/components/sprout75/FooterSection";
 import { title, description, SPROUT75_IMAGE, SPROUT75_PRODUCT_QUERY } from "~/components/sprout75/constants";
+import { EmailConversionPopover } from "~/components/sprout75/EmailConversionPopover";
 
 export const meta = () => [
 	{
@@ -107,6 +108,7 @@ export default function Sprout75() {
 
 	return (
 		<Layout footer={false}>
+			<EmailConversionPopover />
 			<DeskpadModal />
 			<Container
 				as="main"
