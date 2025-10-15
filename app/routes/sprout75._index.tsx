@@ -89,7 +89,7 @@ export default function Sprout75() {
 	const { productPayload, url, trackerProjectKey, searchParams } = useLoaderData<typeof loader>();
 	const { publish, shop } = useAnalytics();
 
-	const DeskpadModal = withModalDelay("DeskpadDiscount", 10_000, {}, true);
+	const DeskpadModal = withModalDelay("DeskpadDiscount", 30_000, {}, true);
 
 	const tracker = useMemo(() => new Tracker({ projectKey: trackerProjectKey }), [trackerProjectKey]);
 
