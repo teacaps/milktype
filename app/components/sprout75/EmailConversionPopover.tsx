@@ -20,7 +20,7 @@ const steps = [Step0, Step1, Step2, Step3];
 
 export function EmailConversionPopover() {
 	const [params, setSearchParams] = useSearchParams();
-	const popover = useRef<HTMLDivElement>(null);
+	const popover = useRef<HTMLDialogElement>(null);
 	const [step, setStep] = useState<number | null>(null);
 
 	const fetcher = useFetcher({ key: "newsletter-signup" });
@@ -55,10 +55,10 @@ export function EmailConversionPopover() {
 	const stepProps = { setStep, name, turnstileStatus };
 
 	return (
-		<div
+		<dialog
 			ref={popover}
 			popover="auto"
-			className="z-10 px-0 py-2 w-full xs:w-4/5 max-w-xl h-full xs:h-2/3 xs:max-h-[36rem] overflow-y-hidden xs:rounded-2xl xs:shadow-2xl bg-yogurt-80 xs:bg-yogurt-60 flex flex-col">
+			className="z-50 px-0 py-2 flex flex-col w-full xs:w-4/5 max-w-xl h-full xs:h-2/3 xs:max-h-[36rem] overflow-y-hidden xs:rounded-2xl xs:shadow-2xl bg-yogurt-80 xs:bg-yogurt-60 backdrop:bg-yogurt-80 backdrop:xs:bg-transparent">
 			<fetcher.Form
 				action="/signup"
 				method="POST"
@@ -112,7 +112,7 @@ export function EmailConversionPopover() {
 				/>
 			</fetcher.Form>
 			<Image {...Renders.DeskpadCloseUp} className="w-4/5 h-auto mt-auto self-end -mb-16" />
-		</div>
+		</dialog>
 	);
 }
 

@@ -33,4 +33,7 @@
 	html {
 		scroll-behavior: smooth;
 	}
+	body:has(dialog) {
+		overflow: hidden;
+	}
 }
