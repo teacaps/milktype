@@ -21,8 +21,8 @@ export function Navigation() {
 					!isSproutPage && "hover:bg-lilac",
 				)}>
 				{isSproutPage
-					? "use code cozyautumn to save $17 on sprout 75!"
-					: "use code cozyautumn to save $17 on sprout 75! →"}
+					? "save 20% now – our biggest sale of the year ends soon"
+					: "save 20% on sprout 75 during our biggest sale of the year!"}
 			</BannerEl>
 			<div
 				className="flex flex-row w-full relative items-center py-8"
