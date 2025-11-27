@@ -126,7 +126,7 @@ export function CheckoutForm() {
 							"loading..."
 						) : (
 							<span>
-								buy now ⋅ $169 <span className="text-yogurt-60 opacity-75 line-through"></span> usd
+								buy now ⋅ $134 <span className="text-yogurt-60 opacity-75 line-through">$169</span> usd
 							</span>
 						)}
 					</Button>
