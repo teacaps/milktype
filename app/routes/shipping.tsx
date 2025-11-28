@@ -60,12 +60,13 @@ export default function Shipping() {
 				<div className="flex flex-col text-cocoa-120 text-lg">
 					<h2 className="text-3xl text-cocoa-100 font-semibold">returns and exchanges</h2>
 					<p>
-						we don&#39;t accept returns or exchanges unless there is a significant flaw with the product you
-						received. if so, we will do our best to ensure the issue is resolved, providing a refund or
-						exchange if we deem it necessary.
+						we accept returns or exchanges within 14 days of delivery. if you're not satisfied, or would prefer a different
+						product, let us know by emailing us at hi@milktype.co
+
+						return shipping costs are not covered by us. all original packaging elements must be included with the return.
 						<br />
 						<br />
-						this policy lasts for 30 days. if 30 days have passed since the delivery of your product, we
+						this policy lasts for 14 days. if 14 days have passed since the delivery of your product, we
 						will not be able to offer you a refund or exchange.
 						<br />
 						<br />
