@@ -19,7 +19,13 @@ import { TaroSwitchesSection } from "~/components/sprout75/TaroSwitchesSection";
 import { UseCaseSections } from "~/components/sprout75/UseCaseSections";
 import { SpecsSection } from "~/components/sprout75/SpecsSection";
 import { FooterSection } from "~/components/sprout75/FooterSection";
-import { title, description, SPROUT75_IMAGE, SPROUT75_PRODUCT_QUERY } from "~/components/sprout75/constants";
+import {
+	title,
+	description,
+	SPROUT75_IMAGE,
+	SPROUT75_PRODUCT_QUERY,
+	BSB_DESKPAD_MERCHANDISE_ID,
+} from "~/components/sprout75/constants";
 import { EmailConversionPopover } from "~/components/sprout75/EmailConversionPopover";
 
 export const meta = () => [
@@ -55,9 +61,10 @@ export const meta = () => [
 export const links = () => [{ rel: "stylesheet", href: lightboxStyles }];
 
 export async function loader({ request, context }: LoaderFunctionArgs) {
-	const { product } = await context.storefront.query(SPROUT75_PRODUCT_QUERY, {
+	const { product, deskpad } = await context.storefront.query(SPROUT75_PRODUCT_QUERY, {
 		variables: {
 			handle: "sprout-75-brown-sugar-boba",
+			deskpadId: BSB_DESKPAD_MERCHANDISE_ID,
 		},
 	});
 
@@ -82,11 +89,14 @@ export async function loader({ request, context }: LoaderFunctionArgs) {
 		url: request.url,
 		trackerProjectKey: context.env.OPENREPLAY_PROJECT_KEY,
 		searchParams: Object.fromEntries(searchParams.entries()),
+		availableForSale: product.variants.nodes[0].availableForSale ?? true,
+		deskpadAvailableForSale: deskpad?.availableForSale ?? true,
 	};
 }
 
 export default function Sprout75() {
-	const { productPayload, url, trackerProjectKey, searchParams } = useLoaderData<typeof loader>();
+	const { productPayload, url, trackerProjectKey, searchParams, availableForSale, deskpadAvailableForSale } =
+		useLoaderData<typeof loader>();
 	const { publish, shop } = useAnalytics();
 
 	const DeskpadModal = withModalDelay("DeskpadDiscount", 30_000, {}, true);
@@ -113,7 +123,7 @@ export default function Sprout75() {
 			<Container
 				as="main"
 				className="w-full sm:w-full max-w-[96rem] lg:max-w-[96rem] px-0 sm:px-0 lg:px-0 overflow-x-visible flex flex-col">
-				<HeroSection />
+				<HeroSection availableForSale={availableForSale} deskpadAvailableForSale={deskpadAvailableForSale} />
 				<PhotoCarousel />
 				<IntroSection />
 				<NoveltiesSection />

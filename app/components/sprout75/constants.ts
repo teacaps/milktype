@@ -156,7 +156,7 @@ export const keycapSpinImages = Array.from({ length: 90 }, (_, i) => ({
 }));
 
 export const SPROUT75_PRODUCT_QUERY = `#graphql
-query Sprout75Product($handle: String!) {
+query Sprout75Product($handle: String!, $deskpadId: ID!) {
     product(handle: $handle) {
         id
         title
@@ -165,10 +165,17 @@ query Sprout75Product($handle: String!) {
             nodes {
                 id
                 title
+                availableForSale
                 price {
                     amount
                 }
             }
+        }
+    }
+    deskpad: node(id: $deskpadId) {
+        ... on ProductVariant {
+            id
+            availableForSale
         }
     }
 }

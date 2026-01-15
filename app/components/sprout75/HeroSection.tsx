@@ -3,7 +3,13 @@ import { Sprout75Mark } from "./Sprout75Mark";
 import { CheckoutForm } from "./CheckoutForm";
 import { Renders } from "./constants";
 
-export function HeroSection() {
+export function HeroSection({
+	availableForSale,
+	deskpadAvailableForSale,
+}: {
+	availableForSale: boolean;
+	deskpadAvailableForSale: boolean;
+}) {
 	return (
 		<section className="w-full px-8 md:pl-16 md:pr-12 flex flex-col sm:flex-row-reverse sm:items-center lg:max-w-screen-lg sm:mx-auto">
 			<LightboxImage
@@ -18,7 +24,7 @@ export function HeroSection() {
 				<span className="text-cocoa-100 text-balance text-lg sm:text-xl xl:text-2xl font-medium">
 					a mechanical keyboard inspired by our favorite drink — brown sugar boba.
 				</span>
-				<CheckoutForm />
+				<CheckoutForm availableForSale={availableForSale} deskpadAvailableForSale={deskpadAvailableForSale} />
 			</div>
 		</section>
 	);

@@ -15,7 +15,13 @@ import { TruckIcon } from "~/assets/icons/Truck";
 import { ShoppingBagIcon } from "~/assets/icons/ShoppingBag";
 import { SPROUT_75_MERCHANDISE_ID, BSB_DESKPAD_MERCHANDISE_ID, Renders } from "./constants";
 
-export function CheckoutForm() {
+export function CheckoutForm({
+	availableForSale,
+	deskpadAvailableForSale,
+}: {
+	availableForSale: boolean;
+	deskpadAvailableForSale: boolean;
+}) {
 	const { setCartVisible } = useCartVisibility();
 	const navigation = useNavigation();
 	const [justAddedDeskpad, setJustAddedDeskpad] = useState(false);
@@ -34,6 +40,8 @@ export function CheckoutForm() {
 	const handleDeskpadAdd: MouseEventHandler = (e) => {
 		e.preventDefault();
 		e.stopPropagation();
+
+		if (!deskpadAvailableForSale) return;
 
 		setJustAddedDeskpad(true);
 		setTimeout(() => setJustAddedDeskpad(false), 2000);
@@ -76,7 +84,7 @@ export function CheckoutForm() {
 							onClick={handleDeskpadAdd}
 							hoverRef={deskpadRef}
 							className="absolute bottom-[10%] sm:bottom-[5%] md:bottom-[10%] -right-2 sm:-right-[20%] md:-right-[15%] rotate-[3deg] rounded-full py-2 pl-4 pr-5 flex flex-row gap-0 items-center justify-center text-yogurt-100 text-sm xs:text-base lg:text-lg xs:font-medium"
-							disabled={navigation.state !== "idle"}
+							disabled={!deskpadAvailableForSale || navigation.state !== "idle"}
 							aria-label={includeDeskpad ? "Remove desk pad from cart" : "Add desk pad to cart"}>
 							{!includeDeskpad ? (
 								<CartIcon className="w-4 xs:w-5 h-auto mr-3" />
@@ -97,7 +105,9 @@ export function CheckoutForm() {
 								</>
 							)}
 							<span>
-								{fetcher.state === "submitting" ? (
+								{!deskpadAvailableForSale ? (
+									"sold out"
+								) : fetcher.state === "submitting" ? (
 									"loading..."
 								) : (
 									<>
@@ -121,8 +131,10 @@ export function CheckoutForm() {
 						className="w-full py-4 text-yogurt-100 xs:text-lg xs:font-medium lg:text-xl"
 						color="shrub"
 						rainbow={false}
-						disabled={navigation.state !== "idle"}>
-						{fetcher.state === "submitting" ? (
+						disabled={!availableForSale || navigation.state !== "idle"}>
+						{!availableForSale ? (
+							"sold out"
+						) : fetcher.state === "submitting" ? (
 							"loading..."
 						) : (
 							<span>
