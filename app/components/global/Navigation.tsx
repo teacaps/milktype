@@ -14,7 +14,7 @@ export function Navigation() {
 	const BannerEl = isSproutPage ? "div" : "a";
 	return (
 		<Container as="header" className="flex flex-col w-full z-10">
-			<BannerEl
+			{/* <BannerEl
 				href="/sprout75"
 				className={twJoin(
 					"w-full py-2 px-4 mt-4 text-xs md:text-sm text-center text-balance font-medium text-yogurt-100 bg-accent rounded-full",
@@ -23,7 +23,7 @@ export function Navigation() {
 				{isSproutPage
 					? "save 20% now – our biggest sale of the year ends soon"
 					: "save 20% on sprout 75 during our biggest sale of the year!"}
-			</BannerEl>
+			</BannerEl> */ }
 			<div
 				className="flex flex-row w-full relative items-center py-8"
 				style={{ viewTransitionName: "navigation" }}>
